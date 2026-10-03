@@ -41,7 +41,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Know where an Euler job runs
@@ -50,7 +50,7 @@ before continuing if these words are new.
 
 SSH opens an Euler login node for file and job management. Slurm schedules actual computation on a compute node. sbatch submits one batch script, squeue shows active jobs, sacct reports recorded state and resources, and seff summarizes efficiency. All four commands use the same numeric job ID. GiB is the memory unit used in this guide; 1 GiB is approximately one gigabyte.
 
-- [Open the Slurm command reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/slurm.md)
+- [Open the Slurm command reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
 
 **Expected:** You can distinguish the login node from the compute node and state what sbatch, squeue, sacct, and seff do.
 
@@ -180,9 +180,9 @@ sed -n '1,100p' first-job.slurm
 ```
 <!-- /passport-snippet:euler-cpu-tiny-request -->
 
-**Expected:** The command prints created-script-ok or existing-script-ok, then shows es_fuge, two minutes, one task, one CPU, 1 GiB per CPU, the dated Python module, the training environment, and separate logs.
+**Expected:** The command prints created-script-ok or existing-script-ok before displaying the script. The displayed script ends at PYTHON; EOF and the lines after it finish the creation command and are not printed as part of the script. Check that the script shows es_fuge, two minutes, one task, one CPU, 1 GiB per CPU, the dated Python module, the training environment, and separate logs. This step does not submit a job, so an empty squeue is normal.
 
-**Continue when:** Submit it once.
+**Continue when:** After checking the script, use Step 5 to submit it once.
 
 **If not:** Correct the script before sbatch; do not submit a script you have not read.
 
@@ -202,12 +202,12 @@ id_file="$HOME/passport-euler/first-job.id"
 if [ -e "$id_file" ]; then
   [ -s "$id_file" ] || { printf 'STOP: %s is empty. Ask for help before submitting.\n' "$id_file" >&2; exit 1; }
   job_id="$(cat "$id_file")"
-  case "$job_id" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
+  case "$job_id" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
   printf 'Existing job, not resubmitted: %s\n' "$job_id"
 else
   submission="$(sbatch --parsable first-job.slurm)"
   job_id="${submission%%;*}"
-  case "$job_id" in ''|*[!0-9]*) printf 'STOP: sbatch did not return a numeric job ID.\n' >&2; exit 1;; esac
+  case "$job_id" in ''|*[^0-9]*) printf 'STOP: sbatch did not return a numeric job ID.\n' >&2; exit 1;; esac
   printf '%s\n' "$job_id" > "$id_file"
   chmod 600 "$id_file"
   printf 'Submitted job: %s\n' "$job_id"
@@ -232,7 +232,7 @@ Query only the recorded job. A header without a row means the short job already 
 ```bash
 (
 job_id="$(cat "$HOME/passport-euler/first-job.id")"
-case "$job_id" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
+case "$job_id" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
 squeue -j "$job_id" -o "%.18i %.2t %.30R"
 )
 ```
@@ -255,19 +255,19 @@ Run this for the same job. If it says job-not-finished, wait 30 seconds and run 
 (
 set -eu
 job_id="$(cat "$HOME/passport-euler/first-job.id")"
-case "$job_id" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
+case "$job_id" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
 state="$(sacct -X -n -j "$job_id" --format=State | awk 'NF {print $1; exit}' | cut -d+ -f1)"
 case "$state" in
   COMPLETED) printf 'job-completed\n' ;;
   PENDING|RUNNING|CONFIGURING|COMPLETING) printf 'job-not-finished: %s; wait 30 seconds and rerun this step; do not resubmit\n' "$state"; exit 2 ;;
   '') printf 'accounting-not-ready; wait 30 seconds and rerun this step; do not resubmit\n'; exit 2 ;;
-  *) printf 'STOP: job ended in %s; inspect both logs before changing resources.\n' "$state" >&2; sacct -j "$job_id" --format=JobID,JobName,User,Account,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS; exit 1 ;;
+  *) printf 'STOP: job ended in %s; inspect both logs before changing resources.\n' "$state" >&2; sacct -j "$job_id" --format=JobID,JobName,User,Account%40,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS; exit 1 ;;
 esac
-sacct -j "$job_id" --format=JobID,JobName,User,Account,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS
+sacct -j "$job_id" --format=JobID,JobName,User,Account%40,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS
 )
 ```
 
-**Expected:** While queued or running, the command says to wait without resubmitting. After completion it prints job-completed, then sacct shows the main job and its steps. The main row names your user, es_fuge, COMPLETED, 0:0, one CPU, and 1G requested memory; MaxRSS may appear on the .batch step.
+**Expected:** While queued or running, the command says to wait without resubmitting. After completion it prints job-completed, then sacct shows the main job and its steps. The main row names your user, normal/es_fuge (or es_fuge if shown in short form), COMPLETED, 0:0, one CPU, and 1G requested memory. Account%40 gives the account column room to display the full name; normal/es+ is a truncated display and is not a value to enter. MaxRSS may appear on the .batch step.
 
 **Continue when:** Inspect the efficiency report.
 
@@ -284,7 +284,7 @@ Read the requested-versus-used CPU and memory summary for the same job.
 ```bash
 (
 job_id="$(cat "$HOME/passport-euler/first-job.id")"
-case "$job_id" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
+case "$job_id" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
 seff "$job_id"
 )
 ```
@@ -306,7 +306,7 @@ Read only the two expected lines from the output file for the stored job ID. The
 ```bash
 (
 job_id="$(cat "$HOME/passport-euler/first-job.id")"
-case "$job_id" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
+case "$job_id" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
 output="$HOME/passport-euler/logs/passport-cpu_$job_id.out"
 grep -Fx "python_environment=passport-python" "$output"
 grep -Fx "5 squared is 25" "$output"
@@ -346,13 +346,13 @@ feedback and can be retried without penalty.
 For an invalid account, stop and check `my_share_info`. For a pending job,
 inspect `myjobs -j "$job_id"` instead of submitting duplicates. Read the first
 meaningful error before changing resources. Use the
-[first Euler job lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-first-job.md) for recovery.
+[first Euler job lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-first-job.md) for recovery.
 
 Useful references:
 
-- [First Euler job](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-first-job.md)
-- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/slurm.md)
-- [IDEAL Lab Euler share policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/euler-share.md)
+- [First Euler job](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-first-job.md)
+- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
+- [IDEAL Lab Euler share policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/euler-share.md)
 
 ## Understand Before Accepting AI Output
 

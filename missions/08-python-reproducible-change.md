@@ -35,7 +35,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Open the Python practice project
@@ -252,8 +252,8 @@ packages merely to make the check green.
 
 Useful references:
 
-- [Reproducible Python](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/reproducible-python.md)
-- [Code contributor track](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/tracks/code-contributor.md)
+- [Reproducible Python](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/reproducible-python.md)
+- [Code contributor track](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/tracks/code-contributor.md)
 
 ## Understand Before Accepting AI Output
 

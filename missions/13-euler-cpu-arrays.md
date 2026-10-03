@@ -19,11 +19,14 @@ distinct logs for every task. No command submits the practice file to Euler.
 Check these points:
 
 - **What does %4 mean in --array=0-31%4?** At most four array tasks may run concurrently.
-- **Which placeholders distinguish array logs?** %A for the parent job and %a for the task index.
+- **Which placeholders show the parent array and task index in log filenames?** %A for the parent job and %a for the task index.
 
 ## Common Trap
 
-Submitting a large array before adding %N, or using %j so tasks overwrite or obscure one another.
+Submitting a large array without a concurrency cap, or giving every task the
+same fixed log filename. `%j` is a distinct job ID for each array task; it does
+not inherently cause collisions. This exercise requires `%A_%a` so filenames
+also show which array and task index produced the log.
 
 ## Your Action
 
@@ -36,7 +39,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Understand an array and its concurrency cap
@@ -45,7 +48,7 @@ before continuing if these words are new.
 
 A job array creates many similar Slurm tasks from one script. The range sets the total number of tasks. The value after %, called the concurrency cap, limits how many tasks may run at the same time. Each task still reserves its own CPU, memory, GPU, and time and needs a distinct log name.
 
-- [Open the job-array lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-job-arrays.md)
+- [Open the job-array lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-job-arrays.md)
 
 **Expected:** You can distinguish total task count from the maximum running at once.
 
@@ -65,13 +68,13 @@ Press Prepare practice folder, enter it, and open workspace/slurm/array_job.slur
 
 **If not:** Do not create your own replacement script or use Euler for this exercise.
 
-### 3. Identify both defects
+### 3. Inspect the cap and log names
 
 **Where:** The laptop or desktop in front of you
 
-Read the array and log settings. The practice file allows 100 tasks without a concurrency cap and uses log names that do not identify each array task.
+Read the array and log settings. The practice file allows 100 tasks without a concurrency cap. Its %j log names use each task's distinct job ID, but do not directly show the parent array and task index. This exercise uses %A_%a to make that relationship visible.
 
-**Expected:** You can explain why uncapped tasks and colliding logs are unsafe.
+**Expected:** You can explain the missing concurrency cap and why parent/index labels make array logs easier to trace.
 
 **Continue when:** Edit only the required directives.
 
@@ -170,13 +173,13 @@ feedback and can be retried without penalty.
 
 Reduce the cap to `%1` and validate a representative input. If many tasks fail
 identically, cancel the array and debug one task. Use the
-[job arrays lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-job-arrays.md) for dependent or
+[job arrays lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-job-arrays.md) for dependent or
 heterogeneous workloads.
 
 Useful references:
 
-- [Euler job arrays](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-job-arrays.md)
-- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/slurm.md)
+- [Euler job arrays](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-job-arrays.md)
+- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
 
 ## Understand Before Accepting AI Output
 

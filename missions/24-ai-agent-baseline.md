@@ -36,7 +36,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Prepare the AI practice files
@@ -133,7 +133,7 @@ git status --short -- workspace/agent_task
 
 **Where:** The laptop or desktop in front of you
 
-Check that the plan makes P: durable, D: temporary, C: unsuitable for project data, and Euler or approved compute the place for heavy work.
+Check that the plan makes P: durable, D: temporary, C: unsuitable for project data, and Euler or approved compute the place for heavy work. Write each policy correction as its own sentence or bullet, connecting the location with its role. Keep the compute task and its destination together; their order does not matter. Remove contradictory claims left from the unsafe plan.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -169,7 +169,7 @@ Return to this page and press Check my work. The automatic check confirms the ch
 
 **Continue when:** Submit the mission once.
 
-**If not:** Use the named failed check; do not submit an agent transcript or claim.
+**If not:** Read the named check and its recovery message. Review that statement and any contradictory claim in storage-plan.md, then check again. Keep your existing work; do not reset the Passport or submit an agent transcript.
 
 The Passport presents the questions and required confirmation in the
 browser. Do not create or edit a submission JSON file by hand.
@@ -185,13 +185,13 @@ feedback and can be retried without penalty.
 
 Start a new agent thread for the same specific task if context has become inconsistent. Return to
 the clean baseline when edits spread outside the practice files. Use the
-[manual versus agent lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/manual-vs-agent.md) for recovery.
+[manual versus agent lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/manual-vs-agent.md) for recovery.
 
 Useful references:
 
-- [Manual Vs Agent](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/manual-vs-agent.md)
-- [Agents And Interfaces](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/agents-and-interfaces.md)
-- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/data-and-ai.md)
+- [Manual Vs Agent](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/manual-vs-agent.md)
+- [Agents And Interfaces](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/agents-and-interfaces.md)
+- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/data-and-ai.md)
 
 ## Understand Before Accepting AI Output
 

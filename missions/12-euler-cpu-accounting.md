@@ -44,7 +44,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Distinguish requested and used resources
@@ -53,7 +53,7 @@ before continuing if these words are new.
 
 A Slurm request reserves CPUs, memory, and time before a job runs. sacct provides exact recorded fields; seff summarizes CPU and memory efficiency. AllocCPUS is the allocated CPU count, ReqMem is requested memory, MaxRSS is the largest recorded memory use, Elapsed is run time, State is the final condition, and ExitCode reports program success or failure. Read both commands for the existing job before deciding what a future run should request.
 
-- [Open the Slurm accounting reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/slurm.md)
+- [Open the Slurm accounting reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
 
 **Expected:** You can distinguish allocated resources from measured use.
 
@@ -124,7 +124,7 @@ set -eu
 id_file="$HOME/passport-euler/first-job.id"
 if [ -e "$id_file" ] && [ ! -s "$id_file" ]; then printf 'STOP: %s exists but is empty. Ask for help before changing it.\n' "$id_file" >&2; exit 1; fi
 if [ -s "$id_file" ]; then job_id="$(cat "$id_file")"; else read -r -p 'Existing passport-cpu job ID: ' job_id; fi
-case "$job_id" in ''|*[!0-9]*) printf 'STOP: job ID must contain digits only.\n' >&2; exit 1;; esac
+case "$job_id" in ''|*[^0-9]*) printf 'STOP: job ID must contain digits only.\n' >&2; exit 1;; esac
 if [ ! -e "$id_file" ]; then mkdir -p "$(dirname "$id_file")"; printf '%s\n' "$job_id" > "$id_file"; chmod 600 "$id_file"; fi
 sacct -j "$job_id" --format=JobID,JobName,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS
 state="$(sacct -X -n -j "$job_id" --format=State | awk 'NF {print $1; exit}' | cut -d+ -f1)"
@@ -151,7 +151,7 @@ Use seff for a concise CPU and memory efficiency summary, while keeping sacct as
 ```bash
 (
 job_id="$(cat "$HOME/passport-euler/first-job.id")"
-case "$job_id" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
+case "$job_id" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\n' >&2; exit 1;; esac
 seff "$job_id"
 )
 ```
@@ -211,14 +211,14 @@ feedback and can be retried without penalty.
 ## If Blocked
 
 Do not increase resources when fields are unclear. Use
-[Euler resource optimization](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-resource-optimization.md)
+[Euler resource optimization](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-resource-optimization.md)
 and ask for help for MPI/multiprocess workloads, highly variable inputs, or
 disagreeing metrics.
 
 Useful references:
 
-- [Euler resource optimization](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-resource-optimization.md)
-- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/slurm.md)
+- [Euler resource optimization](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-resource-optimization.md)
+- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
 
 ## Understand Before Accepting AI Output
 

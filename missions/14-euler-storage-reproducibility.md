@@ -36,7 +36,7 @@ Apply the reproducible-run sequence to a fictional Euler job before deciding whe
 
 Use $HOME for small private code and configuration, /cluster/work/fuge for approved shared working data, $SCRATCH for replaceable high-throughput files, and $TMPDIR for temporary files inside one running job. Name the durable location that will hold the main copy after the run.
 
-- [Open the Euler storage reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/storage.md)
+- [Open the Euler storage reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/storage.md)
 
 **Expected:** You can identify which locations survive, which are shared, and which are temporary.
 
@@ -142,14 +142,14 @@ feedback and can be retried without penalty.
 
 Do not invent permissions or recursively change a shared folder. Ask the data
 owner which approved location holds the main durable copy, and use
-[Euler storage](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/storage.md) for lifecycle and
+[Euler storage](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/storage.md) for lifecycle and
 collaboration recovery.
 
 Useful references:
 
-- [Euler storage](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/storage.md)
-- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/slurm.md)
-- [Data Placement](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/data-placement.md)
+- [Euler storage](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/storage.md)
+- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
+- [Data Placement](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/data-placement.md)
 
 ## Understand Before Accepting AI Output
 

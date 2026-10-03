@@ -117,13 +117,13 @@ feedback and can be retried without penalty.
 
 Do not grant broad access while waiting for a decision. Record the blocker and
 obtain the information owner, system owner, or lab owner decision. Use
-[lab IT policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/lab-it.md) for escalation.
+[lab IT policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/lab-it.md) for escalation.
 
 Useful references:
 
-- [Supervisor and staff track](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/tracks/supervisor-staff.md)
-- [Lab It](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/lab-it.md)
-- [Rubric](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/assessment/rubric.md)
+- [Supervisor and staff track](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/tracks/supervisor-staff.md)
+- [Lab It](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/lab-it.md)
+- [Rubric](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/assessment/rubric.md)
 
 ## Understand Before Accepting AI Output
 

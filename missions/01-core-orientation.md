@@ -43,7 +43,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Confirm the page mode
@@ -76,7 +76,7 @@ Open the Passport progress page and confirm that it names the operating system o
 
 Every command names the computer and application where it runs. Your computer or local means the laptop or desktop in front of you; remote means another computer reached through the network. A terminal is the text application you open. A shell is the program inside it that reads commands: PowerShell on Windows, zsh on macOS, and Bash on Linux or Euler. On Windows, open PowerShell. On macOS or Linux, open Terminal; it starts zsh or Bash automatically. You do not need to install a separate Bash or zsh application. A prompt is the text and cursor showing that the shell is ready. Paste only the displayed command after that prompt, press Enter once, and read the output before continuing. A path is the address of a file or folder.
 
-- [Open terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+- [Open terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 
 **Expected:** You can distinguish a terminal from a shell and identify the machine named above a command.
 
@@ -90,7 +90,7 @@ Every command names the computer and application where it runs. Your computer or
 
 Read the short system map. Git and GitHub manage code history and review. The NAS stores durable shared project data. Blade is a shared remote Windows computer for licensed graphical software. Euler is an ETH Zurich service made of many managed computers for research calculations. A CPU is the general-purpose processor used by most programs; a GPU is an accelerator used only by compatible programs. Euler schedules both kinds of work. Later lessons explain access; do not connect to any of these systems in this step.
 
-- [Open the laptop, NAS, Blade, and Euler map](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/environments-overview.md)
+- [Open the laptop, NAS, Blade, and Euler map](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/environments-overview.md)
 
 **Expected:** You can state in one sentence what GitHub, NAS, Blade, and Euler are used for.
 
@@ -172,12 +172,12 @@ recovery step does not resolve the problem. The public issue is assigned to
 the lab maintainer for asynchronous triage; nobody needs to be online when you
 submit it.
 
-Use the [glossary](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/glossary.md) when a term is unfamiliar.
+Use the [glossary](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/glossary.md) when a term is unfamiliar.
 
 Useful references:
 
-- [Passport start page](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/README.md)
-- [Glossary](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/glossary.md)
+- [Passport start page](https://github.com/IDEALLab/onboarding-IT/blob/main/README.md)
+- [Glossary](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/glossary.md)
 
 ## Understand Before Accepting AI Output
 

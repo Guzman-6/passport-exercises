@@ -41,7 +41,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Understand what a GPU request reserves
@@ -50,7 +50,7 @@ before continuing if these words are new.
 
 A GPU accelerates only compatible code. A Slurm request such as rtx_4090:1 reserves one accelerator on a compute node; it does not prove that the program uses it efficiently and does not grant the whole node. CPU, memory, time, logs, and the project account are requested separately.
 
-- [Open the Euler GPU policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/euler-share.md)
+- [Open the Euler GPU policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/euler-share.md)
 
 **Expected:** You can explain why the starter plan requests one explicit GPU plus measured supporting resources.
 
@@ -185,10 +185,10 @@ training, unusual memory, or CUDA compatibility to the supervisor.
 
 Useful references:
 
-- [Euler GPU review](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/euler-gpu-review.md)
-- [Euler GPU track](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/tracks/euler-gpu.md)
-- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/slurm.md)
-- [IDEAL Lab Euler share policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/euler-share.md)
+- [Euler GPU review](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-gpu-review.md)
+- [Euler GPU track](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/tracks/euler-gpu.md)
+- [Slurm reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
+- [IDEAL Lab Euler share policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/euler-share.md)
 
 ## Understand Before Accepting AI Output
 
