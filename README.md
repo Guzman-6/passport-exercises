@@ -11,7 +11,7 @@ Do not clone this repository manually. Install the public GitHub CLI extension,
 then let it create or reuse your public learning record:
 
 ```text
-gh extension install soheylm-passport-sandbox/gh-passport --force --pin v0.5.5
+gh extension install soheylm-passport-sandbox/gh-passport --force --pin v0.5.20
 gh passport start
 ```
 

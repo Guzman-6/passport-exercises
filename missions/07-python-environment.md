@@ -36,7 +36,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Know what the Python environment contains
@@ -45,7 +45,7 @@ before continuing if these words are new.
 
 Python is run by a program called an interpreter. Packages add reusable code. A project environment keeps one interpreter and package set separate from other projects. Conda manages environments, and Miniforge provides Conda. Conda's base environment is the shared default and is not used for project packages. environment.yml records what to recreate. .venv is the local project environment folder. .gitignore tells Git not to record named local files or folders.
 
-- [Open the Python setup reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/python_setup.md)
+- [Open the Python setup reference](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/python_setup.md)
 
 **Expected:** You can distinguish the versioned environment.yml definition from the local .venv installation.
 
@@ -57,7 +57,7 @@ Python is run by a program called an interpreter. Packages add reusable code. A 
 
 **Where:** The laptop or desktop in front of you
 
-Press Prepare practice folder in this step and run the displayed enter-folder command. The repository root is the top-level project folder that contains files such as environment.yml and .gitignore. Keep all following commands there unless a step says otherwise.
+Press Prepare practice folder in this step and run the displayed enter-folder command in your command terminal. Keep this page open: the Practice folder ready box shows your exact folder path and a Copy button for returning there later. After a page reload, press Prepare practice folder again to display the same folder; the launcher reuses it. The repository root is its top-level folder, containing environment.yml and .gitignore. Do not use the hidden .transport folder.
 
 **Expected:** The practice repository and practice branch are active.
 
@@ -69,7 +69,7 @@ Press Prepare practice folder in this step and run the displayed enter-folder co
 
 **Where:** The laptop or desktop in front of you
 
-Run the version check. If it succeeds, keep the existing working installation and skip installation.
+Run both checks below. If Conda was installed while this command terminal was already open, including through Self Service or another managed software installer, wait for installation to finish first. Close only this command terminal, leave the terminal running the Passport open, and open a new standalone PowerShell window on Windows or Terminal window on macOS/Linux before retrying. A new shell loads setup changes that an older shell may not know about. If both checks already work, keep this terminal and skip installation.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -96,13 +96,13 @@ conda info --base
 
 **Continue when:** Skip installation and read the environment definition.
 
-**If not:** Check for an existing installation in the next step. Do not install a second copy yet.
+**If not:** If a newly opened command terminal still cannot find Conda, continue to Recover an existing Conda installation. Do not download another copy. If Self Service or IT says Conda is installed, keep that installation and ask IT for its supported terminal setup if recovery cannot find it.
 
 ### 4. Recover an existing Conda installation
 
 **Where:** The laptop or desktop in front of you
 
-Run this only when conda was not recognized. The check looks only in common personal installation folders and does not delete anything. If it finds exactly one installation, it runs conda init for this operating system; that change becomes available only in a newly opened terminal. On Windows, also search the Start menu for Miniforge Prompt, Miniconda Prompt, or Anaconda Prompt. If one exists but this check found nothing, open that prompt, run conda info --base, and request help without including private information rather than installing another copy.
+Run this only when conda is still not recognized after retrying in a new command terminal. The check looks only in common personal installation folders and does not delete anything. If it finds exactly one installation, it runs conda init for this operating system; that change becomes available only in a newly opened terminal. On Windows, also search the Start menu for Miniforge Prompt, Miniconda Prompt, or Anaconda Prompt. If one exists but this check found nothing, open that prompt, run conda info --base, and request help without including private information rather than installing another copy.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -171,7 +171,7 @@ fi
 
 **Expected:** The final line is existing-conda-initialized or no-common-conda-installation.
 
-**Continue when:** After existing-conda-initialized, skip installation and continue at Reopen and recheck Conda. After no-common-conda-installation, run only the installation step for this operating system.
+**Continue when:** After existing-conda-initialized, skip installation and continue at Reopen and recheck Conda. After no-common-conda-installation, install only if Self Service, IT and any Start-menu Conda prompt do not indicate an existing installation. The check searches common folders only; an unlisted managed installation needs IT help, not a second copy.
 
 **If not:** If more than one installation is listed, or a Start-menu Conda prompt exists at another path, stop and request help without including private information. Do not uninstall, rename, or overwrite any installation.
 
@@ -179,7 +179,7 @@ fi
 
 **Where:** The laptop or desktop in front of you
 
-Run this step only after the recovery check printed no-common-conda-installation and no Conda prompt exists in the Start menu. Download the Windows x86-64 installer from the official page, run it for Just Me, keep the default personal installation folder and Start Menu shortcut, and leave Add Miniforge to PATH disabled. Open Miniforge Prompt from the Start menu, run conda --version, then run conda init powershell once. Close only that Miniforge Prompt, keep the terminal running the Passport open, and open a new PowerShell window.
+Skip this step if Self Service or IT already installed Conda; request its supported setup if needed. Run this step only after the recovery check printed no-common-conda-installation and no Conda prompt exists in the Start menu. Download the Windows x86-64 installer from the official page, run it for Just Me, keep the default personal installation folder and Start Menu shortcut, and leave Add Miniforge to PATH disabled. Open Miniforge Prompt from the Start menu, run conda --version, then run conda init powershell once. Close only that Miniforge Prompt, keep the terminal running the Passport open, and open a new PowerShell window.
 
 - [Open official Miniforge installers](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Windows-x86_64.exe)
 
@@ -193,7 +193,7 @@ Run this step only after the recovery check printed no-common-conda-installation
 
 **Where:** The laptop or desktop in front of you
 
-Run this step only after the recovery check printed no-common-conda-installation. The block downloads the official installer and its published SHA-256 checksum, a fingerprint used to detect a changed or damaged download. It checks that fingerprint before starting the interactive installer. Answer yes when asked to initialize zsh.
+Skip this step if Self Service or IT already installed Conda; request its supported setup if needed. Run this step only after the recovery check printed no-common-conda-installation. The block downloads the versioned Miniforge 26.5.3-0 installer for this Mac and its published SHA-256 checksum into a temporary directory. It verifies the checksum before starting the interactive installer. Answer yes when asked to initialize zsh.
 
 **Open Terminal on your Mac; zsh starts inside it automatically. Then run:**
 
@@ -201,29 +201,36 @@ Run this step only after the recovery check printed no-common-conda-installation
 ```zsh
 (
 set -eu
+tag="26.5.3-0"
 temporary="$(mktemp -d "${TMPDIR:-/tmp}/ideal-passport-miniforge.XXXXXX")"
-installer="$temporary/Miniforge3.sh"
-checksum="$temporary/Miniforge3.sh.sha256"
+asset="Miniforge3-$tag-MacOSX-$(uname -m).sh"
+installer="$temporary/$asset"
+checksum="$installer.sha256"
 cleanup() { rm -f -- "$installer" "$checksum"; rmdir -- "$temporary" 2>/dev/null || true; }
 trap cleanup EXIT HUP INT TERM
-asset="Miniforge3-MacOSX-$(uname -m).sh"
 printf 'Operating system: '; uname -s
 printf 'Architecture: '; uname -m
+case "$(uname -m)" in
+  arm64|x86_64) ;;
+  *) printf 'STOP: this Mac architecture has no approved installer in release %s.\n' "$tag" >&2; exit 1 ;;
+esac
 command -v curl >/dev/null || { printf 'STOP: curl is unavailable; use the official installer link.\n' >&2; exit 1; }
-curl -fL --output "$installer" "https://github.com/conda-forge/miniforge/releases/latest/download/$asset"
-curl -fL --output "$checksum" "https://github.com/conda-forge/miniforge/releases/latest/download/$asset.sha256"
-expected="$(awk '{print $1}' "$checksum")"
-actual="$(shasum -a 256 "$installer" | awk '{print $1}')"
-[ "$actual" = "$expected" ] || { printf 'STOP: checksum mismatch. Do not run the installer.\n' >&2; exit 1; }
+command -v shasum >/dev/null || { printf 'STOP: shasum is unavailable; do not run the installer.\n' >&2; exit 1; }
+curl -fL --output "$installer" "https://github.com/conda-forge/miniforge/releases/download/$tag/$asset"
+curl -fL --output "$checksum" "https://github.com/conda-forge/miniforge/releases/download/$tag/$asset.sha256"
+(
+  cd "$temporary"
+  shasum -a 256 -c "$asset.sha256"
+)
 printf 'checksum-ok\n'
 bash "$installer"
 )
 ```
 <!-- /passport-snippet:miniforge-macos-installer -->
 
-- [Open official Miniforge releases](https://github.com/conda-forge/miniforge/releases/latest)
+- [Open Miniforge release 26.5.3-0](https://github.com/conda-forge/miniforge/releases/tag/26.5.3-0)
 
-**Expected:** The operating system is Darwin, the checksum matches, and installation finishes without replacing another Conda installation.
+**Expected:** The operating system is Darwin, the matching versioned installer prints Miniforge3-...sh: OK before it runs, and installation finishes without replacing another Conda installation.
 
 **Continue when:** Close this command terminal after the installer finishes, open a new Terminal window, and continue at Reopen and recheck Conda.
 
@@ -233,7 +240,7 @@ bash "$installer"
 
 **Where:** The laptop or desktop in front of you
 
-Run this step only after the recovery check printed no-common-conda-installation. The block downloads the official installer and its published SHA-256 checksum, a fingerprint used to detect a changed or damaged download. It checks that fingerprint before starting the interactive installer. Answer yes when asked to initialize Bash. Do not use sudo.
+Skip this step if Self Service or IT already installed Conda; request its supported setup if needed. Run this step only after the recovery check printed no-common-conda-installation. The block downloads the versioned Miniforge 26.5.3-0 installer for this Linux computer and its published SHA-256 checksum into a temporary directory. It verifies the checksum before starting the interactive installer. Answer yes when asked to initialize Bash. Do not use sudo.
 
 **Open Terminal on your Linux computer; Bash normally starts inside it automatically. Then run:**
 
@@ -241,29 +248,36 @@ Run this step only after the recovery check printed no-common-conda-installation
 ```bash
 (
 set -eu
+tag="26.5.3-0"
 temporary="$(mktemp -d "${TMPDIR:-/tmp}/ideal-passport-miniforge.XXXXXX")"
-installer="$temporary/Miniforge3.sh"
-checksum="$temporary/Miniforge3.sh.sha256"
+asset="Miniforge3-$tag-$(uname -s)-$(uname -m).sh"
+installer="$temporary/$asset"
+checksum="$installer.sha256"
 cleanup() { rm -f -- "$installer" "$checksum"; rmdir -- "$temporary" 2>/dev/null || true; }
 trap cleanup EXIT HUP INT TERM
-asset="Miniforge3-$(uname -s)-$(uname -m).sh"
 printf 'Operating system: '; uname -s
 printf 'Architecture: '; uname -m
+case "$(uname -m)" in
+  aarch64|ppc64le|x86_64) ;;
+  *) printf 'STOP: this Linux architecture has no approved installer in release %s.\n' "$tag" >&2; exit 1 ;;
+esac
 command -v curl >/dev/null || { printf 'STOP: curl is unavailable; use the official installer link.\n' >&2; exit 1; }
-curl -fL --output "$installer" "https://github.com/conda-forge/miniforge/releases/latest/download/$asset"
-curl -fL --output "$checksum" "https://github.com/conda-forge/miniforge/releases/latest/download/$asset.sha256"
-expected="$(awk '{print $1}' "$checksum")"
-actual="$(sha256sum "$installer" | awk '{print $1}')"
-[ "$actual" = "$expected" ] || { printf 'STOP: checksum mismatch. Do not run the installer.\n' >&2; exit 1; }
+command -v sha256sum >/dev/null || { printf 'STOP: sha256sum is unavailable; do not run the installer.\n' >&2; exit 1; }
+curl -fL --output "$installer" "https://github.com/conda-forge/miniforge/releases/download/$tag/$asset"
+curl -fL --output "$checksum" "https://github.com/conda-forge/miniforge/releases/download/$tag/$asset.sha256"
+(
+  cd "$temporary"
+  sha256sum -c "$asset.sha256"
+)
 printf 'checksum-ok\n'
 bash "$installer"
 )
 ```
 <!-- /passport-snippet:miniforge-linux-installer -->
 
-- [Open official Miniforge releases](https://github.com/conda-forge/miniforge/releases/latest)
+- [Open Miniforge release 26.5.3-0](https://github.com/conda-forge/miniforge/releases/tag/26.5.3-0)
 
-**Expected:** The operating system is Linux, the checksum matches, and installation finishes without replacing another Conda installation.
+**Expected:** The operating system is Linux, the matching versioned installer prints Miniforge3-...sh: OK before it runs, and installation finishes without replacing another Conda installation.
 
 **Continue when:** Close this command terminal after the installer finishes, open a new Terminal window, which normally starts Bash, and continue at Reopen and recheck Conda.
 
@@ -273,7 +287,7 @@ bash "$installer"
 
 **Where:** The laptop or desktop in front of you
 
-If Conda already worked in the first check, keep this terminal. If you initialized or installed Conda, close only the terminal used for the setup commands, leave the terminal running the Passport open, and open a new PowerShell window on Windows or Terminal window on macOS or Linux. On Linux, Terminal normally starts Bash. Run the enter-folder command shown in Prepare the Python practice folder, then run both checks below.
+If both initial Conda checks worked, keep that terminal. After an installer finishes (including Self Service) or after conda init, close only the command terminal used for setup, leave the terminal running the Passport open, and open a new standalone PowerShell window on Windows or Terminal window on macOS/Linux. Linux Terminal normally starts Bash. Use this separate command terminal for the checks below. A new terminal may start in your home folder; the next step shows how to return to the practice folder.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -298,39 +312,48 @@ conda info --base
 
 **Expected:** Conda prints a version and one base installation path without a command-not-found error.
 
-**Continue when:** Keep this terminal open and continue to the environment definition.
+**Continue when:** Keep this command terminal open. Return to the exact practice folder before reading environment.yml.
 
 **If not:** Do not install another copy. On Windows, try Miniforge Prompt and run conda info --base. On any platform, request help with the command-not-found message and the base path already found; do not include your username or full home path.
 
-### 9. Read the environment definition
+### 9. Return to the practice folder and read the definition
 
 **Where:** The laptop or desktop in front of you
 
-Open environment.yml at the practice repository root. This versioned file selects conda-forge, uses nodefaults so personal Conda settings cannot add another package channel, and pins Python 3.11. Do not edit it in this exercise.
+In the new command terminal, first run the enter-folder command from the Practice folder ready box under Prepare the Python practice folder. If that box is missing after a page reload, press Prepare practice folder to show it again; this reuses your existing folder. Then run the read-only checks below. The first two paths must identify the same folder as the Passport path. The branch must be practice/ followed by your GitHub username in lowercase. environment.yml at that root selects conda-forge, nodefaults and Python 3.11. Keep the file unchanged.
 
 **Open PowerShell on your Windows computer, then run:**
 
 ```powershell
+(Get-Location).Path
+git rev-parse --show-toplevel
+git status --short --branch
 Get-Content -LiteralPath environment.yml
 ```
 
 **Open Terminal on your Mac; zsh starts inside it automatically. Then run:**
 
 ```zsh
+pwd -P
+git rev-parse --show-toplevel
+git status --short --branch
 cat environment.yml
 ```
 
 **Open Terminal on your Linux computer; Bash normally starts inside it automatically. Then run:**
 
 ```bash
+pwd -P
+git rev-parse --show-toplevel
+git status --short --branch
 cat environment.yml
 ```
 
-**Expected:** The file names conda-forge, nodefaults, and Python 3.11, and it contains no machine-specific path.
+**Expected:** The current folder and Git root both identify the Passport practice folder, the practice branch is active, and the file names conda-forge, nodefaults and Python 3.11. Windows may display the same folder with backslashes or forward slashes.
 
 **Continue when:** Inspect the .venv target before creating it.
 
-**If not:** Return to Prepare practice folder if environment.yml is missing or changed; do not invent a replacement.
+**If not:** Stop if a path or branch differs, Git says not a repository, or the file is missing or changed. Copy the enter-folder command again and repeat these checks. Do not create a replacement environment.yml, run git init, clone again, or change branches to hide the error. Ask for help with the named failed check, without sharing private paths.
 
 ### 10. Inspect the environment path
 
@@ -495,11 +518,93 @@ fi
 
 **Expected:** Conda creates .venv from environment.yml, or the final line is reused-conda-environment for the valid environment already present.
 
-**Continue when:** Activate the environment.
+**Continue when:** If creation succeeded or the command printed reused-conda-environment, skip the channel-terms recovery and continue at Activate the project environment.
 
-**If not:** Read the first Conda or environment error. Do not rerun with administrator rights, follow a link target, or delete an unrelated environment.
+**If not:** If Conda reports CondaToSNonInteractiveError for repo.anaconda.com/pkgs/main or /pkgs/r, use the next recovery step. Do not accept terms just to unblock this exercise. For other failures, stop and ask for help; preserve any existing or incomplete .venv.
 
-### 13. Activate the project environment
+### 13. Recover only from a Conda channel-terms error
+
+**Where:** The laptop or desktop in front of you
+
+Skip this step if creation or reuse succeeded. Use it only after CondaToSNonInteractiveError names repo.anaconda.com/pkgs/main or /pkgs/r. Some installations check configured channels before reading environment.yml, so nodefaults alone does not prevent this early error. In your local command terminal, at the practice repository root, the guarded command below reads the same definition and selects only conda-forge for this invocation. It needs stable Conda 26.3 or newer, leaves the ToS plugin enabled, and does not change global settings or accept terms. Keep the terminal running the Passport open.
+
+**Open PowerShell on your Windows computer, then run:**
+
+```powershell
+& {
+  if (Get-Item -Force -LiteralPath .venv -ErrorAction SilentlyContinue) { throw "STOP: .venv already exists; return to Inspect the environment path. Nothing was replaced." }
+  git ls-files --error-unmatch -- environment.yml *> $null
+  if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath environment.yml -PathType Leaf)) { throw "STOP: use environment.yml in the practice repository" }
+  git diff --quiet -- environment.yml
+  if ($LASTEXITCODE -ne 0) { throw "STOP: environment.yml has changed; return to Read the environment definition" }
+  git diff --cached --quiet -- environment.yml
+  if ($LASTEXITCODE -ne 0) { throw "STOP: environment.yml has staged changes; return to Read the environment definition" }
+  git check-ignore -q --no-index .venv/conda-meta/history
+  if ($LASTEXITCODE -ne 0) { throw "STOP: .venv must be ignored by Git" }
+  $PassportCondaVersion = conda --version
+  if ($LASTEXITCODE -ne 0) { throw "STOP: Conda version could not be checked" }
+  $PassportVersion = [regex]::Match([string]$PassportCondaVersion, '^conda (\d+)\.(\d+)\.(\d+)$')
+  if (-not $PassportVersion.Success -or [int]$PassportVersion.Groups[1].Value -lt 26 -or ([int]$PassportVersion.Groups[1].Value -eq 26 -and [int]$PassportVersion.Groups[2].Value -lt 3)) { throw "STOP: this recovery needs stable Conda 26.3 or newer. Ask IT about an approved update; do not reinstall or accept terms to unblock this exercise." }
+  conda create --prefix ./.venv --file environment.yml --override-channels --channel conda-forge --no-default-packages -y
+  if ($LASTEXITCODE -ne 0) { throw "STOP: Conda recovery failed; keep the error type and ask for help" }
+}
+```
+
+**Open Terminal on your Mac; zsh starts inside it automatically. Then run:**
+
+```zsh
+(
+if [ -e .venv ] || [ -L .venv ]; then
+  printf 'STOP: .venv already exists; return to Inspect the environment path. Nothing was replaced.\n' >&2
+  exit 1
+fi
+git ls-files --error-unmatch -- environment.yml >/dev/null 2>&1 &&
+  git diff --quiet -- environment.yml && git diff --cached --quiet -- environment.yml &&
+  [ -f environment.yml ] || { printf 'STOP: use the unchanged environment.yml in the practice repository.\n' >&2; exit 1; }
+git check-ignore -q --no-index .venv/conda-meta/history || { printf 'STOP: .venv must be ignored by Git.\n' >&2; exit 1; }
+passport_conda_version="$(conda --version)" || exit 1
+printf '%s\n' "$passport_conda_version" | awk '
+  $1 == "conda" && $2 ~ /^[0-9]+\.[0-9]+\.[0-9]+$/ {
+    split($2, v, "."); if (v[1] > 26 || (v[1] == 26 && v[2] >= 3)) ok = 1
+  }
+  END { exit !ok }
+' || { printf 'STOP: this recovery needs stable Conda 26.3 or newer. Ask IT about an approved update; do not reinstall or accept terms to unblock this exercise.\n' >&2; exit 1; }
+conda create --prefix ./.venv --file environment.yml --override-channels --channel conda-forge --no-default-packages -y
+)
+```
+
+**Open Terminal on your Linux computer; Bash normally starts inside it automatically. Then run:**
+
+```bash
+(
+if [ -e .venv ] || [ -L .venv ]; then
+  printf 'STOP: .venv already exists; return to Inspect the environment path. Nothing was replaced.\n' >&2
+  exit 1
+fi
+git ls-files --error-unmatch -- environment.yml >/dev/null 2>&1 &&
+  git diff --quiet -- environment.yml && git diff --cached --quiet -- environment.yml &&
+  [ -f environment.yml ] || { printf 'STOP: use the unchanged environment.yml in the practice repository.\n' >&2; exit 1; }
+git check-ignore -q --no-index .venv/conda-meta/history || { printf 'STOP: .venv must be ignored by Git.\n' >&2; exit 1; }
+passport_conda_version="$(conda --version)" || exit 1
+printf '%s\n' "$passport_conda_version" | awk '
+  $1 == "conda" && $2 ~ /^[0-9]+\.[0-9]+\.[0-9]+$/ {
+    split($2, v, "."); if (v[1] > 26 || (v[1] == 26 && v[2] >= 3)) ok = 1
+  }
+  END { exit !ok }
+' || { printf 'STOP: this recovery needs stable Conda 26.3 or newer. Ask IT about an approved update; do not reinstall or accept terms to unblock this exercise.\n' >&2; exit 1; }
+conda create --prefix ./.venv --file environment.yml --override-channels --channel conda-forge --no-default-packages -y
+)
+```
+
+- [Understand the error and safe recovery](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/python_setup.md#recover-from-a-conda-channel-terms-error)
+
+**Expected:** Only conda-forge is selected and .venv is created with Python 3.11, without a terms prompt. The command stops before creation if .venv exists, the definition changed, Git does not ignore .venv, or Conda is too old.
+
+**Continue when:** Continue at Activate the project environment, then verify the interpreter and pip paths. No reset, new Passport, or edited environment.yml is needed.
+
+**If not:** Preserve .venv if it exists and return to the inspection step. For old Conda, ask IT about an approved update of the existing installation; do not install a second distribution. If terms, channel-policy, permission, or network errors remain, stop and use the linked help path. Do not disable plugins, change .condarc, or enable automatic ToS acceptance.
+
+### 14. Activate the project environment
 
 **Where:** The laptop or desktop in front of you
 
@@ -529,7 +634,7 @@ conda activate ./.venv
 
 **If not:** Windows: open Miniforge Prompt and run conda init powershell. macOS: run conda init zsh. Linux Bash: run conda init bash. Run it once, close only that command terminal, keep the terminal running the Passport open, open a new command terminal, return to the practice root, and retry.
 
-### 14. Verify the active interpreter
+### 15. Verify the active interpreter
 
 **Where:** The laptop or desktop in front of you
 
@@ -555,23 +660,41 @@ python -c "import sys; print(sys.executable); print(sys.version)"
 
 **Expected:** The executable path is inside the practice repository .venv directory and Python reports version 3.11.
 
-**Continue when:** If you use an editor for Python, connect it to the same interpreter in the next step.
+**Continue when:** If you use VS Code, check its Python extension in the next step. Other-editor and terminal-only users can skip that extension step.
 
 **If not:** Do not install packages until the interpreter path is correct.
 
-### 15. Use the same interpreter in your editor
+### 16. Install the Python extension if you use VS Code
 
 **Where:** The laptop or desktop in front of you
 
-Terminal activation and editor selection are separate. If you use VS Code, open the practice repository, press Ctrl+Shift+P on Windows/Linux or Command+Shift+P on macOS, run Python: Select Interpreter, and choose the interpreter inside this repository's .venv folder. For another editor, use its Python interpreter setting and choose the same path printed in the previous step. If you run Python only from the terminal, no editor setting is required.
+Skip this step for another editor or terminal-only work. In a local VS Code window, use File > Open Folder to open the exact Practice folder ready path. Open Extensions with Ctrl+Shift+X on Windows/Linux or Command+Shift+X on macOS. Search @id:ms-python.python, choose Python by Microsoft, and click Install if it is missing. If it is installed but disabled, enable it for this workspace. Save your files and reload the VS Code window if prompted; keep the separate Passport terminal open. This extension connects the editor to Python; it does not replace the Conda environment you just verified.
+
+- [Python extension setup and missing-command help](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/vscode.md#python-extension)
+
+- [Official Python extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+
+**Expected:** Python by Microsoft is installed and enabled in the current local VS Code workspace. No extra Python installation or new environment is needed.
+
+**Continue when:** Open workspace/python_project/passport_example.py from the Explorer, then select the existing interpreter in the next step.
+
+**If not:** If VS Code shows Restricted Mode, use the linked folder-trust guidance before enabling Python features. Trust only the recognized practice folder after reviewing its contents; do not disable Workspace Trust globally. If device policy blocks installation or enabling, ask IT for the approved extension. Keep using the verified command terminal; the terminal-only route remains valid.
+
+### 17. Use the same interpreter in your editor
+
+**Where:** The laptop or desktop in front of you
+
+Terminal activation and editor selection are separate. After the Python extension is enabled and a .py file is open in VS Code, press Ctrl+Shift+P on Windows/Linux or Command+Shift+P on macOS. Run Python: Select Interpreter and select the exact executable printed by Verify the active interpreter, inside this practice folder's .venv. Then open Terminal > New Terminal, return to the practice folder, and repeat Activate the project environment and Verify the active interpreter there. An already-open terminal may still use the previous environment. For another editor, select the same verified interpreter through its settings. Terminal-only users need no editor extension or setting.
+
+- [Select the interpreter and recover a missing command](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/vscode.md#conda-environments-in-vs-code)
 
 - [Read the VS Code Python environment instructions](https://code.visualstudio.com/docs/python/environments)
 
-**Expected:** An editor in use names the repository .venv interpreter; terminal-only users keep the verified active terminal.
+**Expected:** The editor selects the same .venv interpreter as the verified command terminal; a new integrated terminal reports that same interpreter and Python 3.11. Terminal-only users keep their verified terminal.
 
 **Continue when:** Run Check my work.
 
-**If not:** Keep using the verified terminal interpreter and correct the editor selection; do not install another Python or recreate the environment.
+**If not:** If Python: Select Interpreter is missing, return to the Python extension step and check that Python by Microsoft is enabled in this local workspace. If .venv is not listed, use the linked recovery guide. Keep the working terminal environment; do not select base, install another Python, or recreate .venv to make it appear.
 
 The Passport presents the questions and required confirmation in the
 browser. Do not create or edit a submission JSON file by hand.
@@ -587,13 +710,13 @@ feedback and can be retried without penalty.
 
 Do not repeatedly reinstall into `base`. Record `conda info --envs`, the Python
 path, and the exact error without credentials. Use the
-[reproducible Python lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/reproducible-python.md) or ask for
+[reproducible Python lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/reproducible-python.md) or ask for
 help before deleting an existing environment.
 
 Useful references:
 
-- [Python setup](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/python_setup.md)
-- [Reproducible Python](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/reproducible-python.md)
+- [Python setup](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/python_setup.md)
+- [Reproducible Python](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/reproducible-python.md)
 
 ## Understand Before Accepting AI Output
 

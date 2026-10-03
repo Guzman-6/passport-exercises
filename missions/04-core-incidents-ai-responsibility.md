@@ -41,7 +41,7 @@ Practise a safe incident response and confirm who remains responsible for automa
 
 An incident is a suspected loss of confidentiality, access, control, or data. An AI coding agent is a tool that can read project files and request edits or commands. Automation is software that performs steps without a person typing each one. In the Euler example, Slurm is the scheduler and a job is a submitted program identified by a number. scancel stops that job, squeue shows active jobs, and sacct shows recorded job history. You are learning the response order here, not running these commands.
 
-- [Read the incident and help procedure](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md)
+- [Read the incident and help procedure](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md)
 
 **Expected:** You can explain the Euler example without needing to know Slurm syntax.
 
@@ -67,7 +67,7 @@ Do not enter real names, account identifiers, logs, credentials, job output, or 
 
 Stop the known harmful action without destroying evidence. For a runaway Euler job, record its job ID and cancel that job.
 
-- [Choose the correct private incident route](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md)
+- [Choose the correct private incident route](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md)
 
 **Expected:** The immediate harmful action has stopped.
 
@@ -81,7 +81,7 @@ Stop the known harmful action without destroying evidence. For a runaway Euler j
 
 Check the affected service directly. Examples include confirming a token is revoked or using squeue or sacct to confirm a job stopped.
 
-- [Choose the correct private incident route](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md)
+- [Choose the correct private incident route](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md)
 
 **Expected:** The service reports the contained state.
 
@@ -95,7 +95,7 @@ Check the affected service directly. Examples include confirming a token is revo
 
 For each fictional scenario, use the linked procedure to identify the private contact. Contact your supervisor or lab IT for lab projects, NAS, or research data. Contact ETH cyber incident support for stolen credentials, phishing, malware, or attacks. Contact ETH High-Performance Computing (HPC) support for Euler service or account problems that contain no confidential research content. Do not send a real report for a fictional scenario. Public Passport submissions and public help issues are never incident channels.
 
-- [Open the incident and help procedure](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md)
+- [Open the incident and help procedure](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md)
 
 **Expected:** You can name the correct private recipient for each fictional scenario without contacting that recipient.
 
@@ -143,14 +143,14 @@ If one scenario resembles a real current event, stop writing the assessment
 answer and select **This is a real incident**. The Passport leaves the exercise
 without collecting incident details and opens the private reporting choices in
 the incident guide. The
-[incident scenarios lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/incident-scenarios.md) provides
+[incident scenarios lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/incident-scenarios.md) provides
 additional safe examples.
 
 Useful references:
 
-- [Incidents And Help](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md)
-- [Incident Scenarios](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/incident-scenarios.md)
-- [Agents And Interfaces](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/agents-and-interfaces.md)
+- [Incidents And Help](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md)
+- [Incident Scenarios](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/incident-scenarios.md)
+- [Agents And Interfaces](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/agents-and-interfaces.md)
 
 ## Understand Before Accepting AI Output
 

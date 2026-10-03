@@ -126,15 +126,15 @@ feedback and can be retried without penalty.
 
 Do not create another ad hoc copy. Record the unresolved owner, classification,
 or storage decision and ask the supervisor. Use the
-[NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md) only after the assigned
+[NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md) only after the assigned
 supervisor folder is known.
 
 Useful references:
 
-- [Data Placement](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/data-placement.md)
-- [Data Steward](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/tracks/data-steward.md)
-- [NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md)
-- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/data-and-ai.md)
+- [Data Placement](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/data-placement.md)
+- [Data Steward](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/tracks/data-steward.md)
+- [NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md)
+- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/data-and-ai.md)
 
 ## Understand Before Accepting AI Output
 

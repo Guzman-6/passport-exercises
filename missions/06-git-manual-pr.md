@@ -2,75 +2,99 @@
 
 ## Outcome
 
-Make one small change in the practice project, inspect exactly what changed,
-save that version with Git, send it to GitHub, and open it for review.
+Prepare one small change your colleague can understand, and explain exactly
+which version reaches GitHub for review. Keep the shared `main` branch unchanged.
 
 ## Concept
 
-A Git change moves through a visible sequence. The working tree contains the files you are editing. A branch keeps the work separate. Staging selects the reviewed changes for one commit; the commit records them with an author and message. Pushing sends that branch to GitHub. A pull request, or PR, asks others to review the branch before it is merged.
+### What exactly will your colleague receive?
 
-A Conventional Commit is a commit message in `type(scope): summary` form. The type states the kind of change, the optional scope names the affected area, and the summary says what changed. Consistent messages make history easier to search and can support release notes and version tags later.
+You will add a reminder to a fictional project note, then open a draft
+PR that a colleague could review. You do not need to contact anyone.
+Follow the change through three places:
 
-Complete this sequence manually once before delegating it to an editor button or AI agent.
+- Your file: the working tree is the folder you edit. Staging selects the
+  saved content for the next commit.
+- Your history: a commit records that selection on your computer. Your
+  practice branch keeps it separate from `main`.
+- Your review page: pushing sends your commits to GitHub. A pull request
+  (PR) compares your branch with `main` for someone to review.
+
+Leave the PR in draft: it is not ready to merge. The Conventional Commit
+format is explained in step 7.
+
+## Learning Challenge
+
+<span id="step-terms"></span>
+
+### What will this commit contain?
+
+Imagine editing `meeting-note.md`. You add Monday, save, and stage the file.
+Then you add Room 204 and save again, without staging again.
+
+If you commit now, will it include Monday, Room 204, or both? Why?
+Think it through before opening the explanation. No answer to submit.
 
 ## Worked Example
 
-The personal practice PR contains only the intended file, a Conventional Commit, and an honest verification record.
+<details class="learning-explanation">
+<summary>See the three versions</summary>
 
-Check these points:
+| Where the version is | What it contains |
+| --- | --- |
+| Last commit | Original note |
+| Staging area: selected for the next commit | Original note + Monday |
+| Working tree: saved in your editor | Original note + Monday + Room 204 |
 
-- **Which PR do you create manually in this mission?** The personal practice PR shown by the mission.
-- **What must happen immediately before committing?** Inspect git diff --cached and confirm every staged change.
+The commit includes Monday, but not Room 204. Staging captures the saved
+content at that moment; saving again does not update the selection.
+To include the room, you would stage the newer version and review it.
+
+You will inspect two diffs: your edit, then the selection for the commit.
+Do not create `meeting-note.md`; it is only an example.
+
+</details>
+
+Optional: [another explanation of staging](https://www.w3schools.com/git/git_staging_environment.asp).
+Read just that page, then return here; you do not need its Next links or commands.
 
 ## Common Trap
 
-Using the background transport PR as the exercise, or staging every file with git add . before reviewing status.
+Select the named practice file, not every file with `git add .`.
+**Keep the PR in draft; do not merge it.** The Passport handles its
+background submission separately.
 
 ## Your Action
 
 Make one small manual change, review both diffs, create a Conventional Commit, push it, and open a draft pull request.
 
-**Follow these steps in order.** Do this mission without an AI agent. Use the exact practice folder and commands prepared by the Passport.
+**Follow these steps in order.** Work in the prepared practice folder, using the same terminal throughout. Leave the PR open in draft.
 
 **New to text commands?** A command is a line of text that tells a
 computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
-### 1. Learn the manual Git change path
-
-**Where:** This web page in your browser
-
-The working tree is the project folder you are editing. A diff shows changed lines. Staging selects reviewed changes for the next commit; a commit records that version with an author and message. Pushing sends the branch to GitHub. A pull request, or PR, asks for the branch to be reviewed before merging. A draft PR is visible but explicitly not ready to merge. Follow the order: edit, diff, stage, commit, push, pull request.
-
-- [Read the beginner Git workflow](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/git_workflow.md)
-
-**Expected:** You can name the order: edit, diff, stage, commit, push, pull request.
-
-**Continue when:** Open the prepared practice folder.
-
-**If not:** Do not use an editor button or AI agent to skip a step you cannot yet identify.
-
-### 2. Open the practice folder
+### 1. Open the practice folder
 
 **Where:** The laptop or desktop in front of you
 
-Press Prepare practice folder in this step. Run the displayed enter-folder command, then keep this terminal in that folder.
+Click Prepare practice folder. Run its enter-folder command in your terminal, then keep that terminal in this folder.
 
-**Expected:** The terminal is at the root of the practice repository.
+**Expected:** Your terminal is in the exact folder shown by preparation, on its practice branch.
 
-**Continue when:** Continue to the baseline inspection.
+**Continue when:** The prepared copy gives you a practice branch without changing another project. Read its task before choosing any file to edit.
 
-**If not:** Do not clone again; rerun the preparation or gh passport doctor.
+**If not:** Retry the preparation or run gh passport doctor. Do not create another clone.
 
-### 3. Inspect before editing
+### 2. Inspect before editing
 
 **Where:** The laptop or desktop in front of you
 
-Read workspace/manual_task/README.md and project-note.md. Confirm the branch is the practice branch and the working tree has no unexpected change.
+Run these commands to read the task and note. Stop if the branch differs from the prepared practice branch or unexpected edits appear.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -96,31 +120,31 @@ sed -n '1,160p' workspace/manual_task/README.md
 sed -n '1,160p' workspace/manual_task/project-note.md
 ```
 
-**Expected:** The practice branch is shown with no unexpected file below it.
+**Expected:** The branch starts with practice/. No modified file is listed. The task names project-note.md as the file to edit.
 
-**Continue when:** Open the practice folder in a plain-text code editor.
+**Continue when:** You know the starting version and the scope of the change. The task README is an instruction, not a file to modify.
 
-**If not:** Stop and understand every existing change before touching a file.
+**If not:** Stop if the branch is different or changes already exist. Inspect them before editing; do not reset the repository.
 
-### 4. Open the exact practice folder in an editor
+### 3. Open the same folder in your editor
 
 **Where:** The laptop or desktop in front of you
 
-Use a plain-text code editor you already trust. If you do not have one, install VS Code from the official link, open it, choose File > Open Folder, and select the exact practice-folder path shown by the Passport. Do not enable an AI agent for this mission.
+In VS Code, choose File > Open Folder and select the exact practice-folder path shown by the Passport. Open workspace/manual_task/project-note.md. Edit it yourself, without an AI agent.
 
 - [Download VS Code](https://code.visualstudio.com/download)
 
-**Expected:** The editor file tree contains workspace/manual_task/README.md and project-note.md from the practice folder.
+**Expected:** Your editor shows project-note.md inside the prepared practice folder.
 
-**Continue when:** Open project-note.md and make the requested edit.
+**Continue when:** Your editor and terminal point to the same practice folder, so the file you save is the file Git will inspect.
 
-**If not:** Return to the folder path shown by Prepare practice folder; do not open the handbook or a research repository instead.
+**If not:** Compare the editor folder with the preparation path. If needed, install VS Code using the download link. Do not edit the handbook or a research repository.
 
-### 5. Make the requested edit
+### 4. Write a reminder your colleague can use
 
 **Where:** The laptop or desktop in front of you
 
-Open workspace/manual_task/project-note.md in the editor file tree. Add the exact block shown below at the end of the file, then save it. Do not edit another file.
+In workspace/manual_task/project-note.md, add a ## Verification heading and one short sentence in your own words about reviewing the staged diff before publishing. Include the terms staged diff and review. Save only this file. Put the text in your editor, not the terminal.
 
 **Put this in the named Markdown file:**
 
@@ -130,17 +154,17 @@ Open workspace/manual_task/project-note.md in the editor file tree. Add the exac
 The staged diff must be reviewed before publishing.
 ```
 
-**Expected:** Only project-note.md contains the intended text change.
+**Expected:** The saved note has your heading and reminder. No other file has changed.
 
-**Continue when:** Inspect the unstaged diff.
+**Continue when:** Saving updates your working file. The next diff lets you decide whether these are the lines you want your colleague to receive.
 
-**If not:** Undo only the mistaken lines in your editor; do not reset the repository.
+**If not:** Correct only the mistaken lines in your editor. Do not reset or delete the practice folder.
 
-### 6. Review the unstaged diff
+### 5. Read your change as a reviewer
 
 **Where:** The laptop or desktop in front of you
 
-Check the changed path and read every added or removed line before staging.
+Read every added (+) and removed (-) line. Is this the change you intended? Fix anything unexpected in the editor before staging.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -163,17 +187,17 @@ git status --short
 git diff -- workspace/manual_task/project-note.md
 ```
 
-**Expected:** The diff contains one intended file and no credential or private information.
+**Expected:** Only workspace/manual_task/project-note.md is modified. Its diff shows your heading and reminder, without unrelated changes or private information.
 
-**Continue when:** Stage that exact file.
+**Continue when:** A diff compares two versions. Here, git diff compares your saved file with the staged version. Next, select only the named file.
 
-**If not:** Correct the file before staging anything.
+**If not:** Correct unexpected content before staging. If another file changed, understand why before continuing.
 
-### 7. Stage one file
+### 6. What will this commit contain?
 
 **Where:** The laptop or desktop in front of you
 
-Add only the reviewed project note, then check whitespace and inspect the staged diff.
+Run the block to stage the note, then read the staged diff. Confirm every line before committing. If you edit again, stage and review the newer version.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -199,17 +223,17 @@ git diff --cached --check
 git diff --cached
 ```
 
-**Expected:** The staged diff contains only the reviewed note and the whitespace check is silent.
+**Expected:** The staged diff contains only the intended note change. The whitespace check prints nothing when it passes.
 
-**Continue when:** Create the commit.
+**Continue when:** git add selects the current saved content. git diff --cached compares that selection with the last commit; --check checks whitespace. The selection is what your next commit will record.
 
-**If not:** Use git restore --staged on the unintended path, correct it, and review again.
+**If not:** For an unintended staged path, use git restore --staged on that path to keep the edit but remove it from the selection. Correct and review again.
 
-### 8. Create a Conventional Commit
+### 7. Record the version you chose
 
 **Where:** The laptop or desktop in front of you
 
-Use the exact commit command prepared by the Passport. This is a Conventional Commit: a consistent message in type(scope): concise summary form. The type states the kind of change, the optional scope names the affected area, and the summary says what changed.
+Will your colleague see this new commit on GitHub? Think about that, then run the command.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -229,29 +253,29 @@ git commit -m "docs(practice): explain staged diff review"
 git commit -m "docs(practice): explain staged diff review"
 ```
 
-**Expected:** Git creates one commit with the shown subject.
+**Expected:** Git prints a new commit with the subject docs(practice): explain staged diff review.
 
-**Continue when:** Push the current practice branch.
+**Continue when:** The commit is recorded on your computer. It reaches GitHub when you push. The Conventional Commit format is type(scope): summary: docs means documentation, practice names the area, and the summary describes the change.
 
-**If not:** Read the first Git error; do not use force or skip hooks.
+**If not:** Read the first Git error and ask for help if needed. Do not force the operation or skip hooks.
 
-### 9. Push and open a draft pull request
-
-**Where:** The laptop or desktop in front of you
-
-Run the exact push and gh pr create commands displayed by Prepare practice folder. Keep the pull request in draft and do not merge it.
-
-**Expected:** GitHub shows one open draft pull request from your practice branch to main.
-
-**Continue when:** Open the PR and inspect Files changed.
-
-**If not:** Do not create a second PR; inspect the branch and existing PR with gh pr status.
-
-### 10. Review what GitHub received
+### 8. Push and open a draft pull request
 
 **Where:** The laptop or desktop in front of you
 
-Run both commands below from the practice folder. The first checks that the draft PR exists. The second opens it. Your local Passport fills in your fork and practice branch automatically. Do not run gh repo set-default. On GitHub, confirm the author, source branch, target branch, commit subject, and single changed file. Leave the PR open.
+Which command shares your commit, and which asks for review? Run the prepared git push command, then its gh pr create command, one at a time. Keep --draft. Leave the PR open in draft; do not merge it.
+
+**Expected:** One open draft PR proposes your practice branch to main. Opening it has not merged your change into main.
+
+**Continue when:** Pushing sends your commits to your GitHub branch. A PR compares that branch with main for review. Opening it does not change main.
+
+**If not:** If a PR already exists, inspect it with gh pr status. Do not create a second one or force-push.
+
+### 9. Review what GitHub received
+
+**Where:** The laptop or desktop in front of you
+
+Run both commands to open your PR; the local Passport fills in your fork and branch. Do not run gh repo set-default. In Files changed, check that the reminder makes sense and the diff matches your reviewed edit.
 
 **Open PowerShell on your Windows computer, then run:**
 
@@ -274,33 +298,69 @@ gh pr status --repo {{fork_repository}}
 gh pr view {{practice_branch}} --repo {{fork_repository}} --web
 ```
 
-**Expected:** The GitHub diff matches the staged diff you reviewed locally.
+**Expected:** You are the author; your practice branch targets main. Only project-note.md changed, with your reviewed reminder and commit subject. Leave the PR open in draft; do not merge it.
 
-**Continue when:** Return to the Passport and run Check my work.
+**Continue when:** Compare your saved note, recorded commit and PR diff: they should show the same reminder. You can now use Check my work, then Submit lesson.
 
-**If not:** If no PR is listed, return to Push and open a draft pull request. Otherwise correct the same branch and push again. Do not configure a default repository, create a second PR, merge, or delete the existing PR.
+**If not:** If no PR appears, return to Push and open a draft pull request. Otherwise correct the same branch and push again. Do not configure a default repository, create a second PR, merge, or delete the existing PR.
 
 The Passport presents the questions and required confirmation in the
 browser. Do not create or edit a submission JSON file by hand.
 
 ## Check Your Work
 
-Use **Check my work** before submitting. This check runs on your computer and
-checks only the practical work in this lesson. A score of 80% is required, and every
-safety-critical question must be correct. Failed attempts provide targeted
-feedback and can be retried without penalty.
+Try the two practice situations, then answer the two lesson questions.
+Review the fictional file you will submit,
+and confirm the results you personally observed. **Check my work** verifies
+the practice branch, the bounded change, the commit and the draft PR. Passing
+this check enables **Submit lesson**. Completion is recorded only when the
+automatic GitHub check passes. Both lesson answers and every required check
+must pass; you can retry with feedback.
+
+## Learning Check
+
+### Practise
+
+Try an answer before opening the explanation. These questions are for
+practice; they do not affect your progress.
+
+1. You staged your note, then saved one more correction. You want that correction in the next commit. What should you do before committing?
+
+   - Commit now; saving includes the correction.
+   - Stage the note again, then review the staged diff.
+   - Push the branch to include the saved correction.
+
+<details class="learning-explanation">
+<summary>See an explanation</summary>
+
+Stage the note again to select the newer saved version, then review git diff --cached. Saving alone does not update the selection; pushing sends existing commits to GitHub.
+
+</details>
+
+2. You commit a fix on your practice branch but have not pushed. Your colleague looks for that commit on GitHub. What must happen before they can see it there?
+
+   - Open a draft PR so GitHub uploads the local commit.
+   - Make another local commit to update the GitHub copy.
+   - Push the practice branch so GitHub receives the commit.
+
+<details class="learning-explanation">
+<summary>See an explanation</summary>
+
+Committing records the change on your computer; pushing sends it to GitHub. A draft PR gives your colleague a review page for a pushed branch. Neither action merges it into main.
+
+</details>
 
 ## If Blocked
 
 Do not use `git reset --hard`, broad deletion, or force push as a first repair.
 Preserve `git status`, the current branch, and the diff, then use the
-[first safe PR lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/first-safe-pr.md) recovery section or ask
+[first safe PR lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/first-safe-pr.md) recovery section or ask
 for help through the non-secret dashboard issue form.
 
 Useful references:
 
-- [First Safe Pr](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/first-safe-pr.md)
-- [Git workflow](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/git_workflow.md)
+- [First Safe Pr](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/first-safe-pr.md)
+- [Git workflow](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/git_workflow.md)
 
 ## Understand Before Accepting AI Output
 

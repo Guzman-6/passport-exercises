@@ -180,7 +180,7 @@
               ],
               "expected": "The diff is limited to the four requested policy corrections.",
               "id": "inspect-diff",
-              "instruction": "Check that the plan makes P: durable, D: temporary, C: unsuitable for project data, and Euler or approved compute the place for heavy work.",
+              "instruction": "Check that the plan makes P: durable, D: temporary, C: unsuitable for project data, and Euler or approved compute the place for heavy work. Write each policy correction as its own sentence or bullet, connecting the location with its role. Keep the compute task and its destination together; their order does not matter. Remove contradictory claims left from the unsafe plan.",
               "links": [],
               "machine": "local",
               "on_failure": "Correct the one allowed file manually or start a new chat with the missing constraint stated explicitly.",
@@ -197,7 +197,7 @@
               "instruction": "Return to this page and press Check my work. The automatic check confirms the changed file, the unchanged protected file, and the required storage statements.",
               "links": [],
               "machine": "browser",
-              "on_failure": "Use the named failed check; do not submit an agent transcript or claim.",
+              "on_failure": "Read the named check and its recovery message. Review that statement and any contradictory claim in storage-plan.md, then check again. Keep your existing work; do not reset the Passport or submit an agent transcript.",
               "on_success": "Submit the mission once.",
               "platforms": [
                 "all"
@@ -2645,12 +2645,12 @@
                   "shell": "powershell"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'echo password-login-ok'\n)",
+                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'echo password-login-ok'\n)",
                   "platform": "macos",
                   "shell": "zsh"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'echo password-login-ok'\n)",
+                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'echo password-login-ok'\n)",
                   "platform": "linux",
                   "shell": "bash"
                 }
@@ -2710,12 +2710,12 @@
                   "shell": "powershell"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n\nresolved=\"$(ssh -G euler 2>/dev/null)\" || {\n  printf 'STOP: existing SSH config is invalid\\n' >&2\n  exit 1\n}\nresolved_host=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"hostname\" { print $2; exit }')\"\nresolved_user=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"user\" { print $2; exit }')\"\nif [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n  if printf '%s\\n' \"$resolved\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: the existing euler alias points IdentityFile at a .pub file\\n' >&2\n    exit 1\n  fi\n  if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'echo existing-alias-ok'; then\n    exit 0\n  fi\nfi\n\nkey=\"$HOME/.ssh/id_ed25519_euler\"\nprivate_exists=0; public_exists=0\n[ -f \"$key\" ] && private_exists=1\n[ -f \"$key.pub\" ] && public_exists=1\nif [ \"$private_exists\" -ne \"$public_exists\" ]; then\n  printf 'STOP: the standard key pair is incomplete; do not overwrite either file\\n' >&2\n  exit 1\nfi\nif [ \"$private_exists\" -eq 0 ]; then\n  printf 'no-standard-key\\n'\n  exit 0\nfi\nssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo standard-key-ok'\n)",
+                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n\nresolved=\"$(ssh -G euler 2>/dev/null)\" || {\n  printf 'STOP: existing SSH config is invalid\\n' >&2\n  exit 1\n}\nresolved_host=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"hostname\" { print $2; exit }')\"\nresolved_user=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"user\" { print $2; exit }')\"\nif [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n  if printf '%s\\n' \"$resolved\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: the existing euler alias points IdentityFile at a .pub file\\n' >&2\n    exit 1\n  fi\n  if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'echo existing-alias-ok'; then\n    exit 0\n  fi\nfi\n\nkey=\"$HOME/.ssh/id_ed25519_euler\"\nprivate_exists=0; public_exists=0\n[ -f \"$key\" ] && private_exists=1\n[ -f \"$key.pub\" ] && public_exists=1\nif [ \"$private_exists\" -ne \"$public_exists\" ]; then\n  printf 'STOP: the standard key pair is incomplete; do not overwrite either file\\n' >&2\n  exit 1\nfi\nif [ \"$private_exists\" -eq 0 ]; then\n  printf 'no-standard-key\\n'\n  exit 0\nfi\nssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo standard-key-ok'\n)",
                   "platform": "macos",
                   "shell": "zsh"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n\nresolved=\"$(ssh -G euler 2>/dev/null)\" || {\n  printf 'STOP: existing SSH config is invalid\\n' >&2\n  exit 1\n}\nresolved_host=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"hostname\" { print $2; exit }')\"\nresolved_user=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"user\" { print $2; exit }')\"\nif [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n  if printf '%s\\n' \"$resolved\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: the existing euler alias points IdentityFile at a .pub file\\n' >&2\n    exit 1\n  fi\n  if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'echo existing-alias-ok'; then\n    exit 0\n  fi\nfi\n\nkey=\"$HOME/.ssh/id_ed25519_euler\"\nprivate_exists=0; public_exists=0\n[ -f \"$key\" ] && private_exists=1\n[ -f \"$key.pub\" ] && public_exists=1\nif [ \"$private_exists\" -ne \"$public_exists\" ]; then\n  printf 'STOP: the standard key pair is incomplete; do not overwrite either file\\n' >&2\n  exit 1\nfi\nif [ \"$private_exists\" -eq 0 ]; then\n  printf 'no-standard-key\\n'\n  exit 0\nfi\nssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo standard-key-ok'\n)",
+                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n\nresolved=\"$(ssh -G euler 2>/dev/null)\" || {\n  printf 'STOP: existing SSH config is invalid\\n' >&2\n  exit 1\n}\nresolved_host=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"hostname\" { print $2; exit }')\"\nresolved_user=\"$(printf '%s\\n' \"$resolved\" | awk '$1 == \"user\" { print $2; exit }')\"\nif [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n  if printf '%s\\n' \"$resolved\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: the existing euler alias points IdentityFile at a .pub file\\n' >&2\n    exit 1\n  fi\n  if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'echo existing-alias-ok'; then\n    exit 0\n  fi\nfi\n\nkey=\"$HOME/.ssh/id_ed25519_euler\"\nprivate_exists=0; public_exists=0\n[ -f \"$key\" ] && private_exists=1\n[ -f \"$key.pub\" ] && public_exists=1\nif [ \"$private_exists\" -ne \"$public_exists\" ]; then\n  printf 'STOP: the standard key pair is incomplete; do not overwrite either file\\n' >&2\n  exit 1\nfi\nif [ \"$private_exists\" -eq 0 ]; then\n  printf 'no-standard-key\\n'\n  exit 0\nfi\nssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo standard-key-ok'\n)",
                   "platform": "linux",
                   "shell": "bash"
                 }
@@ -2800,27 +2800,32 @@
             {
               "commands": [
                 {
-                  "command": "& {\n  $EulerUser = Read-Host \"Short ETH username used in the password test\"\n  if ($EulerUser -notmatch \"^[A-Za-z0-9._-]+$\") { throw \"STOP: invalid ETH username\" }\n  $PublicKey = Join-Path $env:USERPROFILE \".ssh\\id_ed25519_euler.pub\"\n  if (-not (Test-Path -LiteralPath $PublicKey)) { throw \"STOP: public key is missing\" }\n  Get-Content -LiteralPath $PublicKey | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$EulerUser@euler.ethz.ch\" 'umask 077; mkdir -p ~/.ssh; chmod 700 ~/.ssh; touch ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys; key=\"$(tr -d \"\\r\")\"; grep -Fqx \"$key\" ~/.ssh/authorized_keys || printf \"%s\\n\" \"$key\" >> ~/.ssh/authorized_keys; printf \"public-key-installed\\n\"'\n}",
+                  "command": "& {\n  $ErrorActionPreference = \"Stop\"\n  $EulerUser = Read-Host \"Short ETH username used in the password test\"\n  if ($EulerUser -notmatch \"^[A-Za-z0-9._-]+$\") { throw \"STOP: invalid ETH username\" }\n  $PublicKey = Join-Path $env:USERPROFILE \".ssh\\id_ed25519_euler.pub\"\n  if (-not (Test-Path -LiteralPath $PublicKey -PathType Leaf)) { throw \"STOP: public key is missing\" }\n  $KeyText = (Get-Content -LiteralPath $PublicKey -Raw -Encoding UTF8).Trim()\n  if ($KeyText -notmatch '^ssh-ed25519 [A-Za-z0-9+/]+={0,2}(?: [^\\r\\n]*)?$') { throw \"STOP: expected one Ed25519 public-key line; keep the files and request help\" }\n  $KeyData = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($KeyText))\n  $Script = @'\nset -eu\nkey=$(printf %s __PUBLIC_KEY_DATA__ | base64 -d)\numask 077\nmkdir -p ~/.ssh\nchmod 700 ~/.ssh\ntouch ~/.ssh/authorized_keys\nchmod 600 ~/.ssh/authorized_keys\nif grep -Fqx -- \"$key\" ~/.ssh/authorized_keys; then\n  :\nelse\n  status=$?\n  [ \"$status\" -eq 1 ] || exit \"$status\"\n  printf \"\\n%s\\n\" \"$key\" >> ~/.ssh/authorized_keys\nfi\ngrep -Fqx -- \"$key\" ~/.ssh/authorized_keys\nprintf \"public-key-installed\\n\"\n'@\n  $Script = $Script.Replace('__PUBLIC_KEY_DATA__', $KeyData).Replace(\"`r\", \"\")\n  $ScriptData = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Script + \"`n\"))\n  $ScriptData | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$EulerUser@euler.ethz.ch\" \"bash -o pipefail -c 'base64 -d | sh'\"\n  if ($LASTEXITCODE -ne 0) { throw \"STOP: public-key installation failed; keep both key files and request help with the error\" }\n}",
                   "platform": "windows",
                   "shell": "powershell"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username used in the password test: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\npublic_key=\"$HOME/.ssh/id_ed25519_euler.pub\"\ntest -f \"$public_key\" || { printf 'STOP: public key is missing\\n' >&2; exit 1; }\ncat \"$public_key\" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'umask 077; mkdir -p ~/.ssh; chmod 700 ~/.ssh; touch ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys; key=\"$(tr -d \"\\r\")\"; grep -Fqx \"$key\" ~/.ssh/authorized_keys || printf \"%s\\n\" \"$key\" >> ~/.ssh/authorized_keys; printf \"public-key-installed\\n\"'\n)",
+                  "command": "(\nprintf 'Short ETH username used in the password test: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\npublic_key=\"$HOME/.ssh/id_ed25519_euler.pub\"\ntest -f \"$public_key\" || { printf 'STOP: public key is missing\\n' >&2; exit 1; }\ncat \"$public_key\" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'set -eu\nkey=\"$(tr -d \"\\r\")\"\n[ -n \"$key\" ] || { printf \"STOP: empty public key\\n\" >&2; exit 1; }\numask 077\nmkdir -p ~/.ssh\nchmod 700 ~/.ssh\ntouch ~/.ssh/authorized_keys\nchmod 600 ~/.ssh/authorized_keys\nif grep -Fqx -- \"$key\" ~/.ssh/authorized_keys; then\n  :\nelse\n  status=$?\n  [ \"$status\" -eq 1 ] || exit \"$status\"\n  printf \"\\n%s\\n\" \"$key\" >> ~/.ssh/authorized_keys\nfi\ngrep -Fqx -- \"$key\" ~/.ssh/authorized_keys\nprintf \"public-key-installed\\n\"'\n)",
                   "platform": "macos",
                   "shell": "zsh"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username used in the password test: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\npublic_key=\"$HOME/.ssh/id_ed25519_euler.pub\"\ntest -f \"$public_key\" || { printf 'STOP: public key is missing\\n' >&2; exit 1; }\ncat \"$public_key\" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'umask 077; mkdir -p ~/.ssh; chmod 700 ~/.ssh; touch ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys; key=\"$(tr -d \"\\r\")\"; grep -Fqx \"$key\" ~/.ssh/authorized_keys || printf \"%s\\n\" \"$key\" >> ~/.ssh/authorized_keys; printf \"public-key-installed\\n\"'\n)",
+                  "command": "(\nprintf 'Short ETH username used in the password test: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\npublic_key=\"$HOME/.ssh/id_ed25519_euler.pub\"\ntest -f \"$public_key\" || { printf 'STOP: public key is missing\\n' >&2; exit 1; }\ncat \"$public_key\" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password \"$eth_user@euler.ethz.ch\" 'set -eu\nkey=\"$(tr -d \"\\r\")\"\n[ -n \"$key\" ] || { printf \"STOP: empty public key\\n\" >&2; exit 1; }\numask 077\nmkdir -p ~/.ssh\nchmod 700 ~/.ssh\ntouch ~/.ssh/authorized_keys\nchmod 600 ~/.ssh/authorized_keys\nif grep -Fqx -- \"$key\" ~/.ssh/authorized_keys; then\n  :\nelse\n  status=$?\n  [ \"$status\" -eq 1 ] || exit \"$status\"\n  printf \"\\n%s\\n\" \"$key\" >> ~/.ssh/authorized_keys\nfi\ngrep -Fqx -- \"$key\" ~/.ssh/authorized_keys\nprintf \"public-key-installed\\n\"'\n)",
                   "platform": "linux",
                   "shell": "bash"
                 }
               ],
-              "expected": "After the ETH password, Euler prints public-key-installed and no SSH or permission error.",
+              "expected": "After the ETH password, Euler prints public-key-installed with no error. This confirms the exact public-key line is present; the next key-only test must still pass.",
               "id": "install-public",
-              "instruction": "Send only the contents of id_ed25519_euler.pub through the working password login. Euler stores accepted public keys in a file named authorized_keys. The remote command removes a possible Windows carriage return, preserves all existing entries, and avoids adding a duplicate exact line.",
-              "links": [],
+              "instruction": "Run this on your own computer, not inside an Euler session. Send only id_ed25519_euler.pub through the working password login. Spaces in your Windows profile or key comment are supported; do not rename your profile or move your keys. The command preserves existing authorized_keys entries and avoids adding a duplicate exact line.",
+              "links": [
+                {
+                  "label": "Recover a failed Windows public-key installation",
+                  "url": "../../../docs/reference/euler/troubleshooting.md#windows-public-key-installation-reports-grep-errors"
+                }
+              ],
               "machine": "local",
-              "on_failure": "Do not edit authorized_keys manually; diagnose the reported login or permission error.",
+              "on_failure": "Stop at any error, even if an older command printed public-key-installed. Keep both key files. For grep errors or public-key-installedn from the older Windows command, follow the linked recovery guide; do not delete authorized_keys or regenerate keys.",
               "on_success": "Run the direct key-only test.",
               "platforms": [
                 "all"
@@ -2835,12 +2840,12 @@
                   "shell": "powershell"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -i \"$HOME/.ssh/id_ed25519_euler\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo key-ok'\n)",
+                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -i \"$HOME/.ssh/id_ed25519_euler\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo key-ok'\n)",
                   "platform": "macos",
                   "shell": "zsh"
                 },
                 {
-                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -i \"$HOME/.ssh/id_ed25519_euler\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo key-ok'\n)",
+                  "command": "(\nprintf 'Short ETH username: '; read -r eth_user\ncase \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\nssh -F none -i \"$HOME/.ssh/id_ed25519_euler\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'echo key-ok'\n)",
                   "platform": "linux",
                   "shell": "bash"
                 }
@@ -2865,12 +2870,12 @@
                   "shell": "powershell"
                 },
                 {
-                  "command": "(\n  set -eu\n  printf 'Short ETH username: '; read -r eth_user\n  case \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n  ssh_dir=\"$HOME/.ssh\"; config=\"$ssh_dir/config\"; include_dir=\"$ssh_dir/passport.d\"; backup_dir=\"$ssh_dir/passport-backups\"; euler_config=\"$include_dir/euler.conf\"; key=\"$ssh_dir/id_ed25519_euler\"\n  [ ! -L \"$config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$config\" >&2; exit 1; }\n  [ ! -L \"$euler_config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$euler_config\" >&2; exit 1; }\n  config_existed=0; euler_config_existed=0\n  if [ -e \"$config\" ]; then [ -f \"$config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$config\" >&2; exit 1; }; config_existed=1; fi\n  if [ -e \"$euler_config\" ]; then [ -f \"$euler_config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$euler_config\" >&2; exit 1; }; euler_config_existed=1; fi\n\n  resolved_before=\"$(ssh -G euler 2>/dev/null)\" || {\n    printf 'STOP: existing SSH config is invalid; no file was changed\\n' >&2\n    exit 1\n  }\n  resolved_host=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"hostname\" { print $2; exit }')\"\n  resolved_user=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"user\" { print $2; exit }')\"\n  if printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: existing IdentityFile points at a .pub file\\n' >&2\n    exit 1\n  fi\n\n  use_existing=0\n  if [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n    if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'exit 0'; then\n      use_existing=1\n    fi\n  fi\n\n  private_exists=0; public_exists=0\n  [ -f \"$key\" ] && private_exists=1\n  [ -f \"$key.pub\" ] && public_exists=1\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -ne \"$public_exists\" ]; then printf 'STOP: standard key pair is incomplete\\n' >&2; exit 1; fi\n  standard_key_works=0\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -eq 1 ]; then\n    if ssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'exit 0'; then\n      standard_key_works=1\n    fi\n  fi\n  if [ \"$use_existing\" -eq 0 ] && [ \"$standard_key_works\" -eq 0 ]; then\n    printf 'STOP: no tested key-only identity is available\\n' >&2\n    exit 1\n  fi\n\n  mkdir -p \"$include_dir\" \"$backup_dir\" && chmod 700 \"$ssh_dir\" \"$include_dir\" \"$backup_dir\"\n  stamp=\"$(date +%Y%m%d-%H%M%S)-$$\"\n  config_backup=\"$backup_dir/config.$stamp\"\n  euler_config_backup=\"$backup_dir/euler.conf.$stamp\"\n  [ \"$config_existed\" -eq 0 ] || cp -p \"$config\" \"$config_backup\"\n  [ \"$euler_config_existed\" -eq 0 ] || cp -p \"$euler_config\" \"$euler_config_backup\"\n\n  restore_originals() {\n    restore_status=0\n    if [ \"$config_existed\" -eq 1 ]; then cp -p \"$config_backup\" \"$config\" || restore_status=1; else rm -f \"$config\" || restore_status=1; fi\n    if [ \"$euler_config_existed\" -eq 1 ]; then cp -p \"$euler_config_backup\" \"$euler_config\" || restore_status=1; else rm -f \"$euler_config\" || restore_status=1; fi\n    return \"$restore_status\"\n  }\n\n  euler_temporary=\"$euler_config.passport-new\"\n  {\n    printf 'Host euler\\n  HostName euler.ethz.ch\\n  User %s\\n' \"$eth_user\"\n    if [ \"$use_existing\" -eq 1 ]; then\n      identity_count=0\n      while IFS= read -r identity; do\n        [ -n \"$identity\" ] || continue\n        case \"$identity\" in *'\"'*) printf 'STOP: unsupported quote in resolved identity path\\n' >&2; exit 1;; esac\n        printf '  IdentityFile \"%s\"\\n' \"$identity\"\n        identity_count=$((identity_count + 1))\n      done <<EOF\n$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" { $1=\"\"; sub(/^[[:space:]]+/, \"\"); print }')\nEOF\n      [ \"$identity_count\" -gt 0 ] || { printf 'STOP: working alias has no inspectable identity selection\\n' >&2; exit 1; }\n      identities_only=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identitiesonly\" { print $2; exit }')\"\n      case \"$identities_only\" in yes|no) ;; *) printf 'STOP: invalid resolved IdentitiesOnly value\\n' >&2; exit 1;; esac\n      printf '  IdentitiesOnly %s\\n' \"$identities_only\"\n    else\n      printf '  IdentityFile ~/.ssh/id_ed25519_euler\\n  IdentitiesOnly yes\\n'\n    fi\n    printf '  Port 22\\n  ProxyCommand none\\n  ProxyJump none\\n  PreferredAuthentications publickey\\n  PasswordAuthentication no\\n  KbdInteractiveAuthentication no\\n  ForwardAgent no\\n'\n  } > \"$euler_temporary\"\n  chmod 600 \"$euler_temporary\"\n  ssh -F \"$euler_temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\"\n    printf 'STOP: generated Euler block is invalid\\n' >&2\n    exit 1\n  }\n\n  include='Include ~/.ssh/passport.d/*.conf'; temporary=\"$config.passport-new\"\n  if [ -f \"$config\" ]; then\n    awk -v include=\"$include\" 'BEGIN { print include } /^[[:space:]]*Include[[:space:]]+(~\\/[.]ssh\\/)?passport[.]d\\/[*]([.]conf)?[[:space:]]*$/ { next } { print }' \"$config\" > \"$temporary\"\n  else\n    printf '%s\\n' \"$include\" > \"$temporary\"\n  fi\n  chmod 600 \"$temporary\"\n  ssh -F \"$temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\" \"$temporary\"\n    printf 'STOP: generated SSH config is invalid; the original files are unchanged\\n' >&2\n    exit 1\n  }\n\n  if ! mv \"$euler_temporary\" \"$euler_config\" || ! mv \"$temporary\" \"$config\" || ! ssh -G euler >/dev/null; then\n    rm -f \"$euler_temporary\" \"$temporary\"\n    if restore_originals; then\n      printf 'STOP: install failed; the original SSH files were restored automatically\\n' >&2\n    else\n      printf 'STOP: install failed and automatic restore was incomplete. Restore only config.%s and euler.conf.%s from %s\\n' \"$stamp\" \"$stamp\" \"$backup_dir\" >&2\n    fi\n    exit 1\n  fi\n)",
+                  "command": "(\n  set -eu\n  printf 'Short ETH username: '; read -r eth_user\n  case \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n  ssh_dir=\"$HOME/.ssh\"; config=\"$ssh_dir/config\"; include_dir=\"$ssh_dir/passport.d\"; backup_dir=\"$ssh_dir/passport-backups\"; euler_config=\"$include_dir/euler.conf\"; key=\"$ssh_dir/id_ed25519_euler\"\n  [ ! -L \"$config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$config\" >&2; exit 1; }\n  [ ! -L \"$euler_config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$euler_config\" >&2; exit 1; }\n  config_existed=0; euler_config_existed=0\n  if [ -e \"$config\" ]; then [ -f \"$config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$config\" >&2; exit 1; }; config_existed=1; fi\n  if [ -e \"$euler_config\" ]; then [ -f \"$euler_config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$euler_config\" >&2; exit 1; }; euler_config_existed=1; fi\n\n  resolved_before=\"$(ssh -G euler 2>/dev/null)\" || {\n    printf 'STOP: existing SSH config is invalid; no file was changed\\n' >&2\n    exit 1\n  }\n  resolved_host=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"hostname\" { print $2; exit }')\"\n  resolved_user=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"user\" { print $2; exit }')\"\n  if printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: existing IdentityFile points at a .pub file\\n' >&2\n    exit 1\n  fi\n\n  use_existing=0\n  if [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n    if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'exit 0'; then\n      use_existing=1\n    fi\n  fi\n\n  private_exists=0; public_exists=0\n  [ -f \"$key\" ] && private_exists=1\n  [ -f \"$key.pub\" ] && public_exists=1\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -ne \"$public_exists\" ]; then printf 'STOP: standard key pair is incomplete\\n' >&2; exit 1; fi\n  standard_key_works=0\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -eq 1 ]; then\n    if ssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'exit 0'; then\n      standard_key_works=1\n    fi\n  fi\n  if [ \"$use_existing\" -eq 0 ] && [ \"$standard_key_works\" -eq 0 ]; then\n    printf 'STOP: no tested key-only identity is available\\n' >&2\n    exit 1\n  fi\n\n  mkdir -p \"$include_dir\" \"$backup_dir\" && chmod 700 \"$ssh_dir\" \"$include_dir\" \"$backup_dir\"\n  stamp=\"$(date +%Y%m%d-%H%M%S)-$$\"\n  config_backup=\"$backup_dir/config.$stamp\"\n  euler_config_backup=\"$backup_dir/euler.conf.$stamp\"\n  [ \"$config_existed\" -eq 0 ] || cp -p \"$config\" \"$config_backup\"\n  [ \"$euler_config_existed\" -eq 0 ] || cp -p \"$euler_config\" \"$euler_config_backup\"\n\n  restore_originals() {\n    restore_status=0\n    if [ \"$config_existed\" -eq 1 ]; then cp -p \"$config_backup\" \"$config\" || restore_status=1; else rm -f \"$config\" || restore_status=1; fi\n    if [ \"$euler_config_existed\" -eq 1 ]; then cp -p \"$euler_config_backup\" \"$euler_config\" || restore_status=1; else rm -f \"$euler_config\" || restore_status=1; fi\n    return \"$restore_status\"\n  }\n\n  euler_temporary=\"$euler_config.passport-new\"\n  {\n    printf 'Host euler\\n  HostName euler.ethz.ch\\n  User %s\\n' \"$eth_user\"\n    if [ \"$use_existing\" -eq 1 ]; then\n      identity_count=0\n      while IFS= read -r identity; do\n        [ -n \"$identity\" ] || continue\n        case \"$identity\" in *'\"'*) printf 'STOP: unsupported quote in resolved identity path\\n' >&2; exit 1;; esac\n        printf '  IdentityFile \"%s\"\\n' \"$identity\"\n        identity_count=$((identity_count + 1))\n      done <<EOF\n$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" { $1=\"\"; sub(/^[[:space:]]+/, \"\"); print }')\nEOF\n      [ \"$identity_count\" -gt 0 ] || { printf 'STOP: working alias has no inspectable identity selection\\n' >&2; exit 1; }\n      identities_only=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identitiesonly\" { print $2; exit }')\"\n      case \"$identities_only\" in yes|no) ;; *) printf 'STOP: invalid resolved IdentitiesOnly value\\n' >&2; exit 1;; esac\n      printf '  IdentitiesOnly %s\\n' \"$identities_only\"\n    else\n      printf '  IdentityFile ~/.ssh/id_ed25519_euler\\n  IdentitiesOnly yes\\n'\n    fi\n    printf '  Port 22\\n  ProxyCommand none\\n  ProxyJump none\\n  PreferredAuthentications publickey\\n  PasswordAuthentication no\\n  KbdInteractiveAuthentication no\\n  ForwardAgent no\\n'\n  } > \"$euler_temporary\"\n  chmod 600 \"$euler_temporary\"\n  ssh -F \"$euler_temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\"\n    printf 'STOP: generated Euler block is invalid\\n' >&2\n    exit 1\n  }\n\n  include='Include ~/.ssh/passport.d/*.conf'; temporary=\"$config.passport-new\"\n  if [ -f \"$config\" ]; then\n    awk -v include=\"$include\" 'BEGIN { print include } /^[[:space:]]*Include[[:space:]]+(~\\/[.]ssh\\/)?passport[.]d\\/[*]([.]conf)?[[:space:]]*$/ { next } { print }' \"$config\" > \"$temporary\"\n  else\n    printf '%s\\n' \"$include\" > \"$temporary\"\n  fi\n  chmod 600 \"$temporary\"\n  ssh -F \"$temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\" \"$temporary\"\n    printf 'STOP: generated SSH config is invalid; the original files are unchanged\\n' >&2\n    exit 1\n  }\n\n  if ! mv \"$euler_temporary\" \"$euler_config\" || ! mv \"$temporary\" \"$config\" || ! ssh -G euler >/dev/null; then\n    rm -f \"$euler_temporary\" \"$temporary\"\n    if restore_originals; then\n      printf 'STOP: install failed; the original SSH files were restored automatically\\n' >&2\n    else\n      printf 'STOP: install failed and automatic restore was incomplete. Restore only config.%s and euler.conf.%s from %s\\n' \"$stamp\" \"$stamp\" \"$backup_dir\" >&2\n    fi\n    exit 1\n  fi\n)",
                   "platform": "macos",
                   "shell": "zsh"
                 },
                 {
-                  "command": "(\n  set -eu\n  printf 'Short ETH username: '; read -r eth_user\n  case \"$eth_user\" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n  ssh_dir=\"$HOME/.ssh\"; config=\"$ssh_dir/config\"; include_dir=\"$ssh_dir/passport.d\"; backup_dir=\"$ssh_dir/passport-backups\"; euler_config=\"$include_dir/euler.conf\"; key=\"$ssh_dir/id_ed25519_euler\"\n  [ ! -L \"$config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$config\" >&2; exit 1; }\n  [ ! -L \"$euler_config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$euler_config\" >&2; exit 1; }\n  config_existed=0; euler_config_existed=0\n  if [ -e \"$config\" ]; then [ -f \"$config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$config\" >&2; exit 1; }; config_existed=1; fi\n  if [ -e \"$euler_config\" ]; then [ -f \"$euler_config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$euler_config\" >&2; exit 1; }; euler_config_existed=1; fi\n\n  resolved_before=\"$(ssh -G euler 2>/dev/null)\" || {\n    printf 'STOP: existing SSH config is invalid; no file was changed\\n' >&2\n    exit 1\n  }\n  resolved_host=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"hostname\" { print $2; exit }')\"\n  resolved_user=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"user\" { print $2; exit }')\"\n  if printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: existing IdentityFile points at a .pub file\\n' >&2\n    exit 1\n  fi\n\n  use_existing=0\n  if [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n    if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'exit 0'; then\n      use_existing=1\n    fi\n  fi\n\n  private_exists=0; public_exists=0\n  [ -f \"$key\" ] && private_exists=1\n  [ -f \"$key.pub\" ] && public_exists=1\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -ne \"$public_exists\" ]; then printf 'STOP: standard key pair is incomplete\\n' >&2; exit 1; fi\n  standard_key_works=0\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -eq 1 ]; then\n    if ssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'exit 0'; then\n      standard_key_works=1\n    fi\n  fi\n  if [ \"$use_existing\" -eq 0 ] && [ \"$standard_key_works\" -eq 0 ]; then\n    printf 'STOP: no tested key-only identity is available\\n' >&2\n    exit 1\n  fi\n\n  mkdir -p \"$include_dir\" \"$backup_dir\" && chmod 700 \"$ssh_dir\" \"$include_dir\" \"$backup_dir\"\n  stamp=\"$(date +%Y%m%d-%H%M%S)-$$\"\n  config_backup=\"$backup_dir/config.$stamp\"\n  euler_config_backup=\"$backup_dir/euler.conf.$stamp\"\n  [ \"$config_existed\" -eq 0 ] || cp -p \"$config\" \"$config_backup\"\n  [ \"$euler_config_existed\" -eq 0 ] || cp -p \"$euler_config\" \"$euler_config_backup\"\n\n  restore_originals() {\n    restore_status=0\n    if [ \"$config_existed\" -eq 1 ]; then cp -p \"$config_backup\" \"$config\" || restore_status=1; else rm -f \"$config\" || restore_status=1; fi\n    if [ \"$euler_config_existed\" -eq 1 ]; then cp -p \"$euler_config_backup\" \"$euler_config\" || restore_status=1; else rm -f \"$euler_config\" || restore_status=1; fi\n    return \"$restore_status\"\n  }\n\n  euler_temporary=\"$euler_config.passport-new\"\n  {\n    printf 'Host euler\\n  HostName euler.ethz.ch\\n  User %s\\n' \"$eth_user\"\n    if [ \"$use_existing\" -eq 1 ]; then\n      identity_count=0\n      while IFS= read -r identity; do\n        [ -n \"$identity\" ] || continue\n        case \"$identity\" in *'\"'*) printf 'STOP: unsupported quote in resolved identity path\\n' >&2; exit 1;; esac\n        printf '  IdentityFile \"%s\"\\n' \"$identity\"\n        identity_count=$((identity_count + 1))\n      done <<EOF\n$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" { $1=\"\"; sub(/^[[:space:]]+/, \"\"); print }')\nEOF\n      [ \"$identity_count\" -gt 0 ] || { printf 'STOP: working alias has no inspectable identity selection\\n' >&2; exit 1; }\n      identities_only=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identitiesonly\" { print $2; exit }')\"\n      case \"$identities_only\" in yes|no) ;; *) printf 'STOP: invalid resolved IdentitiesOnly value\\n' >&2; exit 1;; esac\n      printf '  IdentitiesOnly %s\\n' \"$identities_only\"\n    else\n      printf '  IdentityFile ~/.ssh/id_ed25519_euler\\n  IdentitiesOnly yes\\n'\n    fi\n    printf '  Port 22\\n  ProxyCommand none\\n  ProxyJump none\\n  PreferredAuthentications publickey\\n  PasswordAuthentication no\\n  KbdInteractiveAuthentication no\\n  ForwardAgent no\\n'\n  } > \"$euler_temporary\"\n  chmod 600 \"$euler_temporary\"\n  ssh -F \"$euler_temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\"\n    printf 'STOP: generated Euler block is invalid\\n' >&2\n    exit 1\n  }\n\n  include='Include ~/.ssh/passport.d/*.conf'; temporary=\"$config.passport-new\"\n  if [ -f \"$config\" ]; then\n    awk -v include=\"$include\" 'BEGIN { print include } /^[[:space:]]*Include[[:space:]]+(~\\/[.]ssh\\/)?passport[.]d\\/[*]([.]conf)?[[:space:]]*$/ { next } { print }' \"$config\" > \"$temporary\"\n  else\n    printf '%s\\n' \"$include\" > \"$temporary\"\n  fi\n  chmod 600 \"$temporary\"\n  ssh -F \"$temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\" \"$temporary\"\n    printf 'STOP: generated SSH config is invalid; the original files are unchanged\\n' >&2\n    exit 1\n  }\n\n  if ! mv \"$euler_temporary\" \"$euler_config\" || ! mv \"$temporary\" \"$config\" || ! ssh -G euler >/dev/null; then\n    rm -f \"$euler_temporary\" \"$temporary\"\n    if restore_originals; then\n      printf 'STOP: install failed; the original SSH files were restored automatically\\n' >&2\n    else\n      printf 'STOP: install failed and automatic restore was incomplete. Restore only config.%s and euler.conf.%s from %s\\n' \"$stamp\" \"$stamp\" \"$backup_dir\" >&2\n    fi\n    exit 1\n  fi\n)",
+                  "command": "(\n  set -eu\n  printf 'Short ETH username: '; read -r eth_user\n  case \"$eth_user\" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\\n' >&2; exit 1;; esac\n  ssh_dir=\"$HOME/.ssh\"; config=\"$ssh_dir/config\"; include_dir=\"$ssh_dir/passport.d\"; backup_dir=\"$ssh_dir/passport-backups\"; euler_config=\"$include_dir/euler.conf\"; key=\"$ssh_dir/id_ed25519_euler\"\n  [ ! -L \"$config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$config\" >&2; exit 1; }\n  [ ! -L \"$euler_config\" ] || { printf \"STOP: %s is a symbolic link; no file was changed\\n\" \"$euler_config\" >&2; exit 1; }\n  config_existed=0; euler_config_existed=0\n  if [ -e \"$config\" ]; then [ -f \"$config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$config\" >&2; exit 1; }; config_existed=1; fi\n  if [ -e \"$euler_config\" ]; then [ -f \"$euler_config\" ] || { printf \"STOP: %s is not a regular file\\n\" \"$euler_config\" >&2; exit 1; }; euler_config_existed=1; fi\n\n  resolved_before=\"$(ssh -G euler 2>/dev/null)\" || {\n    printf 'STOP: existing SSH config is invalid; no file was changed\\n' >&2\n    exit 1\n  }\n  resolved_host=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"hostname\" { print $2; exit }')\"\n  resolved_user=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"user\" { print $2; exit }')\"\n  if printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" && $2 ~ /[.]pub$/ { found=1 } END { exit !found }'; then\n    printf 'STOP: existing IdentityFile points at a .pub file\\n' >&2\n    exit 1\n  fi\n\n  use_existing=0\n  if [ \"$resolved_host\" = \"euler.ethz.ch\" ] && [ \"$resolved_user\" = \"$eth_user\" ]; then\n    if ssh -o Port=22 -o ProxyCommand=none -o ProxyJump=none -o ForwardAgent=no -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no euler 'exit 0'; then\n      use_existing=1\n    fi\n  fi\n\n  private_exists=0; public_exists=0\n  [ -f \"$key\" ] && private_exists=1\n  [ -f \"$key.pub\" ] && public_exists=1\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -ne \"$public_exists\" ]; then printf 'STOP: standard key pair is incomplete\\n' >&2; exit 1; fi\n  standard_key_works=0\n  if [ \"$use_existing\" -eq 0 ] && [ \"$private_exists\" -eq 1 ]; then\n    if ssh -F none -i \"$key\" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no \"$eth_user@euler.ethz.ch\" 'exit 0'; then\n      standard_key_works=1\n    fi\n  fi\n  if [ \"$use_existing\" -eq 0 ] && [ \"$standard_key_works\" -eq 0 ]; then\n    printf 'STOP: no tested key-only identity is available\\n' >&2\n    exit 1\n  fi\n\n  mkdir -p \"$include_dir\" \"$backup_dir\" && chmod 700 \"$ssh_dir\" \"$include_dir\" \"$backup_dir\"\n  stamp=\"$(date +%Y%m%d-%H%M%S)-$$\"\n  config_backup=\"$backup_dir/config.$stamp\"\n  euler_config_backup=\"$backup_dir/euler.conf.$stamp\"\n  [ \"$config_existed\" -eq 0 ] || cp -p \"$config\" \"$config_backup\"\n  [ \"$euler_config_existed\" -eq 0 ] || cp -p \"$euler_config\" \"$euler_config_backup\"\n\n  restore_originals() {\n    restore_status=0\n    if [ \"$config_existed\" -eq 1 ]; then cp -p \"$config_backup\" \"$config\" || restore_status=1; else rm -f \"$config\" || restore_status=1; fi\n    if [ \"$euler_config_existed\" -eq 1 ]; then cp -p \"$euler_config_backup\" \"$euler_config\" || restore_status=1; else rm -f \"$euler_config\" || restore_status=1; fi\n    return \"$restore_status\"\n  }\n\n  euler_temporary=\"$euler_config.passport-new\"\n  {\n    printf 'Host euler\\n  HostName euler.ethz.ch\\n  User %s\\n' \"$eth_user\"\n    if [ \"$use_existing\" -eq 1 ]; then\n      identity_count=0\n      while IFS= read -r identity; do\n        [ -n \"$identity\" ] || continue\n        case \"$identity\" in *'\"'*) printf 'STOP: unsupported quote in resolved identity path\\n' >&2; exit 1;; esac\n        printf '  IdentityFile \"%s\"\\n' \"$identity\"\n        identity_count=$((identity_count + 1))\n      done <<EOF\n$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identityfile\" { $1=\"\"; sub(/^[[:space:]]+/, \"\"); print }')\nEOF\n      [ \"$identity_count\" -gt 0 ] || { printf 'STOP: working alias has no inspectable identity selection\\n' >&2; exit 1; }\n      identities_only=\"$(printf '%s\\n' \"$resolved_before\" | awk '$1 == \"identitiesonly\" { print $2; exit }')\"\n      case \"$identities_only\" in yes|no) ;; *) printf 'STOP: invalid resolved IdentitiesOnly value\\n' >&2; exit 1;; esac\n      printf '  IdentitiesOnly %s\\n' \"$identities_only\"\n    else\n      printf '  IdentityFile ~/.ssh/id_ed25519_euler\\n  IdentitiesOnly yes\\n'\n    fi\n    printf '  Port 22\\n  ProxyCommand none\\n  ProxyJump none\\n  PreferredAuthentications publickey\\n  PasswordAuthentication no\\n  KbdInteractiveAuthentication no\\n  ForwardAgent no\\n'\n  } > \"$euler_temporary\"\n  chmod 600 \"$euler_temporary\"\n  ssh -F \"$euler_temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\"\n    printf 'STOP: generated Euler block is invalid\\n' >&2\n    exit 1\n  }\n\n  include='Include ~/.ssh/passport.d/*.conf'; temporary=\"$config.passport-new\"\n  if [ -f \"$config\" ]; then\n    awk -v include=\"$include\" 'BEGIN { print include } /^[[:space:]]*Include[[:space:]]+(~\\/[.]ssh\\/)?passport[.]d\\/[*]([.]conf)?[[:space:]]*$/ { next } { print }' \"$config\" > \"$temporary\"\n  else\n    printf '%s\\n' \"$include\" > \"$temporary\"\n  fi\n  chmod 600 \"$temporary\"\n  ssh -F \"$temporary\" -G euler >/dev/null || {\n    rm -f \"$euler_temporary\" \"$temporary\"\n    printf 'STOP: generated SSH config is invalid; the original files are unchanged\\n' >&2\n    exit 1\n  }\n\n  if ! mv \"$euler_temporary\" \"$euler_config\" || ! mv \"$temporary\" \"$config\" || ! ssh -G euler >/dev/null; then\n    rm -f \"$euler_temporary\" \"$temporary\"\n    if restore_originals; then\n      printf 'STOP: install failed; the original SSH files were restored automatically\\n' >&2\n    else\n      printf 'STOP: install failed and automatic restore was incomplete. Restore only config.%s and euler.conf.%s from %s\\n' \"$stamp\" \"$stamp\" \"$backup_dir\" >&2\n    fi\n    exit 1\n  fi\n)",
                   "platform": "linux",
                   "shell": "bash"
                 }
@@ -3162,7 +3167,7 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\nid_file=\"$HOME/passport-euler/first-job.id\"\nif [ -e \"$id_file\" ] && [ ! -s \"$id_file\" ]; then printf 'STOP: %s exists but is empty. Ask for help before changing it.\\n' \"$id_file\" >&2; exit 1; fi\nif [ -s \"$id_file\" ]; then job_id=\"$(cat \"$id_file\")\"; else read -r -p 'Existing passport-cpu job ID: ' job_id; fi\ncase \"$job_id\" in ''|*[!0-9]*) printf 'STOP: job ID must contain digits only.\\n' >&2; exit 1;; esac\nif [ ! -e \"$id_file\" ]; then mkdir -p \"$(dirname \"$id_file\")\"; printf '%s\\n' \"$job_id\" > \"$id_file\"; chmod 600 \"$id_file\"; fi\nsacct -j \"$job_id\" --format=JobID,JobName,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS\nstate=\"$(sacct -X -n -j \"$job_id\" --format=State | awk 'NF {print $1; exit}' | cut -d+ -f1)\"\nexit_code=\"$(sacct -X -n -j \"$job_id\" --format=ExitCode | awk 'NF {print $1; exit}')\"\n[ \"$state\" = COMPLETED ] && [ \"$exit_code\" = 0:0 ] || { printf 'STOP: wait for COMPLETED 0:0 or inspect the failed job; do not resubmit. Current result: %s %s\\n' \"${state:-unavailable}\" \"${exit_code:-unavailable}\" >&2; exit 1; }\nprintf 'accounting-ready\\n'\n)",
+                  "command": "(\nset -eu\nid_file=\"$HOME/passport-euler/first-job.id\"\nif [ -e \"$id_file\" ] && [ ! -s \"$id_file\" ]; then printf 'STOP: %s exists but is empty. Ask for help before changing it.\\n' \"$id_file\" >&2; exit 1; fi\nif [ -s \"$id_file\" ]; then job_id=\"$(cat \"$id_file\")\"; else read -r -p 'Existing passport-cpu job ID: ' job_id; fi\ncase \"$job_id\" in ''|*[^0-9]*) printf 'STOP: job ID must contain digits only.\\n' >&2; exit 1;; esac\nif [ ! -e \"$id_file\" ]; then mkdir -p \"$(dirname \"$id_file\")\"; printf '%s\\n' \"$job_id\" > \"$id_file\"; chmod 600 \"$id_file\"; fi\nsacct -j \"$job_id\" --format=JobID,JobName,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS\nstate=\"$(sacct -X -n -j \"$job_id\" --format=State | awk 'NF {print $1; exit}' | cut -d+ -f1)\"\nexit_code=\"$(sacct -X -n -j \"$job_id\" --format=ExitCode | awk 'NF {print $1; exit}')\"\n[ \"$state\" = COMPLETED ] && [ \"$exit_code\" = 0:0 ] || { printf 'STOP: wait for COMPLETED 0:0 or inspect the failed job; do not resubmit. Current result: %s %s\\n' \"${state:-unavailable}\" \"${exit_code:-unavailable}\" >&2; exit 1; }\nprintf 'accounting-ready\\n'\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
@@ -3182,7 +3187,7 @@
             {
               "commands": [
                 {
-                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nseff \"$job_id\"\n)",
+                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nseff \"$job_id\"\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
@@ -3322,10 +3327,10 @@
               },
               {
                 "id": "wrong_b",
-                "label": "Only %j in one shared file."
+                "label": "Only %j, the individual job ID."
               }
             ],
-            "prompt": "Which placeholders distinguish array logs?",
+            "prompt": "Which placeholders show the parent array and task index in log filenames?",
             "type": "single"
           },
           {
@@ -3391,9 +3396,9 @@
             },
             {
               "commands": [],
-              "expected": "You can explain why uncapped tasks and colliding logs are unsafe.",
+              "expected": "You can explain the missing concurrency cap and why parent/index labels make array logs easier to trace.",
               "id": "identify",
-              "instruction": "Read the array and log settings. The practice file allows 100 tasks without a concurrency cap and uses log names that do not identify each array task.",
+              "instruction": "Read the array and log settings. The practice file allows 100 tasks without a concurrency cap. Its %j log names use each task's distinct job ID, but do not directly show the parent array and task index. This exercise uses %A_%a to make that relationship visible.",
               "links": [],
               "machine": "local",
               "on_failure": "Review the array and log-name explanation before editing.",
@@ -3401,7 +3406,7 @@
               "platforms": [
                 "all"
               ],
-              "title": "Identify both defects"
+              "title": "Inspect the cap and log names"
             },
             {
               "commands": [
@@ -3665,13 +3670,13 @@
                   "snippet": "euler-cpu-tiny-request"
                 }
               ],
-              "expected": "The command prints created-script-ok or existing-script-ok, then shows es_fuge, two minutes, one task, one CPU, 1 GiB per CPU, the dated Python module, the training environment, and separate logs.",
+              "expected": "The command prints created-script-ok or existing-script-ok before displaying the script. The displayed script ends at PYTHON; EOF and the lines after it finish the creation command and are not printed as part of the script. Check that the script shows es_fuge, two minutes, one task, one CPU, 1 GiB per CPU, the dated Python module, the training environment, and separate logs. This step does not submit a job, so an empty squeue is normal.",
               "id": "create-script",
               "instruction": "Create the expected script in your home training folder without overwriting an existing different file. The script establishes its Python environment inside the job. If the same script already exists after an interrupted session, reuse it. Validate Bash syntax and print it before submission.",
               "links": [],
               "machine": "euler",
               "on_failure": "Correct the script before sbatch; do not submit a script you have not read.",
-              "on_success": "Submit it once.",
+              "on_success": "After checking the script, use Step 5 to submit it once.",
               "platforms": [
                 "all"
               ],
@@ -3680,7 +3685,7 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\ncd \"$HOME/passport-euler\"\nid_file=\"$HOME/passport-euler/first-job.id\"\nif [ -e \"$id_file\" ]; then\n  [ -s \"$id_file\" ] || { printf 'STOP: %s is empty. Ask for help before submitting.\\n' \"$id_file\" >&2; exit 1; }\n  job_id=\"$(cat \"$id_file\")\"\n  case \"$job_id\" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\n  printf 'Existing job, not resubmitted: %s\\n' \"$job_id\"\nelse\n  submission=\"$(sbatch --parsable first-job.slurm)\"\n  job_id=\"${submission%%;*}\"\n  case \"$job_id\" in ''|*[!0-9]*) printf 'STOP: sbatch did not return a numeric job ID.\\n' >&2; exit 1;; esac\n  printf '%s\\n' \"$job_id\" > \"$id_file\"\n  chmod 600 \"$id_file\"\n  printf 'Submitted job: %s\\n' \"$job_id\"\nfi\n)",
+                  "command": "(\nset -eu\ncd \"$HOME/passport-euler\"\nid_file=\"$HOME/passport-euler/first-job.id\"\nif [ -e \"$id_file\" ]; then\n  [ -s \"$id_file\" ] || { printf 'STOP: %s is empty. Ask for help before submitting.\\n' \"$id_file\" >&2; exit 1; }\n  job_id=\"$(cat \"$id_file\")\"\n  case \"$job_id\" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\n  printf 'Existing job, not resubmitted: %s\\n' \"$job_id\"\nelse\n  submission=\"$(sbatch --parsable first-job.slurm)\"\n  job_id=\"${submission%%;*}\"\n  case \"$job_id\" in ''|*[^0-9]*) printf 'STOP: sbatch did not return a numeric job ID.\\n' >&2; exit 1;; esac\n  printf '%s\\n' \"$job_id\" > \"$id_file\"\n  chmod 600 \"$id_file\"\n  printf 'Submitted job: %s\\n' \"$job_id\"\nfi\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
@@ -3700,7 +3705,7 @@
             {
               "commands": [
                 {
-                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nsqueue -j \"$job_id\" -o \"%.18i %.2t %.30R\"\n)",
+                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nsqueue -j \"$job_id\" -o \"%.18i %.2t %.30R\"\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
@@ -3720,12 +3725,12 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nstate=\"$(sacct -X -n -j \"$job_id\" --format=State | awk 'NF {print $1; exit}' | cut -d+ -f1)\"\ncase \"$state\" in\n  COMPLETED) printf 'job-completed\\n' ;;\n  PENDING|RUNNING|CONFIGURING|COMPLETING) printf 'job-not-finished: %s; wait 30 seconds and rerun this step; do not resubmit\\n' \"$state\"; exit 2 ;;\n  '') printf 'accounting-not-ready; wait 30 seconds and rerun this step; do not resubmit\\n'; exit 2 ;;\n  *) printf 'STOP: job ended in %s; inspect both logs before changing resources.\\n' \"$state\" >&2; sacct -j \"$job_id\" --format=JobID,JobName,User,Account,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS; exit 1 ;;\nesac\nsacct -j \"$job_id\" --format=JobID,JobName,User,Account,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS\n)",
+                  "command": "(\nset -eu\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nstate=\"$(sacct -X -n -j \"$job_id\" --format=State | awk 'NF {print $1; exit}' | cut -d+ -f1)\"\ncase \"$state\" in\n  COMPLETED) printf 'job-completed\\n' ;;\n  PENDING|RUNNING|CONFIGURING|COMPLETING) printf 'job-not-finished: %s; wait 30 seconds and rerun this step; do not resubmit\\n' \"$state\"; exit 2 ;;\n  '') printf 'accounting-not-ready; wait 30 seconds and rerun this step; do not resubmit\\n'; exit 2 ;;\n  *) printf 'STOP: job ended in %s; inspect both logs before changing resources.\\n' \"$state\" >&2; sacct -j \"$job_id\" --format=JobID,JobName,User,Account%40,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS; exit 1 ;;\nesac\nsacct -j \"$job_id\" --format=JobID,JobName,User,Account%40,State,ExitCode,Elapsed,AllocCPUS,ReqMem,MaxRSS\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
               ],
-              "expected": "While queued or running, the command says to wait without resubmitting. After completion it prints job-completed, then sacct shows the main job and its steps. The main row names your user, es_fuge, COMPLETED, 0:0, one CPU, and 1G requested memory; MaxRSS may appear on the .batch step.",
+              "expected": "While queued or running, the command says to wait without resubmitting. After completion it prints job-completed, then sacct shows the main job and its steps. The main row names your user, normal/es_fuge (or es_fuge if shown in short form), COMPLETED, 0:0, one CPU, and 1G requested memory. Account%40 gives the account column room to display the full name; normal/es+ is a truncated display and is not a value to enter. MaxRSS may appear on the .batch step.",
               "id": "accounting",
               "instruction": "Run this for the same job. If it says job-not-finished, wait 30 seconds and run this same step again. Never return to sbatch while waiting.",
               "links": [],
@@ -3740,7 +3745,7 @@
             {
               "commands": [
                 {
-                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nseff \"$job_id\"\n)",
+                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\nseff \"$job_id\"\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
@@ -3760,7 +3765,7 @@
             {
               "commands": [
                 {
-                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[!0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\noutput=\"$HOME/passport-euler/logs/passport-cpu_$job_id.out\"\ngrep -Fx \"python_environment=passport-python\" \"$output\"\ngrep -Fx \"5 squared is 25\" \"$output\"\n)",
+                  "command": "(\njob_id=\"$(cat \"$HOME/passport-euler/first-job.id\")\"\ncase \"$job_id\" in ''|*[^0-9]*) printf 'STOP: stored job ID is invalid.\\n' >&2; exit 1;; esac\noutput=\"$HOME/passport-euler/logs/passport-cpu_$job_id.out\"\ngrep -Fx \"python_environment=passport-python\" \"$output\"\ngrep -Fx \"5 squared is 25\" \"$output\"\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
@@ -4226,17 +4231,22 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\nvenv=\"$HOME/passport-euler/venvs/passport-python\"\nif [ -L \"$venv\" ]; then\n  printf 'STOP: %s is a symbolic link; nothing was changed.\\n' \"$venv\" >&2\n  exit 1\nelif [ ! -e \"$venv\" ]; then\n  printf 'environment-target-available\\n'\nelif [ -d \"$venv\" ] && [ -x \"$venv/bin/python\" ]; then\n  version=\"$(\"$venv/bin/python\" -c 'import platform; print(platform.python_version())')\"\n  [ \"$version\" = \"3.11.6\" ] || { printf 'STOP: existing environment uses Python %s; nothing was changed.\\n' \"$version\" >&2; exit 1; }\n  printf 'existing-environment-ok\\n'\nelse\n  printf 'STOP: %s exists but is not a complete environment; nothing was changed.\\n' \"$venv\" >&2\n  exit 1\nfi\n)",
+                  "command": "(\nset -eu\numask 077\nmodule purge\nmodule load stack/2024-06 python/3.11.6\n[ \"$(python -c 'import platform; print(platform.python_version())')\" = 3.11.6 ] || {\n  printf 'STOP: the loaded module must provide Python 3.11.6.\\n' >&2; exit 1\n}\nroot=\"$HOME/passport-euler\"\nbase=\"$root/venvs\"\nvenv=\"$base/passport-python\"\n# <!-- passport-snippet:euler-environment-check -->\ncheck_directories() {\n  python - \"$@\" <<'PY'\nimport os, stat, sys\nfor name in sys.argv[1:]:\n    info = os.lstat(name)\n    if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022:\n        raise SystemExit(\"STOP: training paths must be real directories owned by you, without group/other write access.\")\nPY\n}\nverify_environment() (\n  check_directories \"$root\" \"$base\" \"$venv\" \"$venv/bin\" || exit 1\n  [ -f \"$venv/pyvenv.cfg\" ] && [ ! -L \"$venv/pyvenv.cfg\" ] &&\n    [ -f \"$venv/bin/activate\" ] && [ ! -L \"$venv/bin/activate\" ] &&\n    [ -x \"$venv/bin/python\" ] && [ -x \"$venv/bin/pip\" ] || {\n    printf 'STOP: the training environment is incomplete or unsafe.\\n' >&2; exit 1\n  }\n  . \"$venv/bin/activate\" || exit 1\n  [ \"${VIRTUAL_ENV:-}\" = \"$venv\" ] && [ \"$(command -v python)\" = \"$venv/bin/python\" ] || {\n    printf 'STOP: activation points to another location; use the training-environment recovery instructions.\\n' >&2; exit 1\n  }\n  python - \"$venv\" <<'PY' || exit 1\nimport pathlib, platform, sys\nimport pip\nexpected = pathlib.Path(sys.argv[1])\nassert pathlib.Path(sys.prefix).resolve() == expected.resolve(), \"wrong environment prefix\"\nassert pathlib.Path(sys.executable).parent.resolve() == (expected / \"bin\").resolve(), \"wrong interpreter directory\"\nassert pathlib.Path(sys.executable).name == \"python\", \"wrong interpreter\"\nassert platform.python_version() == \"3.11.6\", \"wrong Python version\"\nassert expected.resolve() in pathlib.Path(pip.__file__).resolve().parents, \"pip belongs to another environment\"\nPY\n  module_pip=\"$(python -m pip --version)\" || exit 1\n  entry_pip=\"$(\"$venv/bin/pip\" --version)\" || exit 1\n  [ \"$module_pip\" = \"$entry_pip\" ] || { printf 'STOP: pip entrypoint uses another environment.\\n' >&2; exit 1; }\n  printf '%s\\n' \"$module_pip\"\n  deactivate\n)\n# <!-- /passport-snippet:euler-environment-check -->\nfor directory in \"$root\" \"$base\"; do\n  if [ -e \"$directory\" ] || [ -L \"$directory\" ]; then check_directories \"$directory\"; fi\ndone\nif [ ! -e \"$venv\" ] && [ ! -L \"$venv\" ]; then\n  printf 'environment-target-available\\n'\nelse\n  [ ! -e \"$venv/.passport-create-in-progress\" ] || {\n    printf 'STOP: a creation may still be running; do not move this environment. Ask lab IT if interrupted.\\n' >&2; exit 1\n  }\n  verify_environment\n  printf 'existing-environment-ok\\n'\nfi\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
               ],
               "expected": "The final line is environment-target-available or existing-environment-ok.",
               "id": "inspect-target",
-              "instruction": "Check the exact training path without changing it. A valid existing environment is kept. A symbolic link, incomplete directory, or different Python version stops the recipe instead of being replaced.",
-              "links": [],
+              "instruction": "Inspect the exact training path. This checks ownership, activation, the selected Python, and both ways of starting pip. It keeps a valid environment and stops if an old moved environment or an incomplete directory is found.",
+              "links": [
+                {
+                  "label": "Recover an affected training environment safely",
+                  "url": "../../../docs/reference/euler/python-environments.md#recover-a-broken-passport-training-environment"
+                }
+              ],
               "machine": "euler",
-              "on_failure": "Do not delete or rename the existing path. Use the help route to identify its owner and purpose.",
+              "on_failure": "Follow the linked recovery procedure only for this Passport training environment. Leave unfamiliar paths, shared permissions, and in-progress creations for lab IT to inspect.",
               "on_success": "Create only when absent, otherwise reuse it.",
               "platforms": [
                 "all"
@@ -4246,17 +4256,22 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\numask 077\nmodule purge\nmodule load stack/2024-06 python/3.11.6\nroot=\"$HOME/passport-euler\"\nbase=\"$root/venvs\"\nvenv=\"$base/passport-python\"\n[ ! -L \"$root\" ] && [ ! -L \"$base\" ] || { printf 'STOP: a training parent path is a symbolic link.\\n' >&2; exit 1; }\nmkdir -p \"$base\"\nif [ -L \"$venv\" ]; then\n  printf 'STOP: environment target is a symbolic link.\\n' >&2\n  exit 1\nelif [ -e \"$venv\" ]; then\n  [ -d \"$venv\" ] && [ -x \"$venv/bin/python\" ] || { printf 'STOP: existing target is incomplete.\\n' >&2; exit 1; }\n  version=\"$(\"$venv/bin/python\" -c 'import platform; print(platform.python_version())')\"\n  [ \"$version\" = \"3.11.6\" ] || { printf 'STOP: existing environment uses Python %s.\\n' \"$version\" >&2; exit 1; }\n  printf 'existing-environment-kept\\n'\nelse\n  tmp=\"$(mktemp -d \"$base/.passport-python.XXXXXX\")\"\n  cleanup() { if [ -n \"${tmp:-}\" ] && [ -d \"$tmp\" ]; then rm -r -- \"$tmp\"; fi; }\n  trap cleanup EXIT HUP INT TERM\n  python -m venv \"$tmp\"\n  \"$tmp/bin/python\" -m pip --version\n  mv \"$tmp\" \"$venv\"\n  tmp=''\n  printf 'created-environment-ok\\n'\nfi\n)",
+                  "command": "(\nset -eu\numask 077\nmodule purge\nmodule load stack/2024-06 python/3.11.6\n[ \"$(python -c 'import platform; print(platform.python_version())')\" = 3.11.6 ] || {\n  printf 'STOP: the loaded module must provide Python 3.11.6.\\n' >&2; exit 1\n}\nroot=\"$HOME/passport-euler\"\nbase=\"$root/venvs\"\nvenv=\"$base/passport-python\"\n# <!-- passport-snippet:euler-environment-check -->\ncheck_directories() {\n  python - \"$@\" <<'PY'\nimport os, stat, sys\nfor name in sys.argv[1:]:\n    info = os.lstat(name)\n    if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022:\n        raise SystemExit(\"STOP: training paths must be real directories owned by you, without group/other write access.\")\nPY\n}\nverify_environment() (\n  check_directories \"$root\" \"$base\" \"$venv\" \"$venv/bin\" || exit 1\n  [ -f \"$venv/pyvenv.cfg\" ] && [ ! -L \"$venv/pyvenv.cfg\" ] &&\n    [ -f \"$venv/bin/activate\" ] && [ ! -L \"$venv/bin/activate\" ] &&\n    [ -x \"$venv/bin/python\" ] && [ -x \"$venv/bin/pip\" ] || {\n    printf 'STOP: the training environment is incomplete or unsafe.\\n' >&2; exit 1\n  }\n  . \"$venv/bin/activate\" || exit 1\n  [ \"${VIRTUAL_ENV:-}\" = \"$venv\" ] && [ \"$(command -v python)\" = \"$venv/bin/python\" ] || {\n    printf 'STOP: activation points to another location; use the training-environment recovery instructions.\\n' >&2; exit 1\n  }\n  python - \"$venv\" <<'PY' || exit 1\nimport pathlib, platform, sys\nimport pip\nexpected = pathlib.Path(sys.argv[1])\nassert pathlib.Path(sys.prefix).resolve() == expected.resolve(), \"wrong environment prefix\"\nassert pathlib.Path(sys.executable).parent.resolve() == (expected / \"bin\").resolve(), \"wrong interpreter directory\"\nassert pathlib.Path(sys.executable).name == \"python\", \"wrong interpreter\"\nassert platform.python_version() == \"3.11.6\", \"wrong Python version\"\nassert expected.resolve() in pathlib.Path(pip.__file__).resolve().parents, \"pip belongs to another environment\"\nPY\n  module_pip=\"$(python -m pip --version)\" || exit 1\n  entry_pip=\"$(\"$venv/bin/pip\" --version)\" || exit 1\n  [ \"$module_pip\" = \"$entry_pip\" ] || { printf 'STOP: pip entrypoint uses another environment.\\n' >&2; exit 1; }\n  printf '%s\\n' \"$module_pip\"\n  deactivate\n)\n# <!-- /passport-snippet:euler-environment-check -->\nfor directory in \"$root\" \"$base\"; do\n  if [ ! -e \"$directory\" ] && [ ! -L \"$directory\" ]; then\n    mkdir -m 700 -- \"$directory\" || { printf 'STOP: a training parent appeared concurrently; inspect again.\\n' >&2; exit 1; }\n  fi\n  check_directories \"$directory\"\ndone\nif [ -e \"$venv\" ] || [ -L \"$venv\" ]; then\n  [ ! -e \"$venv/.passport-create-in-progress\" ] || {\n    printf 'STOP: a creation may still be running; do not move this environment. Ask lab IT if interrupted.\\n' >&2; exit 1\n  }\n  verify_environment\n  printf 'existing-environment-kept\\n'\nelse\n  # Claim the final directory exclusively; never run venv over an existing target.\n  mkdir -m 700 -- \"$venv\" || { printf 'STOP: the target appeared concurrently; inspect again.\\n' >&2; exit 1; }\n  mkdir -- \"$venv/.passport-create-in-progress\"\n  trap 'rmdir -- \"$venv/.passport-create-in-progress\"' EXIT\n  trap 'exit 1' HUP INT TERM\n  printf 'passport-python-training-v1\\n' > \"$venv/.passport-training-environment\"\n  # venv records absolute paths. Create and test it at its permanent location.\n  python -m venv \"$venv\" || {\n    printf 'STOP: creation failed; the partial training directory was kept for safe recovery.\\n' >&2; exit 1\n  }\n  verify_environment\n  printf 'created-environment-ok\\n'\nfi\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
               ],
               "expected": "The command prints existing-environment-kept or created-environment-ok and does not overwrite an existing path.",
               "id": "create",
-              "instruction": "Run this after the inspection passes. The command creates into a private temporary directory and moves it into place only after Python and pip work. If the valid target already exists, it is reused without modification.",
-              "links": [],
+              "instruction": "Create the environment directly at its final path, after exclusively claiming an empty directory. A valid existing environment is checked and kept. A failed creation is retained for recovery; nothing is recursively deleted or overwritten.",
+              "links": [
+                {
+                  "label": "Recover an affected training environment safely",
+                  "url": "../../../docs/reference/euler/python-environments.md#recover-a-broken-passport-training-environment"
+                }
+              ],
               "machine": "euler",
-              "on_failure": "Keep the first error. Do not rerun with sudo, remove the target, or install packages into base.",
+              "on_failure": "Keep the first error and follow the linked recovery procedure. Do not rerun venv over an existing target, use sudo, or install into base.",
               "on_success": "Activate and verify the exact interpreter.",
               "platforms": [
                 "all"
@@ -4266,17 +4281,22 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\nmodule purge\nmodule load stack/2024-06 python/3.11.6\nvenv=\"$HOME/passport-euler/venvs/passport-python\"\n[ -d \"$venv\" ] && [ ! -L \"$venv\" ] && [ -x \"$venv/bin/python\" ] || { printf 'STOP: training environment is missing or unsafe.\\n' >&2; exit 1; }\n. \"$venv/bin/activate\"\npython -c 'import pathlib, platform, sys; expected = pathlib.Path.home() / \"passport-euler\" / \"venvs\" / \"passport-python\"; assert pathlib.Path(sys.prefix) == expected; assert platform.python_version() == \"3.11.6\"; print(\"python_environment=passport-python\"); print(\"euler-python-env-ok\")'\npython -m pip --version\ndeactivate\n)",
+                  "command": "(\nset -eu\numask 077\nmodule purge\nmodule load stack/2024-06 python/3.11.6\n[ \"$(python -c 'import platform; print(platform.python_version())')\" = 3.11.6 ] || {\n  printf 'STOP: the loaded module must provide Python 3.11.6.\\n' >&2; exit 1\n}\nroot=\"$HOME/passport-euler\"\nbase=\"$root/venvs\"\nvenv=\"$base/passport-python\"\n# <!-- passport-snippet:euler-environment-check -->\ncheck_directories() {\n  python - \"$@\" <<'PY'\nimport os, stat, sys\nfor name in sys.argv[1:]:\n    info = os.lstat(name)\n    if not stat.S_ISDIR(info.st_mode) or info.st_uid != os.getuid() or info.st_mode & 0o022:\n        raise SystemExit(\"STOP: training paths must be real directories owned by you, without group/other write access.\")\nPY\n}\nverify_environment() (\n  check_directories \"$root\" \"$base\" \"$venv\" \"$venv/bin\" || exit 1\n  [ -f \"$venv/pyvenv.cfg\" ] && [ ! -L \"$venv/pyvenv.cfg\" ] &&\n    [ -f \"$venv/bin/activate\" ] && [ ! -L \"$venv/bin/activate\" ] &&\n    [ -x \"$venv/bin/python\" ] && [ -x \"$venv/bin/pip\" ] || {\n    printf 'STOP: the training environment is incomplete or unsafe.\\n' >&2; exit 1\n  }\n  . \"$venv/bin/activate\" || exit 1\n  [ \"${VIRTUAL_ENV:-}\" = \"$venv\" ] && [ \"$(command -v python)\" = \"$venv/bin/python\" ] || {\n    printf 'STOP: activation points to another location; use the training-environment recovery instructions.\\n' >&2; exit 1\n  }\n  python - \"$venv\" <<'PY' || exit 1\nimport pathlib, platform, sys\nimport pip\nexpected = pathlib.Path(sys.argv[1])\nassert pathlib.Path(sys.prefix).resolve() == expected.resolve(), \"wrong environment prefix\"\nassert pathlib.Path(sys.executable).parent.resolve() == (expected / \"bin\").resolve(), \"wrong interpreter directory\"\nassert pathlib.Path(sys.executable).name == \"python\", \"wrong interpreter\"\nassert platform.python_version() == \"3.11.6\", \"wrong Python version\"\nassert expected.resolve() in pathlib.Path(pip.__file__).resolve().parents, \"pip belongs to another environment\"\nPY\n  module_pip=\"$(python -m pip --version)\" || exit 1\n  entry_pip=\"$(\"$venv/bin/pip\" --version)\" || exit 1\n  [ \"$module_pip\" = \"$entry_pip\" ] || { printf 'STOP: pip entrypoint uses another environment.\\n' >&2; exit 1; }\n  printf '%s\\n' \"$module_pip\"\n  deactivate\n)\n# <!-- /passport-snippet:euler-environment-check -->\n[ ! -e \"$venv/.passport-create-in-progress\" ] || {\n  printf 'STOP: a creation may still be running; wait for it or ask lab IT.\\n' >&2; exit 1\n}\nverify_environment\nprintf 'python_environment=passport-python\\neuler-python-env-ok\\n'\n)",
                   "platform": "euler",
                   "shell": "bash"
                 }
               ],
               "expected": "The output includes python_environment=passport-python, euler-python-env-ok, and pip from the same environment.",
               "id": "verify",
-              "instruction": "Activate the training environment, verify its exact path and Python version, then deactivate it. The marker is safe to enter in the Passport; do not paste the full private path into a submission.",
-              "links": [],
+              "instruction": "Activate the training environment in this temporary shell and check its activation path, selected interpreter, Python version, and pip entrypoint. The success marker appears only after every check passes. Enter only that marker in the Passport.",
+              "links": [
+                {
+                  "label": "Recover an affected training environment safely",
+                  "url": "../../../docs/reference/euler/python-environments.md#recover-a-broken-passport-training-environment"
+                }
+              ],
               "machine": "euler",
-              "on_failure": "Stop and inspect the reported interpreter. Do not repair it by copying your laptop environment.",
+              "on_failure": "Use the linked recovery procedure if this is the training environment affected by the earlier recipe. Do not copy a laptop environment or change shell startup files.",
               "on_success": "Learn where these lines belong in a job.",
               "platforms": [
                 "all"
@@ -4655,6 +4675,58 @@
         "action": "Make one small manual change, review both diffs, create a Conventional Commit, push it, and open a draft pull request.",
         "expected_result": "The personal practice PR contains only the intended file, a Conventional Commit, and an honest verification record.",
         "kind": "repository_task",
+        "learning_checks": [
+          {
+            "answer": [
+              "correct"
+            ],
+            "critical": false,
+            "feedback": "Stage the note again to select the newer saved version, then review git diff --cached. Saving alone does not update the selection; pushing sends existing commits to GitHub.",
+            "hint": "Did saving the correction update the version you had already staged?",
+            "id": "saved_after_staging",
+            "options": [
+              {
+                "id": "wrong_a",
+                "label": "Commit now; saving includes the correction."
+              },
+              {
+                "id": "correct",
+                "label": "Stage the note again, then review the staged diff."
+              },
+              {
+                "id": "wrong_b",
+                "label": "Push the branch to include the saved correction."
+              }
+            ],
+            "prompt": "You staged your note, then saved one more correction. You want that correction in the next commit. What should you do before committing?",
+            "type": "single"
+          },
+          {
+            "answer": [
+              "correct"
+            ],
+            "critical": false,
+            "feedback": "Committing records the change on your computer; pushing sends it to GitHub. A draft PR gives your colleague a review page for a pushed branch. Neither action merges it into main.",
+            "hint": "Where does a commit live before you share it with GitHub?",
+            "id": "local_commit_visibility",
+            "options": [
+              {
+                "id": "wrong_a",
+                "label": "Open a draft PR so GitHub uploads the local commit."
+              },
+              {
+                "id": "wrong_b",
+                "label": "Make another local commit to update the GitHub copy."
+              },
+              {
+                "id": "correct",
+                "label": "Push the practice branch so GitHub receives the commit."
+              }
+            ],
+            "prompt": "You commit a fix on your practice branch but have not pushed. Your colleague looks for that commit on GitHub. What must happen before they can see it there?",
+            "type": "single"
+          }
+        ],
         "machine": "local",
         "questions": [
           {
@@ -4662,20 +4734,20 @@
               "correct"
             ],
             "critical": true,
-            "feedback": "The personal practice PR shown by the mission.",
+            "feedback": "Create your own draft practice PR in your exercise fork. Submit lesson handles a separate submission; this exercise does not change the shared handbook.",
             "id": "pr_roles",
             "options": [
               {
                 "id": "correct",
-                "label": "The personal practice PR shown by the mission."
+                "label": "A draft PR from my practice branch to main in my own exercise fork."
               },
               {
                 "id": "wrong_a",
-                "label": "The hidden transport PR used by the passport."
+                "label": "The PR the Passport creates when I use Submit lesson."
               },
               {
                 "id": "wrong_b",
-                "label": "A PR changing the handbook main branch."
+                "label": "A PR proposing changes to the shared onboarding handbook."
               }
             ],
             "prompt": "Which PR do you create manually in this mission?",
@@ -4686,7 +4758,7 @@
               "correct"
             ],
             "critical": true,
-            "feedback": "Inspect git diff --cached and confirm every staged change.",
+            "feedback": "git diff --cached shows the selected lines compared with the last commit. git diff shows unstaged edits; git status lists file states rather than the complete change.",
             "id": "staged_diff",
             "options": [
               {
@@ -4695,48 +4767,29 @@
               },
               {
                 "id": "wrong_a",
-                "label": "Force-push the branch."
+                "label": "Inspect git diff to see changes since the last staging."
               },
               {
                 "id": "wrong_b",
-                "label": "Merge the PR yourself."
+                "label": "Inspect git status to see which files are staged."
               }
             ],
-            "prompt": "What must happen immediately before committing?",
+            "prompt": "You have saved and staged your note. Which check shows what the next commit will record?",
             "type": "single"
           }
         ],
         "recipe": {
-          "intro": "Do this mission without an AI agent. Use the exact practice folder and commands prepared by the Passport.",
+          "intro": "Work in the prepared practice folder, using the same terminal throughout. Leave the PR open in draft.",
           "steps": [
             {
               "commands": [],
-              "expected": "You can name the order: edit, diff, stage, commit, push, pull request.",
-              "id": "terms",
-              "instruction": "The working tree is the project folder you are editing. A diff shows changed lines. Staging selects reviewed changes for the next commit; a commit records that version with an author and message. Pushing sends the branch to GitHub. A pull request, or PR, asks for the branch to be reviewed before merging. A draft PR is visible but explicitly not ready to merge. Follow the order: edit, diff, stage, commit, push, pull request.",
-              "links": [
-                {
-                  "label": "Read the beginner Git workflow",
-                  "url": "../../../onboarding_IT_guides/git_workflow.md"
-                }
-              ],
-              "machine": "browser",
-              "on_failure": "Do not use an editor button or AI agent to skip a step you cannot yet identify.",
-              "on_success": "Open the prepared practice folder.",
-              "platforms": [
-                "all"
-              ],
-              "title": "Learn the manual Git change path"
-            },
-            {
-              "commands": [],
-              "expected": "The terminal is at the root of the practice repository.",
+              "expected": "Your terminal is in the exact folder shown by preparation, on its practice branch.",
               "id": "prepare",
-              "instruction": "Press Prepare practice folder in this step. Run the displayed enter-folder command, then keep this terminal in that folder.",
+              "instruction": "Click Prepare practice folder. Run its enter-folder command in your terminal, then keep that terminal in this folder.",
               "links": [],
               "machine": "local",
-              "on_failure": "Do not clone again; rerun the preparation or gh passport doctor.",
-              "on_success": "Continue to the baseline inspection.",
+              "on_failure": "Retry the preparation or run gh passport doctor. Do not create another clone.",
+              "on_success": "The prepared copy gives you a practice branch without changing another project. Read its task before choosing any file to edit.",
               "platforms": [
                 "all"
               ],
@@ -4760,13 +4813,13 @@
                   "shell": "bash"
                 }
               ],
-              "expected": "The practice branch is shown with no unexpected file below it.",
+              "expected": "The branch starts with practice/. No modified file is listed. The task names project-note.md as the file to edit.",
               "id": "baseline",
-              "instruction": "Read workspace/manual_task/README.md and project-note.md. Confirm the branch is the practice branch and the working tree has no unexpected change.",
+              "instruction": "Run these commands to read the task and note. Stop if the branch differs from the prepared practice branch or unexpected edits appear.",
               "links": [],
               "machine": "local",
-              "on_failure": "Stop and understand every existing change before touching a file.",
-              "on_success": "Open the practice folder in a plain-text code editor.",
+              "on_failure": "Stop if the branch is different or changes already exist. Inspect them before editing; do not reset the repository.",
+              "on_success": "You know the starting version and the scope of the change. The task README is an instruction, not a file to modify.",
               "platforms": [
                 "all"
               ],
@@ -4774,9 +4827,9 @@
             },
             {
               "commands": [],
-              "expected": "The editor file tree contains workspace/manual_task/README.md and project-note.md from the practice folder.",
+              "expected": "Your editor shows project-note.md inside the prepared practice folder.",
               "id": "editor",
-              "instruction": "Use a plain-text code editor you already trust. If you do not have one, install VS Code from the official link, open it, choose File > Open Folder, and select the exact practice-folder path shown by the Passport. Do not enable an AI agent for this mission.",
+              "instruction": "In VS Code, choose File > Open Folder and select the exact practice-folder path shown by the Passport. Open workspace/manual_task/project-note.md. Edit it yourself, without an AI agent.",
               "links": [
                 {
                   "label": "Download VS Code",
@@ -4784,12 +4837,12 @@
                 }
               ],
               "machine": "local",
-              "on_failure": "Return to the folder path shown by Prepare practice folder; do not open the handbook or a research repository instead.",
-              "on_success": "Open project-note.md and make the requested edit.",
+              "on_failure": "Compare the editor folder with the preparation path. If needed, install VS Code using the download link. Do not edit the handbook or a research repository.",
+              "on_success": "Your editor and terminal point to the same practice folder, so the file you save is the file Git will inspect.",
               "platforms": [
                 "all"
               ],
-              "title": "Open the exact practice folder in an editor"
+              "title": "Open the same folder in your editor"
             },
             {
               "commands": [
@@ -4800,17 +4853,17 @@
                   "shell": "markdown"
                 }
               ],
-              "expected": "Only project-note.md contains the intended text change.",
+              "expected": "The saved note has your heading and reminder. No other file has changed.",
               "id": "edit",
-              "instruction": "Open workspace/manual_task/project-note.md in the editor file tree. Add the exact block shown below at the end of the file, then save it. Do not edit another file.",
+              "instruction": "In workspace/manual_task/project-note.md, add a ## Verification heading and one short sentence in your own words about reviewing the staged diff before publishing. Include the terms staged diff and review. Save only this file. Put the text in your editor, not the terminal.",
               "links": [],
               "machine": "local",
-              "on_failure": "Undo only the mistaken lines in your editor; do not reset the repository.",
-              "on_success": "Inspect the unstaged diff.",
+              "on_failure": "Correct only the mistaken lines in your editor. Do not reset or delete the practice folder.",
+              "on_success": "Saving updates your working file. The next diff lets you decide whether these are the lines you want your colleague to receive.",
               "platforms": [
                 "all"
               ],
-              "title": "Make the requested edit"
+              "title": "Write a reminder your colleague can use"
             },
             {
               "commands": [
@@ -4830,17 +4883,17 @@
                   "shell": "bash"
                 }
               ],
-              "expected": "The diff contains one intended file and no credential or private information.",
+              "expected": "Only workspace/manual_task/project-note.md is modified. Its diff shows your heading and reminder, without unrelated changes or private information.",
               "id": "unstaged-diff",
-              "instruction": "Check the changed path and read every added or removed line before staging.",
+              "instruction": "Read every added (+) and removed (-) line. Is this the change you intended? Fix anything unexpected in the editor before staging.",
               "links": [],
               "machine": "local",
-              "on_failure": "Correct the file before staging anything.",
-              "on_success": "Stage that exact file.",
+              "on_failure": "Correct unexpected content before staging. If another file changed, understand why before continuing.",
+              "on_success": "A diff compares two versions. Here, git diff compares your saved file with the staged version. Next, select only the named file.",
               "platforms": [
                 "all"
               ],
-              "title": "Review the unstaged diff"
+              "title": "Read your change as a reviewer"
             },
             {
               "commands": [
@@ -4860,17 +4913,17 @@
                   "shell": "bash"
                 }
               ],
-              "expected": "The staged diff contains only the reviewed note and the whitespace check is silent.",
+              "expected": "The staged diff contains only the intended note change. The whitespace check prints nothing when it passes.",
               "id": "stage",
-              "instruction": "Add only the reviewed project note, then check whitespace and inspect the staged diff.",
+              "instruction": "Run the block to stage the note, then read the staged diff. Confirm every line before committing. If you edit again, stage and review the newer version.",
               "links": [],
               "machine": "local",
-              "on_failure": "Use git restore --staged on the unintended path, correct it, and review again.",
-              "on_success": "Create the commit.",
+              "on_failure": "For an unintended staged path, use git restore --staged on that path to keep the edit but remove it from the selection. Correct and review again.",
+              "on_success": "git add selects the current saved content. git diff --cached compares that selection with the last commit; --check checks whitespace. The selection is what your next commit will record.",
               "platforms": [
                 "all"
               ],
-              "title": "Stage one file"
+              "title": "What will this commit contain?"
             },
             {
               "commands": [
@@ -4890,27 +4943,27 @@
                   "shell": "bash"
                 }
               ],
-              "expected": "Git creates one commit with the shown subject.",
+              "expected": "Git prints a new commit with the subject docs(practice): explain staged diff review.",
               "id": "commit",
-              "instruction": "Use the exact commit command prepared by the Passport. This is a Conventional Commit: a consistent message in type(scope): concise summary form. The type states the kind of change, the optional scope names the affected area, and the summary says what changed.",
+              "instruction": "Will your colleague see this new commit on GitHub? Think about that, then run the command.",
               "links": [],
               "machine": "local",
-              "on_failure": "Read the first Git error; do not use force or skip hooks.",
-              "on_success": "Push the current practice branch.",
+              "on_failure": "Read the first Git error and ask for help if needed. Do not force the operation or skip hooks.",
+              "on_success": "The commit is recorded on your computer. It reaches GitHub when you push. The Conventional Commit format is type(scope): summary: docs means documentation, practice names the area, and the summary describes the change.",
               "platforms": [
                 "all"
               ],
-              "title": "Create a Conventional Commit"
+              "title": "Record the version you chose"
             },
             {
               "commands": [],
-              "expected": "GitHub shows one open draft pull request from your practice branch to main.",
+              "expected": "One open draft PR proposes your practice branch to main. Opening it has not merged your change into main.",
               "id": "publish",
-              "instruction": "Run the exact push and gh pr create commands displayed by Prepare practice folder. Keep the pull request in draft and do not merge it.",
+              "instruction": "Which command shares your commit, and which asks for review? Run the prepared git push command, then its gh pr create command, one at a time. Keep --draft. Leave the PR open in draft; do not merge it.",
               "links": [],
               "machine": "local",
-              "on_failure": "Do not create a second PR; inspect the branch and existing PR with gh pr status.",
-              "on_success": "Open the PR and inspect Files changed.",
+              "on_failure": "If a PR already exists, inspect it with gh pr status. Do not create a second one or force-push.",
+              "on_success": "Pushing sends your commits to your GitHub branch. A PR compares that branch with main for review. Opening it does not change main.",
               "platforms": [
                 "all"
               ],
@@ -4934,13 +4987,13 @@
                   "shell": "bash"
                 }
               ],
-              "expected": "The GitHub diff matches the staged diff you reviewed locally.",
+              "expected": "You are the author; your practice branch targets main. Only project-note.md changed, with your reviewed reminder and commit subject. Leave the PR open in draft; do not merge it.",
               "id": "final-review",
-              "instruction": "Run both commands below from the practice folder. The first checks that the draft PR exists. The second opens it. Your local Passport fills in your fork and practice branch automatically. Do not run gh repo set-default. On GitHub, confirm the author, source branch, target branch, commit subject, and single changed file. Leave the PR open.",
+              "instruction": "Run both commands to open your PR; the local Passport fills in your fork and branch. Do not run gh repo set-default. In Files changed, check that the reminder makes sense and the diff matches your reviewed edit.",
               "links": [],
               "machine": "local",
-              "on_failure": "If no PR is listed, return to Push and open a draft pull request. Otherwise correct the same branch and push again. Do not configure a default repository, create a second PR, merge, or delete the existing PR.",
-              "on_success": "Return to the Passport and run Check my work.",
+              "on_failure": "If no PR appears, return to Push and open a draft pull request. Otherwise correct the same branch and push again. Do not configure a default repository, create a second PR, merge, or delete the existing PR.",
+              "on_success": "Compare your saved note, recorded commit and PR diff: they should show the same reminder. You can now use Check my work, then Submit lesson.",
               "platforms": [
                 "all"
               ],
@@ -5167,12 +5220,12 @@
                   "shell": "powershell"
                 },
                 {
-                  "command": "(\nprintf 'Intended GitHub username: '; read -r github_user\ncase \"$github_user\" in ''|*[!A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\\n' >&2; exit 1;; esac\nif ! gh auth switch --hostname github.com --user \"$github_user\"; then gh auth login --hostname github.com --git-protocol https --web; fi\ngh auth status --active --hostname github.com\n)",
+                  "command": "(\nprintf 'Intended GitHub username: '; read -r github_user\ncase \"$github_user\" in ''|*[^A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\\n' >&2; exit 1;; esac\nif ! gh auth switch --hostname github.com --user \"$github_user\"; then gh auth login --hostname github.com --git-protocol https --web; fi\ngh auth status --active --hostname github.com\n)",
                   "platform": "macos",
                   "shell": "zsh"
                 },
                 {
-                  "command": "(\nprintf 'Intended GitHub username: '; read -r github_user\ncase \"$github_user\" in ''|*[!A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\\n' >&2; exit 1;; esac\nif ! gh auth switch --hostname github.com --user \"$github_user\"; then gh auth login --hostname github.com --git-protocol https --web; fi\ngh auth status --active --hostname github.com\n)",
+                  "command": "(\nprintf 'Intended GitHub username: '; read -r github_user\ncase \"$github_user\" in ''|*[^A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\\n' >&2; exit 1;; esac\nif ! gh auth switch --hostname github.com --user \"$github_user\"; then gh auth login --hostname github.com --git-protocol https --web; fi\ngh auth status --active --hostname github.com\n)",
                   "platform": "linux",
                   "shell": "bash"
                 }
@@ -5720,7 +5773,7 @@
               "commands": [],
               "expected": "The practice repository and practice branch are active.",
               "id": "prepare",
-              "instruction": "Press Prepare practice folder in this step and run the displayed enter-folder command. The repository root is the top-level project folder that contains files such as environment.yml and .gitignore. Keep all following commands there unless a step says otherwise.",
+              "instruction": "Press Prepare practice folder in this step and run the displayed enter-folder command in your command terminal. Keep this page open: the Practice folder ready box shows your exact folder path and a Copy button for returning there later. After a page reload, press Prepare practice folder again to display the same folder; the launcher reuses it. The repository root is its top-level folder, containing environment.yml and .gitignore. Do not use the hidden .transport folder.",
               "links": [],
               "machine": "local",
               "on_failure": "Do not create another clone; run gh passport doctor.",
@@ -5750,10 +5803,10 @@
               ],
               "expected": "Conda prints a version and the base path of the installation that will manage this project environment.",
               "id": "check-conda",
-              "instruction": "Run the version check. If it succeeds, keep the existing working installation and skip installation.",
+              "instruction": "Run both checks below. If Conda was installed while this command terminal was already open, including through Self Service or another managed software installer, wait for installation to finish first. Close only this command terminal, leave the terminal running the Passport open, and open a new standalone PowerShell window on Windows or Terminal window on macOS/Linux before retrying. A new shell loads setup changes that an older shell may not know about. If both checks already work, keep this terminal and skip installation.",
               "links": [],
               "machine": "local",
-              "on_failure": "Check for an existing installation in the next step. Do not install a second copy yet.",
+              "on_failure": "If a newly opened command terminal still cannot find Conda, continue to Recover an existing Conda installation. Do not download another copy. If Self Service or IT says Conda is installed, keep that installation and ask IT for its supported terminal setup if recovery cannot find it.",
               "on_success": "Skip installation and read the environment definition.",
               "platforms": [
                 "all"
@@ -5780,11 +5833,11 @@
               ],
               "expected": "The final line is existing-conda-initialized or no-common-conda-installation.",
               "id": "recover-conda",
-              "instruction": "Run this only when conda was not recognized. The check looks only in common personal installation folders and does not delete anything. If it finds exactly one installation, it runs conda init for this operating system; that change becomes available only in a newly opened terminal. On Windows, also search the Start menu for Miniforge Prompt, Miniconda Prompt, or Anaconda Prompt. If one exists but this check found nothing, open that prompt, run conda info --base, and request help without including private information rather than installing another copy.",
+              "instruction": "Run this only when conda is still not recognized after retrying in a new command terminal. The check looks only in common personal installation folders and does not delete anything. If it finds exactly one installation, it runs conda init for this operating system; that change becomes available only in a newly opened terminal. On Windows, also search the Start menu for Miniforge Prompt, Miniconda Prompt, or Anaconda Prompt. If one exists but this check found nothing, open that prompt, run conda info --base, and request help without including private information rather than installing another copy.",
               "links": [],
               "machine": "local",
               "on_failure": "If more than one installation is listed, or a Start-menu Conda prompt exists at another path, stop and request help without including private information. Do not uninstall, rename, or overwrite any installation.",
-              "on_success": "After existing-conda-initialized, skip installation and continue at Reopen and recheck Conda. After no-common-conda-installation, run only the installation step for this operating system.",
+              "on_success": "After existing-conda-initialized, skip installation and continue at Reopen and recheck Conda. After no-common-conda-installation, install only if Self Service, IT and any Start-menu Conda prompt do not indicate an existing installation. The check searches common folders only; an unlisted managed installation needs IT help, not a second copy.",
               "platforms": [
                 "all"
               ],
@@ -5794,7 +5847,7 @@
               "commands": [],
               "expected": "conda --version works in Miniforge Prompt without replacing another Conda installation.",
               "id": "install-miniforge-windows",
-              "instruction": "Run this step only after the recovery check printed no-common-conda-installation and no Conda prompt exists in the Start menu. Download the Windows x86-64 installer from the official page, run it for Just Me, keep the default personal installation folder and Start Menu shortcut, and leave Add Miniforge to PATH disabled. Open Miniforge Prompt from the Start menu, run conda --version, then run conda init powershell once. Close only that Miniforge Prompt, keep the terminal running the Passport open, and open a new PowerShell window.",
+              "instruction": "Skip this step if Self Service or IT already installed Conda; request its supported setup if needed. Run this step only after the recovery check printed no-common-conda-installation and no Conda prompt exists in the Start menu. Download the Windows x86-64 installer from the official page, run it for Just Me, keep the default personal installation folder and Start Menu shortcut, and leave Add Miniforge to PATH disabled. Open Miniforge Prompt from the Start menu, run conda --version, then run conda init powershell once. Close only that Miniforge Prompt, keep the terminal running the Passport open, and open a new PowerShell window.",
               "links": [
                 {
                   "label": "Open official Miniforge installers",
@@ -5812,19 +5865,19 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\ntemporary=\"$(mktemp -d \"${TMPDIR:-/tmp}/ideal-passport-miniforge.XXXXXX\")\"\ninstaller=\"$temporary/Miniforge3.sh\"\nchecksum=\"$temporary/Miniforge3.sh.sha256\"\ncleanup() { rm -f -- \"$installer\" \"$checksum\"; rmdir -- \"$temporary\" 2>/dev/null || true; }\ntrap cleanup EXIT HUP INT TERM\nasset=\"Miniforge3-MacOSX-$(uname -m).sh\"\nprintf 'Operating system: '; uname -s\nprintf 'Architecture: '; uname -m\ncommand -v curl >/dev/null || { printf 'STOP: curl is unavailable; use the official installer link.\\n' >&2; exit 1; }\ncurl -fL --output \"$installer\" \"https://github.com/conda-forge/miniforge/releases/latest/download/$asset\"\ncurl -fL --output \"$checksum\" \"https://github.com/conda-forge/miniforge/releases/latest/download/$asset.sha256\"\nexpected=\"$(awk '{print $1}' \"$checksum\")\"\nactual=\"$(shasum -a 256 \"$installer\" | awk '{print $1}')\"\n[ \"$actual\" = \"$expected\" ] || { printf 'STOP: checksum mismatch. Do not run the installer.\\n' >&2; exit 1; }\nprintf 'checksum-ok\\n'\nbash \"$installer\"\n)",
+                  "command": "(\nset -eu\ntag=\"26.5.3-0\"\ntemporary=\"$(mktemp -d \"${TMPDIR:-/tmp}/ideal-passport-miniforge.XXXXXX\")\"\nasset=\"Miniforge3-$tag-MacOSX-$(uname -m).sh\"\ninstaller=\"$temporary/$asset\"\nchecksum=\"$installer.sha256\"\ncleanup() { rm -f -- \"$installer\" \"$checksum\"; rmdir -- \"$temporary\" 2>/dev/null || true; }\ntrap cleanup EXIT HUP INT TERM\nprintf 'Operating system: '; uname -s\nprintf 'Architecture: '; uname -m\ncase \"$(uname -m)\" in\n  arm64|x86_64) ;;\n  *) printf 'STOP: this Mac architecture has no approved installer in release %s.\\n' \"$tag\" >&2; exit 1 ;;\nesac\ncommand -v curl >/dev/null || { printf 'STOP: curl is unavailable; use the official installer link.\\n' >&2; exit 1; }\ncommand -v shasum >/dev/null || { printf 'STOP: shasum is unavailable; do not run the installer.\\n' >&2; exit 1; }\ncurl -fL --output \"$installer\" \"https://github.com/conda-forge/miniforge/releases/download/$tag/$asset\"\ncurl -fL --output \"$checksum\" \"https://github.com/conda-forge/miniforge/releases/download/$tag/$asset.sha256\"\n(\n  cd \"$temporary\"\n  shasum -a 256 -c \"$asset.sha256\"\n)\nprintf 'checksum-ok\\n'\nbash \"$installer\"\n)",
                   "platform": "macos",
                   "shell": "zsh",
                   "snippet": "miniforge-macos-installer"
                 }
               ],
-              "expected": "The operating system is Darwin, the checksum matches, and installation finishes without replacing another Conda installation.",
+              "expected": "The operating system is Darwin, the matching versioned installer prints Miniforge3-...sh: OK before it runs, and installation finishes without replacing another Conda installation.",
               "id": "install-miniforge-macos",
-              "instruction": "Run this step only after the recovery check printed no-common-conda-installation. The block downloads the official installer and its published SHA-256 checksum, a fingerprint used to detect a changed or damaged download. It checks that fingerprint before starting the interactive installer. Answer yes when asked to initialize zsh.",
+              "instruction": "Skip this step if Self Service or IT already installed Conda; request its supported setup if needed. Run this step only after the recovery check printed no-common-conda-installation. The block downloads the versioned Miniforge 26.5.3-0 installer for this Mac and its published SHA-256 checksum into a temporary directory. It verifies the checksum before starting the interactive installer. Answer yes when asked to initialize zsh.",
               "links": [
                 {
-                  "label": "Open official Miniforge releases",
-                  "url": "https://github.com/conda-forge/miniforge/releases/latest"
+                  "label": "Open Miniforge release 26.5.3-0",
+                  "url": "https://github.com/conda-forge/miniforge/releases/tag/26.5.3-0"
                 }
               ],
               "machine": "local",
@@ -5838,19 +5891,19 @@
             {
               "commands": [
                 {
-                  "command": "(\nset -eu\ntemporary=\"$(mktemp -d \"${TMPDIR:-/tmp}/ideal-passport-miniforge.XXXXXX\")\"\ninstaller=\"$temporary/Miniforge3.sh\"\nchecksum=\"$temporary/Miniforge3.sh.sha256\"\ncleanup() { rm -f -- \"$installer\" \"$checksum\"; rmdir -- \"$temporary\" 2>/dev/null || true; }\ntrap cleanup EXIT HUP INT TERM\nasset=\"Miniforge3-$(uname -s)-$(uname -m).sh\"\nprintf 'Operating system: '; uname -s\nprintf 'Architecture: '; uname -m\ncommand -v curl >/dev/null || { printf 'STOP: curl is unavailable; use the official installer link.\\n' >&2; exit 1; }\ncurl -fL --output \"$installer\" \"https://github.com/conda-forge/miniforge/releases/latest/download/$asset\"\ncurl -fL --output \"$checksum\" \"https://github.com/conda-forge/miniforge/releases/latest/download/$asset.sha256\"\nexpected=\"$(awk '{print $1}' \"$checksum\")\"\nactual=\"$(sha256sum \"$installer\" | awk '{print $1}')\"\n[ \"$actual\" = \"$expected\" ] || { printf 'STOP: checksum mismatch. Do not run the installer.\\n' >&2; exit 1; }\nprintf 'checksum-ok\\n'\nbash \"$installer\"\n)",
+                  "command": "(\nset -eu\ntag=\"26.5.3-0\"\ntemporary=\"$(mktemp -d \"${TMPDIR:-/tmp}/ideal-passport-miniforge.XXXXXX\")\"\nasset=\"Miniforge3-$tag-$(uname -s)-$(uname -m).sh\"\ninstaller=\"$temporary/$asset\"\nchecksum=\"$installer.sha256\"\ncleanup() { rm -f -- \"$installer\" \"$checksum\"; rmdir -- \"$temporary\" 2>/dev/null || true; }\ntrap cleanup EXIT HUP INT TERM\nprintf 'Operating system: '; uname -s\nprintf 'Architecture: '; uname -m\ncase \"$(uname -m)\" in\n  aarch64|ppc64le|x86_64) ;;\n  *) printf 'STOP: this Linux architecture has no approved installer in release %s.\\n' \"$tag\" >&2; exit 1 ;;\nesac\ncommand -v curl >/dev/null || { printf 'STOP: curl is unavailable; use the official installer link.\\n' >&2; exit 1; }\ncommand -v sha256sum >/dev/null || { printf 'STOP: sha256sum is unavailable; do not run the installer.\\n' >&2; exit 1; }\ncurl -fL --output \"$installer\" \"https://github.com/conda-forge/miniforge/releases/download/$tag/$asset\"\ncurl -fL --output \"$checksum\" \"https://github.com/conda-forge/miniforge/releases/download/$tag/$asset.sha256\"\n(\n  cd \"$temporary\"\n  sha256sum -c \"$asset.sha256\"\n)\nprintf 'checksum-ok\\n'\nbash \"$installer\"\n)",
                   "platform": "linux",
                   "shell": "bash",
                   "snippet": "miniforge-linux-installer"
                 }
               ],
-              "expected": "The operating system is Linux, the checksum matches, and installation finishes without replacing another Conda installation.",
+              "expected": "The operating system is Linux, the matching versioned installer prints Miniforge3-...sh: OK before it runs, and installation finishes without replacing another Conda installation.",
               "id": "install-miniforge-linux",
-              "instruction": "Run this step only after the recovery check printed no-common-conda-installation. The block downloads the official installer and its published SHA-256 checksum, a fingerprint used to detect a changed or damaged download. It checks that fingerprint before starting the interactive installer. Answer yes when asked to initialize Bash. Do not use sudo.",
+              "instruction": "Skip this step if Self Service or IT already installed Conda; request its supported setup if needed. Run this step only after the recovery check printed no-common-conda-installation. The block downloads the versioned Miniforge 26.5.3-0 installer for this Linux computer and its published SHA-256 checksum into a temporary directory. It verifies the checksum before starting the interactive installer. Answer yes when asked to initialize Bash. Do not use sudo.",
               "links": [
                 {
-                  "label": "Open official Miniforge releases",
-                  "url": "https://github.com/conda-forge/miniforge/releases/latest"
+                  "label": "Open Miniforge release 26.5.3-0",
+                  "url": "https://github.com/conda-forge/miniforge/releases/tag/26.5.3-0"
                 }
               ],
               "machine": "local",
@@ -5881,11 +5934,11 @@
               ],
               "expected": "Conda prints a version and one base installation path without a command-not-found error.",
               "id": "recheck-conda",
-              "instruction": "If Conda already worked in the first check, keep this terminal. If you initialized or installed Conda, close only the terminal used for the setup commands, leave the terminal running the Passport open, and open a new PowerShell window on Windows or Terminal window on macOS or Linux. On Linux, Terminal normally starts Bash. Run the enter-folder command shown in Prepare the Python practice folder, then run both checks below.",
+              "instruction": "If both initial Conda checks worked, keep that terminal. After an installer finishes (including Self Service) or after conda init, close only the command terminal used for setup, leave the terminal running the Passport open, and open a new standalone PowerShell window on Windows or Terminal window on macOS/Linux. Linux Terminal normally starts Bash. Use this separate command terminal for the checks below. A new terminal may start in your home folder; the next step shows how to return to the practice folder.",
               "links": [],
               "machine": "local",
               "on_failure": "Do not install another copy. On Windows, try Miniforge Prompt and run conda info --base. On any platform, request help with the command-not-found message and the base path already found; do not include your username or full home path.",
-              "on_success": "Keep this terminal open and continue to the environment definition.",
+              "on_success": "Keep this command terminal open. Return to the exact practice folder before reading environment.yml.",
               "platforms": [
                 "all"
               ],
@@ -5894,32 +5947,32 @@
             {
               "commands": [
                 {
-                  "command": "Get-Content -LiteralPath environment.yml",
+                  "command": "(Get-Location).Path\ngit rev-parse --show-toplevel\ngit status --short --branch\nGet-Content -LiteralPath environment.yml",
                   "platform": "windows",
                   "shell": "powershell"
                 },
                 {
-                  "command": "cat environment.yml",
+                  "command": "pwd -P\ngit rev-parse --show-toplevel\ngit status --short --branch\ncat environment.yml",
                   "platform": "macos",
                   "shell": "zsh"
                 },
                 {
-                  "command": "cat environment.yml",
+                  "command": "pwd -P\ngit rev-parse --show-toplevel\ngit status --short --branch\ncat environment.yml",
                   "platform": "linux",
                   "shell": "bash"
                 }
               ],
-              "expected": "The file names conda-forge, nodefaults, and Python 3.11, and it contains no machine-specific path.",
+              "expected": "The current folder and Git root both identify the Passport practice folder, the practice branch is active, and the file names conda-forge, nodefaults and Python 3.11. Windows may display the same folder with backslashes or forward slashes.",
               "id": "read-definition",
-              "instruction": "Open environment.yml at the practice repository root. This versioned file selects conda-forge, uses nodefaults so personal Conda settings cannot add another package channel, and pins Python 3.11. Do not edit it in this exercise.",
+              "instruction": "In the new command terminal, first run the enter-folder command from the Practice folder ready box under Prepare the Python practice folder. If that box is missing after a page reload, press Prepare practice folder to show it again; this reuses your existing folder. Then run the read-only checks below. The first two paths must identify the same folder as the Passport path. The branch must be practice/ followed by your GitHub username in lowercase. environment.yml at that root selects conda-forge, nodefaults and Python 3.11. Keep the file unchanged.",
               "links": [],
               "machine": "local",
-              "on_failure": "Return to Prepare practice folder if environment.yml is missing or changed; do not invent a replacement.",
+              "on_failure": "Stop if a path or branch differs, Git says not a repository, or the file is missing or changed. Copy the enter-folder command again and repeat these checks. Do not create a replacement environment.yml, run git init, clone again, or change branches to hide the error. Ask for help with the named failed check, without sharing private paths.",
               "on_success": "Inspect the .venv target before creating it.",
               "platforms": [
                 "all"
               ],
-              "title": "Read the environment definition"
+              "title": "Return to the practice folder and read the definition"
             },
             {
               "commands": [
@@ -6004,12 +6057,47 @@
               "instruction": "If the earlier path check printed existing-conda-environment, keep it and let this command report reused-conda-environment. Otherwise, create the project-local .venv from the committed environment.yml. Do not install packages into base and do not replace the definition with a manual package list.",
               "links": [],
               "machine": "local",
-              "on_failure": "Read the first Conda or environment error. Do not rerun with administrator rights, follow a link target, or delete an unrelated environment.",
-              "on_success": "Activate the environment.",
+              "on_failure": "If Conda reports CondaToSNonInteractiveError for repo.anaconda.com/pkgs/main or /pkgs/r, use the next recovery step. Do not accept terms just to unblock this exercise. For other failures, stop and ask for help; preserve any existing or incomplete .venv.",
+              "on_success": "If creation succeeded or the command printed reused-conda-environment, skip the channel-terms recovery and continue at Activate the project environment.",
               "platforms": [
                 "all"
               ],
               "title": "Create or reuse the project Conda environment"
+            },
+            {
+              "commands": [
+                {
+                  "command": "& {\n  if (Get-Item -Force -LiteralPath .venv -ErrorAction SilentlyContinue) { throw \"STOP: .venv already exists; return to Inspect the environment path. Nothing was replaced.\" }\n  git ls-files --error-unmatch -- environment.yml *> $null\n  if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath environment.yml -PathType Leaf)) { throw \"STOP: use environment.yml in the practice repository\" }\n  git diff --quiet -- environment.yml\n  if ($LASTEXITCODE -ne 0) { throw \"STOP: environment.yml has changed; return to Read the environment definition\" }\n  git diff --cached --quiet -- environment.yml\n  if ($LASTEXITCODE -ne 0) { throw \"STOP: environment.yml has staged changes; return to Read the environment definition\" }\n  git check-ignore -q --no-index .venv/conda-meta/history\n  if ($LASTEXITCODE -ne 0) { throw \"STOP: .venv must be ignored by Git\" }\n  $PassportCondaVersion = conda --version\n  if ($LASTEXITCODE -ne 0) { throw \"STOP: Conda version could not be checked\" }\n  $PassportVersion = [regex]::Match([string]$PassportCondaVersion, '^conda (\\d+)\\.(\\d+)\\.(\\d+)$')\n  if (-not $PassportVersion.Success -or [int]$PassportVersion.Groups[1].Value -lt 26 -or ([int]$PassportVersion.Groups[1].Value -eq 26 -and [int]$PassportVersion.Groups[2].Value -lt 3)) { throw \"STOP: this recovery needs stable Conda 26.3 or newer. Ask IT about an approved update; do not reinstall or accept terms to unblock this exercise.\" }\n  conda create --prefix ./.venv --file environment.yml --override-channels --channel conda-forge --no-default-packages -y\n  if ($LASTEXITCODE -ne 0) { throw \"STOP: Conda recovery failed; keep the error type and ask for help\" }\n}",
+                  "platform": "windows",
+                  "shell": "powershell"
+                },
+                {
+                  "command": "(\nif [ -e .venv ] || [ -L .venv ]; then\n  printf 'STOP: .venv already exists; return to Inspect the environment path. Nothing was replaced.\\n' >&2\n  exit 1\nfi\ngit ls-files --error-unmatch -- environment.yml >/dev/null 2>&1 &&\n  git diff --quiet -- environment.yml && git diff --cached --quiet -- environment.yml &&\n  [ -f environment.yml ] || { printf 'STOP: use the unchanged environment.yml in the practice repository.\\n' >&2; exit 1; }\ngit check-ignore -q --no-index .venv/conda-meta/history || { printf 'STOP: .venv must be ignored by Git.\\n' >&2; exit 1; }\npassport_conda_version=\"$(conda --version)\" || exit 1\nprintf '%s\\n' \"$passport_conda_version\" | awk '\n  $1 == \"conda\" && $2 ~ /^[0-9]+\\.[0-9]+\\.[0-9]+$/ {\n    split($2, v, \".\"); if (v[1] > 26 || (v[1] == 26 && v[2] >= 3)) ok = 1\n  }\n  END { exit !ok }\n' || { printf 'STOP: this recovery needs stable Conda 26.3 or newer. Ask IT about an approved update; do not reinstall or accept terms to unblock this exercise.\\n' >&2; exit 1; }\nconda create --prefix ./.venv --file environment.yml --override-channels --channel conda-forge --no-default-packages -y\n)",
+                  "platform": "macos",
+                  "shell": "zsh"
+                },
+                {
+                  "command": "(\nif [ -e .venv ] || [ -L .venv ]; then\n  printf 'STOP: .venv already exists; return to Inspect the environment path. Nothing was replaced.\\n' >&2\n  exit 1\nfi\ngit ls-files --error-unmatch -- environment.yml >/dev/null 2>&1 &&\n  git diff --quiet -- environment.yml && git diff --cached --quiet -- environment.yml &&\n  [ -f environment.yml ] || { printf 'STOP: use the unchanged environment.yml in the practice repository.\\n' >&2; exit 1; }\ngit check-ignore -q --no-index .venv/conda-meta/history || { printf 'STOP: .venv must be ignored by Git.\\n' >&2; exit 1; }\npassport_conda_version=\"$(conda --version)\" || exit 1\nprintf '%s\\n' \"$passport_conda_version\" | awk '\n  $1 == \"conda\" && $2 ~ /^[0-9]+\\.[0-9]+\\.[0-9]+$/ {\n    split($2, v, \".\"); if (v[1] > 26 || (v[1] == 26 && v[2] >= 3)) ok = 1\n  }\n  END { exit !ok }\n' || { printf 'STOP: this recovery needs stable Conda 26.3 or newer. Ask IT about an approved update; do not reinstall or accept terms to unblock this exercise.\\n' >&2; exit 1; }\nconda create --prefix ./.venv --file environment.yml --override-channels --channel conda-forge --no-default-packages -y\n)",
+                  "platform": "linux",
+                  "shell": "bash"
+                }
+              ],
+              "expected": "Only conda-forge is selected and .venv is created with Python 3.11, without a terms prompt. The command stops before creation if .venv exists, the definition changed, Git does not ignore .venv, or Conda is too old.",
+              "id": "recover-channel-terms",
+              "instruction": "Skip this step if creation or reuse succeeded. Use it only after CondaToSNonInteractiveError names repo.anaconda.com/pkgs/main or /pkgs/r. Some installations check configured channels before reading environment.yml, so nodefaults alone does not prevent this early error. In your local command terminal, at the practice repository root, the guarded command below reads the same definition and selects only conda-forge for this invocation. It needs stable Conda 26.3 or newer, leaves the ToS plugin enabled, and does not change global settings or accept terms. Keep the terminal running the Passport open.",
+              "links": [
+                {
+                  "label": "Understand the error and safe recovery",
+                  "url": "../../../onboarding_IT_guides/python_setup.md#recover-from-a-conda-channel-terms-error"
+                }
+              ],
+              "machine": "local",
+              "on_failure": "Preserve .venv if it exists and return to the inspection step. For old Conda, ask IT about an approved update of the existing installation; do not install a second distribution. If terms, channel-policy, permission, or network errors remain, stop and use the linked help path. Do not disable plugins, change .condarc, or enable automatic ToS acceptance.",
+              "on_success": "Continue at Activate the project environment, then verify the interpreter and pip paths. No reset, new Passport, or edited environment.yml is needed.",
+              "platforms": [
+                "all"
+              ],
+              "title": "Recover only from a Conda channel-terms error"
             },
             {
               "commands": [
@@ -6065,7 +6153,7 @@
               "links": [],
               "machine": "local",
               "on_failure": "Do not install packages until the interpreter path is correct.",
-              "on_success": "If you use an editor for Python, connect it to the same interpreter in the next step.",
+              "on_success": "If you use VS Code, check its Python extension in the next step. Other-editor and terminal-only users can skip that extension step.",
               "platforms": [
                 "all"
               ],
@@ -6073,17 +6161,44 @@
             },
             {
               "commands": [],
-              "expected": "An editor in use names the repository .venv interpreter; terminal-only users keep the verified active terminal.",
-              "id": "editor",
-              "instruction": "Terminal activation and editor selection are separate. If you use VS Code, open the practice repository, press Ctrl+Shift+P on Windows/Linux or Command+Shift+P on macOS, run Python: Select Interpreter, and choose the interpreter inside this repository's .venv folder. For another editor, use its Python interpreter setting and choose the same path printed in the previous step. If you run Python only from the terminal, no editor setting is required.",
+              "expected": "Python by Microsoft is installed and enabled in the current local VS Code workspace. No extra Python installation or new environment is needed.",
+              "id": "python-extension",
+              "instruction": "Skip this step for another editor or terminal-only work. In a local VS Code window, use File > Open Folder to open the exact Practice folder ready path. Open Extensions with Ctrl+Shift+X on Windows/Linux or Command+Shift+X on macOS. Search @id:ms-python.python, choose Python by Microsoft, and click Install if it is missing. If it is installed but disabled, enable it for this workspace. Save your files and reload the VS Code window if prompted; keep the separate Passport terminal open. This extension connects the editor to Python; it does not replace the Conda environment you just verified.",
               "links": [
+                {
+                  "label": "Python extension setup and missing-command help",
+                  "url": "../../../onboarding_IT_guides/vscode.md#python-extension"
+                },
+                {
+                  "label": "Official Python extension by Microsoft",
+                  "url": "https://marketplace.visualstudio.com/items?itemName=ms-python.python"
+                }
+              ],
+              "machine": "local",
+              "on_failure": "If VS Code shows Restricted Mode, use the linked folder-trust guidance before enabling Python features. Trust only the recognized practice folder after reviewing its contents; do not disable Workspace Trust globally. If device policy blocks installation or enabling, ask IT for the approved extension. Keep using the verified command terminal; the terminal-only route remains valid.",
+              "on_success": "Open workspace/python_project/passport_example.py from the Explorer, then select the existing interpreter in the next step.",
+              "platforms": [
+                "all"
+              ],
+              "title": "Install the Python extension if you use VS Code"
+            },
+            {
+              "commands": [],
+              "expected": "The editor selects the same .venv interpreter as the verified command terminal; a new integrated terminal reports that same interpreter and Python 3.11. Terminal-only users keep their verified terminal.",
+              "id": "editor",
+              "instruction": "Terminal activation and editor selection are separate. After the Python extension is enabled and a .py file is open in VS Code, press Ctrl+Shift+P on Windows/Linux or Command+Shift+P on macOS. Run Python: Select Interpreter and select the exact executable printed by Verify the active interpreter, inside this practice folder's .venv. Then open Terminal > New Terminal, return to the practice folder, and repeat Activate the project environment and Verify the active interpreter there. An already-open terminal may still use the previous environment. For another editor, select the same verified interpreter through its settings. Terminal-only users need no editor extension or setting.",
+              "links": [
+                {
+                  "label": "Select the interpreter and recover a missing command",
+                  "url": "../../../onboarding_IT_guides/vscode.md#conda-environments-in-vs-code"
+                },
                 {
                   "label": "Read the VS Code Python environment instructions",
                   "url": "https://code.visualstudio.com/docs/python/environments"
                 }
               ],
               "machine": "local",
-              "on_failure": "Keep using the verified terminal interpreter and correct the editor selection; do not install another Python or recreate the environment.",
+              "on_failure": "If Python: Select Interpreter is missing, return to the Python extension step and check that Python by Microsoft is enabled in this local workspace. If .venv is not listed, use the linked recovery guide. Keep the working terminal environment; do not select base, install another Python, or recreate .venv to make it appear.",
               "on_success": "Run Check my work.",
               "platforms": [
                 "all"

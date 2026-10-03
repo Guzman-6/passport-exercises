@@ -34,7 +34,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Know what Git and GitHub do
@@ -43,7 +43,7 @@ before continuing if these words are new.
 
 Git records versions of files on this computer. A repository is a project folder and its history. A branch keeps one line of work separate. GitHub stores a shared online copy of the repository. A clone is a separate working copy on your computer. Git saves the online address under a short name called a remote; origin is the usual name for the copy you cloned from. GitHub CLI is the program named gh that signs in and performs GitHub actions from a terminal.
 
-- [Open the Git workflow reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/git_workflow.md)
+- [Open the Git workflow reference](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/git_workflow.md)
 
 **Expected:** You can distinguish Git on your computer from GitHub on the web.
 
@@ -168,7 +168,7 @@ Run this only when the previous check showed no account or the wrong account. En
 ```zsh
 (
 printf 'Intended GitHub username: '; read -r github_user
-case "$github_user" in ''|*[!A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\n' >&2; exit 1;; esac
+case "$github_user" in ''|*[^A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\n' >&2; exit 1;; esac
 if ! gh auth switch --hostname github.com --user "$github_user"; then gh auth login --hostname github.com --git-protocol https --web; fi
 gh auth status --active --hostname github.com
 )
@@ -179,7 +179,7 @@ gh auth status --active --hostname github.com
 ```bash
 (
 printf 'Intended GitHub username: '; read -r github_user
-case "$github_user" in ''|*[!A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\n' >&2; exit 1;; esac
+case "$github_user" in ''|*[^A-Za-z0-9-]*) printf 'STOP: invalid GitHub username\n' >&2; exit 1;; esac
 if ! gh auth switch --hostname github.com --user "$github_user"; then gh auth login --hostname github.com --git-protocol https --web; fi
 gh auth status --active --hostname github.com
 )
@@ -365,8 +365,8 @@ online.
 
 Useful references:
 
-- [Git workflow](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/git_workflow.md)
-- [VS Code](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/vscode.md)
+- [Git workflow](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/git_workflow.md)
+- [VS Code](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/vscode.md)
 
 ## Understand Before Accepting AI Output
 

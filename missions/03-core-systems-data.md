@@ -48,7 +48,7 @@ Map code, durable data, temporary files, graphical Windows work, and scheduled c
 
 Identify the role of each location: GitHub for reviewed source code, NAS for durable shared project data, Blade for licensed graphical Windows work, Euler for scheduled computation, and scratch or temporary folders for replaceable working files. Scheduled computation means submitting a program with requested CPU, memory, and time so a scheduler can choose where and when it runs.
 
-- [Open the complete system decision table](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/environments-overview.md)
+- [Open the complete system decision table](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/environments-overview.md)
 
 **Expected:** Each system has one clear purpose and temporary storage is not treated as durable.
 
@@ -142,14 +142,14 @@ feedback and can be retried without penalty.
 
 Do not guess a storage path or AI approval. Record the unresolved decision and
 ask the project information owner or supervisor. The
-[data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/data-and-ai.md) defines the escalation
+[data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/data-and-ai.md) defines the escalation
 boundary.
 
 Useful references:
 
-- [Environments Overview](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/environments-overview.md)
-- [Data And Ai Safety](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/data-and-ai-safety.md)
-- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/policy/data-and-ai.md)
+- [Environments Overview](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/environments-overview.md)
+- [Data And Ai Safety](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/data-and-ai-safety.md)
+- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/data-and-ai.md)
 
 ## Understand Before Accepting AI Output
 

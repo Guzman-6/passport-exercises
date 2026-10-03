@@ -129,14 +129,14 @@ feedback and can be retried without penalty.
 
 Preserve data and access state while ownership or retention is unclear. Do not
 perform broad deletion to “clean up.” Use the
-[project handover lab](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/project-handover.md) and escalate to
+[project handover lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/project-handover.md) and escalate to
 the relevant owner.
 
 Useful references:
 
-- [Project Handover](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/labs/project-handover.md)
-- [Supervisor and staff track](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/tracks/supervisor-staff.md)
-- [Completion record](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/assessment/completion-record.md)
+- [Project Handover](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/project-handover.md)
+- [Supervisor and staff track](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/tracks/supervisor-staff.md)
+- [Completion record](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/assessment/completion-record.md)
 
 ## Understand Before Accepting AI Output
 

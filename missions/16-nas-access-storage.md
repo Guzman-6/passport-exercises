@@ -35,7 +35,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Know what the NAS is
@@ -44,7 +44,7 @@ before continuing if these words are new.
 
 NAS means network-attached storage. It is the lab's durable shared project drive reached over the ETH network. It is not inside your laptop and is not a general folder open to everyone. High input/output (high-I/O) work repeatedly reads or writes a large amount of data; do not run that kind of Euler job directly against the NAS.
 
-- [Open the NAS reference](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md)
+- [Open the NAS reference](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md)
 
 **Expected:** You can distinguish durable NAS project data from local, GitHub, and temporary storage.
 
@@ -84,7 +84,7 @@ Use the campus network or ETH VPN before connecting the network drive. VPN means
 
 Press Win+E, right-click This PC, choose Map network drive, select an unused drive letter, and enter \\d.ethz.ch\groups\mavt\ide\Projects\<SupervisorFirstName>. Replace only the placeholder. Select Use a different account if needed and sign in as d\<eth-username> with your own ETH password.
 
-- [Open the illustrated NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md)
+- [Open the illustrated NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md)
 
 **Expected:** The approved supervisor folder appears under This PC.
 
@@ -98,7 +98,7 @@ Press Win+E, right-click This PC, choose Map network drive, select an unused dri
 
 Open Finder, press Command+K, and enter smb://d.ethz.ch/groups/mavt/ide/Projects/<SupervisorFirstName>. Replace only the placeholder, choose Connect, and sign in as d\<eth-username> with your own ETH password.
 
-- [Open the illustrated NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md)
+- [Open the illustrated NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md)
 
 **Expected:** The approved supervisor folder appears under Finder Locations.
 
@@ -112,7 +112,7 @@ Open Finder, press Command+K, and enter smb://d.ethz.ch/groups/mavt/ide/Projects
 
 Open your file manager, choose Other Locations or Connect to Server, and enter smb://d.ethz.ch/groups/mavt/ide/Projects/<SupervisorFirstName>. Replace only the placeholder and sign in as d\<eth-username> with your own ETH password. Do not use sudo, edit /etc/fstab, or install a system-wide network file-sharing service for onboarding.
 
-- [Open the complete NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md)
+- [Open the complete NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md)
 
 **Expected:** The approved supervisor folder opens in the file manager.
 
@@ -209,8 +209,8 @@ the share root.
 
 Useful references:
 
-- [NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md)
-- [Laptop, NAS, Blade, and Euler](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/environments-overview.md)
+- [NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md)
+- [Laptop, NAS, Blade, and Euler](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/environments-overview.md)
 
 ## Understand Before Accepting AI Output
 

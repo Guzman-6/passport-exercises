@@ -37,7 +37,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Check the network or VPN
@@ -75,7 +75,7 @@ Enter the short ETH username, not an email address. A host fingerprint is a shor
 ```zsh
 (
 printf 'Short ETH username: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$eth_user@euler.ethz.ch" 'echo password-login-ok'
 )
 ```
@@ -85,7 +85,7 @@ ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInter
 ```bash
 (
 printf 'Short ETH username: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$eth_user@euler.ethz.ch" 'echo password-login-ok'
 )
 ```
@@ -209,7 +209,7 @@ First test an existing euler alias when it resolves to this Euler account. Proxy
 ```zsh
 (
 printf 'Short ETH username: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 
 resolved="$(ssh -G euler 2>/dev/null)" || {
   printf 'STOP: existing SSH config is invalid\n' >&2
@@ -248,7 +248,7 @@ ssh -F none -i "$key" -o IdentitiesOnly=yes -o PreferredAuthentications=publicke
 ```bash
 (
 printf 'Short ETH username: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 
 resolved="$(ssh -G euler 2>/dev/null)" || {
   printf 'STOP: existing SSH config is invalid\n' >&2
@@ -336,7 +336,7 @@ printf 'key-pair-matches\n'
 )
 ```
 
-- [Open Euler SSH troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/troubleshooting.md)
+- [Open Euler SSH troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/troubleshooting.md)
 
 **Expected:** Both fingerprint lines contain the same SHA256 value and the final line is key-pair-matches.
 
@@ -397,17 +397,42 @@ ssh-keygen -t ed25519 -a 100 -f "$key" -C "$USER@euler"
 
 **Where:** The laptop or desktop in front of you
 
-Send only the contents of id_ed25519_euler.pub through the working password login. Euler stores accepted public keys in a file named authorized_keys. The remote command removes a possible Windows carriage return, preserves all existing entries, and avoids adding a duplicate exact line.
+Run this on your own computer, not inside an Euler session. Send only id_ed25519_euler.pub through the working password login. Spaces in your Windows profile or key comment are supported; do not rename your profile or move your keys. The command preserves existing authorized_keys entries and avoids adding a duplicate exact line.
 
 **Open PowerShell on your Windows computer, then run:**
 
 ```powershell
 & {
+  $ErrorActionPreference = "Stop"
   $EulerUser = Read-Host "Short ETH username used in the password test"
   if ($EulerUser -notmatch "^[A-Za-z0-9._-]+$") { throw "STOP: invalid ETH username" }
   $PublicKey = Join-Path $env:USERPROFILE ".ssh\id_ed25519_euler.pub"
-  if (-not (Test-Path -LiteralPath $PublicKey)) { throw "STOP: public key is missing" }
-  Get-Content -LiteralPath $PublicKey | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$EulerUser@euler.ethz.ch" 'umask 077; mkdir -p ~/.ssh; chmod 700 ~/.ssh; touch ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys; key="$(tr -d "\r")"; grep -Fqx "$key" ~/.ssh/authorized_keys || printf "%s\n" "$key" >> ~/.ssh/authorized_keys; printf "public-key-installed\n"'
+  if (-not (Test-Path -LiteralPath $PublicKey -PathType Leaf)) { throw "STOP: public key is missing" }
+  $KeyText = (Get-Content -LiteralPath $PublicKey -Raw -Encoding UTF8).Trim()
+  if ($KeyText -notmatch '^ssh-ed25519 [A-Za-z0-9+/]+={0,2}(?: [^\r\n]*)?$') { throw "STOP: expected one Ed25519 public-key line; keep the files and request help" }
+  $KeyData = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($KeyText))
+  $Script = @'
+set -eu
+key=$(printf %s __PUBLIC_KEY_DATA__ | base64 -d)
+umask 077
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+if grep -Fqx -- "$key" ~/.ssh/authorized_keys; then
+  :
+else
+  status=$?
+  [ "$status" -eq 1 ] || exit "$status"
+  printf "\n%s\n" "$key" >> ~/.ssh/authorized_keys
+fi
+grep -Fqx -- "$key" ~/.ssh/authorized_keys
+printf "public-key-installed\n"
+'@
+  $Script = $Script.Replace('__PUBLIC_KEY_DATA__', $KeyData).Replace("`r", "")
+  $ScriptData = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Script + "`n"))
+  $ScriptData | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$EulerUser@euler.ethz.ch" "bash -o pipefail -c 'base64 -d | sh'"
+  if ($LASTEXITCODE -ne 0) { throw "STOP: public-key installation failed; keep both key files and request help with the error" }
 }
 ```
 
@@ -416,10 +441,26 @@ Send only the contents of id_ed25519_euler.pub through the working password logi
 ```zsh
 (
 printf 'Short ETH username used in the password test: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 public_key="$HOME/.ssh/id_ed25519_euler.pub"
 test -f "$public_key" || { printf 'STOP: public key is missing\n' >&2; exit 1; }
-cat "$public_key" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$eth_user@euler.ethz.ch" 'umask 077; mkdir -p ~/.ssh; chmod 700 ~/.ssh; touch ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys; key="$(tr -d "\r")"; grep -Fqx "$key" ~/.ssh/authorized_keys || printf "%s\n" "$key" >> ~/.ssh/authorized_keys; printf "public-key-installed\n"'
+cat "$public_key" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$eth_user@euler.ethz.ch" 'set -eu
+key="$(tr -d "\r")"
+[ -n "$key" ] || { printf "STOP: empty public key\n" >&2; exit 1; }
+umask 077
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+if grep -Fqx -- "$key" ~/.ssh/authorized_keys; then
+  :
+else
+  status=$?
+  [ "$status" -eq 1 ] || exit "$status"
+  printf "\n%s\n" "$key" >> ~/.ssh/authorized_keys
+fi
+grep -Fqx -- "$key" ~/.ssh/authorized_keys
+printf "public-key-installed\n"'
 )
 ```
 
@@ -428,18 +469,36 @@ cat "$public_key" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentica
 ```bash
 (
 printf 'Short ETH username used in the password test: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 public_key="$HOME/.ssh/id_ed25519_euler.pub"
 test -f "$public_key" || { printf 'STOP: public key is missing\n' >&2; exit 1; }
-cat "$public_key" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$eth_user@euler.ethz.ch" 'umask 077; mkdir -p ~/.ssh; chmod 700 ~/.ssh; touch ~/.ssh/authorized_keys; chmod 600 ~/.ssh/authorized_keys; key="$(tr -d "\r")"; grep -Fqx "$key" ~/.ssh/authorized_keys || printf "%s\n" "$key" >> ~/.ssh/authorized_keys; printf "public-key-installed\n"'
+cat "$public_key" | ssh -F none -o PubkeyAuthentication=no -o PasswordAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive,password "$eth_user@euler.ethz.ch" 'set -eu
+key="$(tr -d "\r")"
+[ -n "$key" ] || { printf "STOP: empty public key\n" >&2; exit 1; }
+umask 077
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+if grep -Fqx -- "$key" ~/.ssh/authorized_keys; then
+  :
+else
+  status=$?
+  [ "$status" -eq 1 ] || exit "$status"
+  printf "\n%s\n" "$key" >> ~/.ssh/authorized_keys
+fi
+grep -Fqx -- "$key" ~/.ssh/authorized_keys
+printf "public-key-installed\n"'
 )
 ```
 
-**Expected:** After the ETH password, Euler prints public-key-installed and no SSH or permission error.
+- [Recover a failed Windows public-key installation](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/troubleshooting.md#windows-public-key-installation-reports-grep-errors)
+
+**Expected:** After the ETH password, Euler prints public-key-installed with no error. This confirms the exact public-key line is present; the next key-only test must still pass.
 
 **Continue when:** Run the direct key-only test.
 
-**If not:** Do not edit authorized_keys manually; diagnose the reported login or permission error.
+**If not:** Stop at any error, even if an older command printed public-key-installed. Keep both key files. For grep errors or public-key-installedn from the older Windows command, follow the linked recovery guide; do not delete authorized_keys or regenerate keys.
 
 ### 8. Prove direct key-only access
 
@@ -463,7 +522,7 @@ Run the direct test with password and keyboard-interactive authentication disabl
 ```zsh
 (
 printf 'Short ETH username: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 ssh -F none -i "$HOME/.ssh/id_ed25519_euler" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no "$eth_user@euler.ethz.ch" 'echo key-ok'
 )
 ```
@@ -473,7 +532,7 @@ ssh -F none -i "$HOME/.ssh/id_ed25519_euler" -o IdentitiesOnly=yes -o PreferredA
 ```bash
 (
 printf 'Short ETH username: '; read -r eth_user
-case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
 ssh -F none -i "$HOME/.ssh/id_ed25519_euler" -o IdentitiesOnly=yes -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no "$eth_user@euler.ethz.ch" 'echo key-ok'
 )
 ```
@@ -601,7 +660,7 @@ The SSH config file stores named connection settings. This guarded command backs
 (
   set -eu
   printf 'Short ETH username: '; read -r eth_user
-  case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+  case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
   ssh_dir="$HOME/.ssh"; config="$ssh_dir/config"; include_dir="$ssh_dir/passport.d"; backup_dir="$ssh_dir/passport-backups"; euler_config="$include_dir/euler.conf"; key="$ssh_dir/id_ed25519_euler"
   [ ! -L "$config" ] || { printf "STOP: %s is a symbolic link; no file was changed\n" "$config" >&2; exit 1; }
   [ ! -L "$euler_config" ] || { printf "STOP: %s is a symbolic link; no file was changed\n" "$euler_config" >&2; exit 1; }
@@ -716,7 +775,7 @@ EOF
 (
   set -eu
   printf 'Short ETH username: '; read -r eth_user
-  case "$eth_user" in ''|*[!A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
+  case "$eth_user" in ''|*[^A-Za-z0-9._-]*) printf 'STOP: invalid ETH username\n' >&2; exit 1;; esac
   ssh_dir="$HOME/.ssh"; config="$ssh_dir/config"; include_dir="$ssh_dir/passport.d"; backup_dir="$ssh_dir/passport-backups"; euler_config="$include_dir/euler.conf"; key="$ssh_dir/id_ed25519_euler"
   [ ! -L "$config" ] || { printf "STOP: %s is a symbolic link; no file was changed\n" "$config" >&2; exit 1; }
   [ ! -L "$euler_config" ] || { printf "STOP: %s is a symbolic link; no file was changed\n" "$euler_config" >&2; exit 1; }
@@ -897,7 +956,7 @@ ssh -o PreferredAuthentications=publickey -o PasswordAuthentication=no -o KbdInt
 
 If you need VS Code on an allocated compute node, follow the separate euler-tunnel procedure now. It depends on the working euler alias.
 
-- [Open the euler-tunnel procedure](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/euler-tunnel.md)
+- [Open the euler-tunnel procedure](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/euler-tunnel.md)
 
 **Expected:** The direct euler alias already prints config-ok.
 
@@ -919,14 +978,14 @@ feedback and can be retried without penalty.
 
 Stop at the first failed gate. Do not regenerate repeatedly, overwrite keys,
 replace the whole SSH config, or loosen permissions broadly. Use
-[Euler SSH troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/troubleshooting.md)
+[Euler SSH troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/troubleshooting.md)
 and share only the exact error plus the requested `ssh -G` fields, which exclude
 credentials and private-key contents.
 
 Useful references:
 
-- [Access And Ssh](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/access-and-ssh.md)
-- [Euler troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/euler/troubleshooting.md)
+- [Access And Ssh](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/access-and-ssh.md)
+- [Euler troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/troubleshooting.md)
 
 ## Understand Before Accepting AI Output
 

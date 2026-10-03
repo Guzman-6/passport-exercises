@@ -37,7 +37,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Identify the components
@@ -46,7 +46,7 @@ before continuing if these words are new.
 
 Identify each part of the setup: the model generates a response; the provider or gateway supplies access and billing; the coding agent can read files or request tools; the editor is the application where you control it. For example, OpenRouter is a gateway, not a coding agent. You do not need to configure a tool protocol for this lesson.
 
-- [Read agents and interfaces](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/agents-and-interfaces.md)
+- [Read agents and interfaces](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/agents-and-interfaces.md)
 
 **Expected:** You can name the role of every component in the chosen setup.
 
@@ -60,7 +60,7 @@ Identify each part of the setup: the model generates a response; the provider or
 
 Use exactly one option. Eligible students use VS Code with GitHub Copilot Student. If you deliberately choose Zed with a personal OpenRouter account, skip the two Copilot-only steps and follow the linked Zed procedure. Use another option only when its owner has supplied written setup, data, cost, and permission rules. If no option is available, leave this lesson pending and continue the non-AI lessons.
 
-- [Compare supported AI setup options](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/README.md)
+- [Compare supported AI setup options](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/README.md)
 
 **Expected:** You have selected one option and can name its account owner, payer, editor, and agent interface.
 
@@ -76,7 +76,7 @@ Do this step only for the Copilot option. After GitHub Education approval, open 
 
 - [Open Education benefits](https://github.com/settings/education/benefits)
 
-- [Read Copilot Student setup](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/vscode-copilot-student.md)
+- [Read Copilot Student setup](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/vscode-copilot-student.md)
 
 **Expected:** GitHub identifies the Student benefit without a paid checkout.
 
@@ -92,7 +92,7 @@ Do this step only for the Copilot option. VS Code is the editor used here. An ex
 
 - [Download VS Code](https://code.visualstudio.com/)
 
-- [Follow the IDEAL Lab VS Code setup](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/vscode.md)
+- [Follow the IDEAL Lab VS Code setup](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/vscode.md)
 
 **Expected:** VS Code shows the intended GitHub account and opens its Chat or Agent interface.
 
@@ -106,7 +106,7 @@ Do this step only for the Copilot option. VS Code is the editor used here. An ex
 
 Do this step only for the Zed option; Copilot users skip it. Follow the linked procedure from start to finish: create a separate personal key, set a low key limit before use, and enter it only through Zed's provider UI so the operating-system keychain stores it. The lab does not provide credits, reimburse charges, or accept liability for personal usage or loss.
 
-- [Read the optional Zed and OpenRouter procedure](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/zed-openrouter.md)
+- [Read the optional Zed and OpenRouter procedure](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/zed-openrouter.md)
 
 **Expected:** For the Zed option, a dedicated limited key is stored outside files and Git. For the Copilot option, this step is skipped.
 
@@ -187,14 +187,14 @@ feedback and can be retried without penalty.
 ## If Blocked
 
 Use the offline route. Purchasing access is never a recovery requirement. For
-technical symptoms, use [AI-agent troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/troubleshooting/ai-agents.md).
+technical symptoms, use [AI-agent troubleshooting](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/troubleshooting/ai-agents.md).
 
 Useful references:
 
-- [AI coding agents](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/README.md)
-- [Vscode Copilot Student](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/vscode-copilot-student.md)
-- [Zed Openrouter](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/zed-openrouter.md)
-- [Cost Context And Failures](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/reference/ai/cost-context-and-failures.md)
+- [AI coding agents](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/README.md)
+- [Vscode Copilot Student](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/vscode-copilot-student.md)
+- [Zed Openrouter](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/zed-openrouter.md)
+- [Cost Context And Failures](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/ai/cost-context-and-failures.md)
 
 ## Understand Before Accepting AI Output
 

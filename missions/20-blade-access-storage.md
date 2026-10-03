@@ -12,7 +12,10 @@ Blade is not the lab's permanent storage or its heavy-compute cluster. `P:` maps
 
 ## Worked Example
 
-The durable copy remains on P:, D: is clean, C: was not used, and no heavy unattended compute was started.
+The test verifies the copy to P:, then removes both random probe files from
+D: and P:. No probe file remains. Real project results belong on P:; they must
+be retained rather than cleaned up like this disposable test. C: was not used,
+and no heavy unattended compute was started.
 
 Check these points:
 
@@ -34,7 +37,7 @@ computer to do one task. A terminal is the text application in which a
 shell reads that command. Open PowerShell on Windows or the application
 named Terminal on macOS or Linux. The application starts the correct
 shell automatically; do not install a separate Bash or zsh application. Read
-[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/command-line-basics.md)
+[Terminal and command basics](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/command-line-basics.md)
 before continuing if these words are new.
 
 ### 1. Confirm Blade is the right system
@@ -69,7 +72,7 @@ Use the campus network or connect ETH VPN before opening RDP. VPN means Virtual 
 
 Open Start, search for Remote Desktop Connection, and open it. Enter mavt-ide-s100w.d.ethz.ch as the computer. At the credential prompt choose More choices and Use a different account if needed, then sign in as d\<eth-username> with your own ETH password.
 
-- [Open the complete Blade guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/remote.md)
+- [Open the complete Blade guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/remote.md)
 
 - [Microsoft: use Remote Desktop on Windows](https://support.microsoft.com/en-us/windows/experience/connectivity-networking/how-to-use-remote-desktop)
 
@@ -85,7 +88,7 @@ Open Start, search for Remote Desktop Connection, and open it. Enter mavt-ide-s1
 
 Install Microsoft Windows App from the Mac App Store if it is absent. Open Windows App, select Devices, select +, choose Add PC, enter mavt-ide-s100w.d.ethz.ch in PC Name, and select Add. Double-click the new PC. At the credential prompt sign in as d\<eth-username> with your own ETH password; do not reuse another person's saved account.
 
-- [Open the complete Blade guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/remote.md)
+- [Open the complete Blade guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/remote.md)
 
 - [Microsoft: connect to a remote PC from macOS](https://learn.microsoft.com/en-us/windows-app/get-started-connect-devices-desktops-apps)
 
@@ -101,7 +104,7 @@ Install Microsoft Windows App from the Mac App Store if it is absent. Open Windo
 
 Search your applications for Remmina. If it is installed, open it, choose RDP, enter mavt-ide-s100w.d.ethz.ch as the server, and sign in as d\<eth-username> with your own ETH password. If Remmina is absent on a personal Linux computer, use your distribution's Software application or the official Remmina installation guide; install the RDP client and plugin only. On an ETH-managed computer, request software installation instead. Do not install a remote-desktop server, change a firewall, or alter Blade security settings.
 
-- [Open the complete Blade guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/remote.md)
+- [Open the complete Blade guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/remote.md)
 
 - [Official Remmina installation guide](https://remmina.org/how-to-install-remmina/)
 
@@ -243,12 +246,12 @@ feedback and can be retried without penalty.
 Check VPN, exact hostname, account format, and assigned supervisor folder. Do
 not use another person's saved credentials, install remote services, or select
 another mapped drive. Use the
-[remote access guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/remote.md).
+[remote access guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/remote.md).
 
 Useful references:
 
-- [Blade remote access](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/remote.md)
-- [NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/onboarding_IT_guides/nas_ideal.md)
+- [Blade remote access](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/remote.md)
+- [NAS guide](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/nas_ideal.md)
 
 ## Understand Before Accepting AI Output
 

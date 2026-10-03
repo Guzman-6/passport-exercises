@@ -82,7 +82,7 @@ Store local secrets only in an approved secret store or an ignored local file. I
 
 If a credential may be exposed, revoke it, meaning disable it, or rotate it, meaning replace it with a new one. Do this first, preserve useful evidence, and report through the private incident path. Deleting a message or a recorded Git version is not sufficient.
 
-- [Open the incident and help procedure](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md)
+- [Open the incident and help procedure](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md)
 
 **Expected:** The compromised credential can no longer be used.
 
@@ -115,13 +115,13 @@ feedback and can be retried without penalty.
 ## If Blocked
 
 If you suspect a real exposure, stop the exercise and follow
-[Incidents and getting help](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md). Do not
+[Incidents and getting help](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md). Do not
 post the secret in a GitHub issue or ask an AI tool to inspect it.
 
 Useful references:
 
-- [Accounts And Security](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/accounts-and-security.md)
-- [Incidents And Help](https://github.com/IDEALLab/onboarding-IT/blob/docs/llm-agent-overhaul/docs/core/incidents-and-help.md)
+- [Accounts And Security](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/accounts-and-security.md)
+- [Incidents And Help](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/incidents-and-help.md)
 
 ## Understand Before Accepting AI Output
 
