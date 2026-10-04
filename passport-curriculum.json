@@ -1488,9 +1488,61 @@
     },
     "core-systems-data": {
       "activity": {
-        "action": "Map code, durable data, temporary files, graphical Windows work, and scheduled computation to the correct lab systems.",
-        "expected_result": "The map separates code history, durable storage, temporary storage, graphical access, and scheduled computation.",
+        "action": "Use the fictional beam-test project to decide where its code, input data, temporary files and retained result belong. No files or permissions are changed.",
+        "expected_result": "You can explain which copy must survive, who approves its location, and where the calculation runs. The check assesses your answers, not real storage or access.",
         "kind": "knowledge_check",
+        "learning_checks": [
+          {
+            "answer": [
+              "correct"
+            ],
+            "critical": false,
+            "feedback": "A checksum confirms the content of a copy. It does not change storage lifetime or authorize a destination. An irreplaceable result needs a verified approved durable copy.",
+            "hint": "What happens if scratch is purged after the checksum check?",
+            "id": "verified_temporary_copy",
+            "options": [
+              {
+                "id": "wrong_a",
+                "label": "Yes; the checksum makes scratch durable."
+              },
+              {
+                "id": "correct",
+                "label": "No; verify a copy in the owner-approved durable location before cleanup."
+              },
+              {
+                "id": "wrong_b",
+                "label": "Yes; rename its folder to archive."
+              }
+            ],
+            "prompt": "A result in scratch matches the original checksum. It cannot be regenerated. Is it ready for the project to keep?",
+            "type": "single"
+          },
+          {
+            "answer": [
+              "correct"
+            ],
+            "critical": false,
+            "feedback": "Sharing approved data does not mean sharing one writable Git working tree. Separate clones let each student make and review their own change before proposing it to the shared repository.",
+            "hint": "Can one student overwrite what the other is currently editing?",
+            "id": "shared_code_edit",
+            "options": [
+              {
+                "id": "wrong_a",
+                "label": "Edit one shared writable Git checkout next to the data."
+              },
+              {
+                "id": "correct",
+                "label": "Use separate clones and propose reviewed changes through GitHub."
+              },
+              {
+                "id": "wrong_b",
+                "label": "Email two complete folders named final and final2."
+              }
+            ],
+            "prompt": "Two students need to change analyse.py. The dataset already has an approved shared NAS folder. How should they edit the code?",
+            "type": "single"
+          }
+        ],
         "machine": "browser",
         "questions": [
           {
@@ -1639,110 +1691,105 @@
           }
         ],
         "recipe": {
-          "intro": "A CPU is the general-purpose processor used by most programs. A GPU is an accelerator used by compatible programs. Durable storage is intended to keep required files under an approved recovery plan; temporary storage may be purged. A GUI is an application controlled with windows, menus, and buttons. For each item, decide who owns it, how long it must survive, and where the work actually runs.",
+          "intro": "Stay on this page. For each part of the fictional project, make your choice before opening Explanation and help. Do not move real files, connect to a service or change permissions.",
           "steps": [
             {
               "commands": [],
-              "expected": "Each system has one clear purpose and temporary storage is not treated as durable.",
+              "expected": "Separate the files that must survive from working copies that can be rebuilt.",
               "id": "system-map",
-              "instruction": "Identify the role of each location: GitHub for reviewed source code, NAS for durable shared project data, Blade for licensed graphical Windows work, Euler for scheduled computation, and scratch or temporary folders for replaceable working files. Scheduled computation means submitting a program with requested CPU, memory, and time so a scheduler can choose where and when it runs.",
-              "links": [
-                {
-                  "label": "Open the complete system decision table",
-                  "url": "../../../docs/core/environments-overview.md"
-                }
-              ],
+              "instruction": "Two students study a beam. They have analyse.py (their program), measurements.csv (approved input data), a replaceable mesh for calculations, and report.pdf (the result to keep). Which of these must remain available after a temporary folder is cleaned?",
+              "links": [],
               "machine": "browser",
-              "on_failure": "Do not answer from familiarity or free disk space; reread the decision table.",
-              "on_success": "Place source code first.",
+              "on_failure": "If the only copy cannot be recreated, treat that as an unresolved preservation decision; do not call it temporary.",
+              "on_success": "Durable means intended to retain required files under an approved ownership and recovery plan. Temporary files may be purged. A file extension does not tell you its approval or lifetime.",
               "platforms": [
                 "all"
               ],
-              "title": "Read the system map before placing files"
+              "title": "Follow one project"
             },
             {
               "commands": [],
-              "expected": "Code has version history and no shared writable working tree.",
+              "expected": "Each person has their own working copy; reviewed code has a shared history.",
               "id": "code",
-              "instruction": "Keep source code and reviewable text in GitHub. Each contributor uses a separate clone, meaning their own working copy of the project. A branch keeps one line of work separate, and a pull request asks for that branch to be reviewed before it is combined with shared work.",
+              "instruction": "Both students want to edit the program. Choose how they can propose changes without overwriting one shared working copy.",
               "links": [],
               "machine": "browser",
-              "on_failure": "Move code collaboration out of a shared NAS checkout before continuing.",
-              "on_success": "Continue to durable project data.",
+              "on_failure": "Do not invent a shared checkout for this plan. The later Git lesson teaches how to propose a reviewed change.",
+              "on_success": "GitHub stores reviewed source code and small text files. Each student uses a separate clone, their own copy for editing. A shared writable NAS checkout is not the collaboration route.",
               "platforms": [
                 "all"
               ],
-              "title": "Place source code"
+              "title": "Share changes to analyse.py"
             },
             {
               "commands": [],
-              "expected": "The durable copy has a named owner and approved access.",
+              "expected": "The main input has a named information owner and an approved durable location.",
               "id": "durable-data",
-              "instruction": "Use the supervisor-approved NAS project folder or another explicitly approved durable project store. A dataset is a collection of research data; a checkpoint is a saved state from a computation or model; a deliverable is an output the project must keep.",
+              "instruction": "The supervisor has named an approved NAS project folder for measurements.csv. Who decides whether a second service is allowed to hold that dataset?",
               "links": [],
               "machine": "browser",
-              "on_failure": "Ask the supervisor which project location holds the main durable copy; do not invent one.",
-              "on_success": "Continue to temporary data.",
+              "on_failure": "For a real project, ask the information owner about an unnamed location. No approval or transfer is performed here.",
+              "on_success": "The NAS is durable shared storage for approved project data. Its owner approves access and other destinations. Having a login or free space does not grant permission.",
               "platforms": [
                 "all"
               ],
-              "title": "Place durable project data"
+              "title": "Keep the approved input"
             },
             {
               "commands": [],
-              "expected": "No irreplaceable file exists only in temporary storage.",
+              "expected": "A replaceable working file can be rebuilt; the retained result has a verified durable copy.",
               "id": "temporary",
-              "instruction": "Scratch means temporary working storage intended for replaceable files. Use scratch, Blade D:, or another named temporary area only for working copies you can recreate. Record how needed results return to durable storage.",
+              "instruction": "The mesh can be rebuilt from recorded inputs. report.pdf is needed for the thesis. Decide which may have its only copy in temporary storage and how the report returns to the approved project store.",
               "links": [],
               "machine": "browser",
-              "on_failure": "Copy and verify the required data in durable storage before proceeding.",
-              "on_success": "Continue to interactive GUI work.",
+              "on_failure": "Revise the fictional plan if a required result exists only in temporary storage. Do not delete or move any actual file.",
+              "on_success": "Scratch and temporary folders hold replaceable working files. Copy a required result to the approved durable location and verify the copy before planned cleanup. A matching checksum proves equal content, not durability or permission.",
               "platforms": [
                 "all"
               ],
-              "title": "Identify temporary storage"
+              "title": "Separate a working copy from the result"
             },
             {
               "commands": [],
-              "expected": "Blade is used interactively and does not hold the only durable copy.",
+              "expected": "Interactive work and durable storage have separate roles.",
               "id": "blade",
-              "instruction": "Use Blade for approved interactive Windows software such as computer-aided design (CAD) or simulation pre-processing and post-processing. Inside Blade, P: is a Windows drive letter for the connected durable project storage. Keep durable files there and move heavy computation elsewhere.",
+              "instruction": "The project uses approved Windows-only engineering software to inspect the mesh with menus and buttons. Choose the computer for that interactive work and the destination of the saved result.",
               "links": [],
               "machine": "browser",
-              "on_failure": "Stop an unattended heavy workload and choose an approved compute system.",
-              "on_success": "Continue to scheduled computation.",
+              "on_failure": "Do not start a long unattended calculation on Blade. This exercise grants no access and requires no connection.",
+              "on_success": "Blade is a shared remote Windows computer for licensed graphical software. A GUI is its windows-and-buttons interface. P: connects approved durable project storage; C: and D: must not hold the only retained copy.",
               "platforms": [
                 "all"
               ],
-              "title": "Place Windows GUI work"
+              "title": "Choose where to use the graphical tool"
             },
             {
               "commands": [],
-              "expected": "The Slurm job requests explicit CPU, memory, and time limits.",
+              "expected": "The plan uses an approved scheduled job with explicit CPU, memory and time limits.",
               "id": "euler",
-              "instruction": "Euler login nodes are the computers reached first for access, file management, editing, and job control. Slurm is the scheduler that assigns submitted work to compute nodes. Run CPU or GPU computation on those compute nodes, not on a login node.",
+              "instruction": "The beam calculation will run unattended for hours. Plan where it runs, rather than starting it in the shell used to log in.",
               "links": [],
               "machine": "browser",
-              "on_failure": "Do not run the workload directly on an Euler login node.",
-              "on_success": "Continue to the classification questions.",
+              "on_failure": "Do not run heavy work on a login node. No job is submitted in this lesson.",
+              "on_success": "Euler login nodes are for access, editing, files and job control. Slurm assigns jobs to compute nodes. A CPU is a general-purpose processor; a GPU helps only compatible programs. Heavy work belongs in an allocation on Euler or approved compute.",
               "platforms": [
                 "all"
               ],
-              "title": "Place scheduled computation"
+              "title": "Choose where the long calculation runs"
             },
             {
               "commands": [],
-              "expected": "Every item has one justified location.",
+              "expected": "You can explain ownership, lifetime and processing location without guessing a real path.",
               "id": "answer",
-              "instruction": "Classify every fictional item below. Use the named systems and durability rules, not the amount of free disk space.",
+              "instruction": "Trace the code, input, working copy and retained report through your plan. Then try the questions below. Only fictional practice content may go to an AI service unless its owner approved the exact service and content.",
               "links": [],
               "machine": "browser",
-              "on_failure": "Return to the relevant system rule and correct the placement.",
-              "on_success": "Run Check my work.",
+              "on_failure": "Open the explanation for the decision you cannot yet justify. Ask privately about real data approval rather than putting project details into the exercise.",
+              "on_success": "The six questions check these decisions. They do not verify a real folder, backup, permission setting or Euler job.",
               "platforms": [
                 "all"
               ],
-              "title": "Complete the placement map"
+              "title": "Check your decisions"
             }
           ]
         },
