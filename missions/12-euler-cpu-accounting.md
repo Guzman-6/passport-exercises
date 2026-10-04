@@ -2,40 +2,53 @@
 
 ## Outcome
 
-Inspect how much CPU, memory, and time the completed practice job reserved and
-used. Use those measurements to choose the next resource request.
+Read the completed training job's accounting, then reason about a separate
+fictional representative run. No new job is required.
 
 ## Concept
 
-A Slurm request reserves CPU, memory, and time for an Euler job. Requested resources and resources actually used are different. `sacct` reports exact accounting fields for a recorded job, while `seff` summarizes CPU and memory efficiency.
+Requested resources and resources actually used are different. sacct reports
+recorded fields; seff summarizes efficiency for the same job. Use this table
+as a lookup while reading the output, rather than memorizing six definitions.
 
-`AllocCPUS` is the number of CPUs reserved. `ReqMem` is the requested memory.
-`MaxRSS` is the largest recorded memory use. `Elapsed` is the run time,
-`State` is the final condition, and `ExitCode` reports whether the program
-finished successfully.
+| Resource | Reservation | Observation to compare |
+| --- | --- | --- |
+| CPU | AllocCPUS | CPU efficiency in seff; allocated does not mean used |
+| Memory | ReqMem, with its units and per-CPU/total meaning | MaxRSS on the relevant job step |
+| Time | Requested maximum time | Elapsed, the actual run time |
 
-Large “just in case” requests can wait longer and reduce capacity for others
-without making a program faster when it uses one CPU or spends most of its
-time waiting for files. Measure a representative run before changing the next
-request.
+State and ExitCode say how the job ended. Inspect a software failure before
+changing its resources. The tiny training job helps locate these fields; only
+a representative workload can support a production sizing decision.
+
+## Learning Challenge
+
+A serial run reserved four CPUs, 16 GiB per CPU and two hours, but took 20
+minutes with 22% CPU efficiency and 9 GiB MaxRSS. Before reading the model,
+which reservations look unsupported by this evidence? The official questions
+ask you to choose the next test for this fictional case.
 
 ## Worked Example
 
-The proposed request follows measured utilization and does not enlarge resources merely to hide an error.
+<details>
+<summary>Reason about the next test</summary>
 
-Check these points:
+Four times 16 GiB reserves 64 GiB. If the program is serial, more allocated CPUs
+do not make its computation parallel. Compare memory and time with the observed
+values, leave sensible headroom, and test the reduced request on representative
+input. One sample does not establish every production input's needs. An import
+error needs a software fix, not an unexplained increase in resources.
 
-- **Which value helps estimate memory actually used?** MaxRSS, interpreted with the job steps and units.
-- **A job exits immediately with a Python import error. What should you optimize first?** Fix and test the software environment before changing resources.
-- **A representative serial job requested 4 CPUs, 16 GiB per CPU, and 2 hours. It completed in 20 minutes with 22% CPU efficiency and 9 GiB MaxRSS. Which next test is justified?** Test 1 CPU, 16 GiB total memory, and 45 minutes on a representative input.
+</details>
 
 ## Common Trap
 
-Treating requested memory as measured memory, or increasing every resource after a software failure.
+Treating a deliberately tiny calculation as a production benchmark, or
+increasing every resource after an error without diagnosing it.
 
 ## Your Action
 
-Connect to Euler, read sacct and seff for the completed training job, then choose the next request from measured use.
+Read sacct and seff for the existing tiny job, then choose a next test from the separate fictional representative-run scenario. Submit no new job.
 
 **Follow these steps in order.** Connect to Euler and reuse the job ID from the first-job mission. This mission does not submit another job.
 
@@ -51,9 +64,7 @@ before continuing if these words are new.
 
 **Where:** This web page in your browser
 
-A Slurm request reserves CPUs, memory, and time before a job runs. sacct provides exact recorded fields; seff summarizes CPU and memory efficiency. AllocCPUS is the allocated CPU count, ReqMem is requested memory, MaxRSS is the largest recorded memory use, Elapsed is run time, State is the final condition, and ExitCode reports program success or failure. Read both commands for the existing job before deciding what a future run should request.
-
-- [Open the Slurm accounting reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
+Use the compact field guide above while reading your existing job. Requested resources describe its reservation, not measured use. The tiny training job locates the fields; the separate fictional serial run supplies the sizing exercise.
 
 **Expected:** You can distinguish allocated resources from measured use.
 
@@ -166,11 +177,13 @@ seff "$job_id"
 
 **Where:** The remote Euler computer after you connect from your computer
 
-Separate requested resources from actual use. A very short smoke test proves the workflow but may be too short to size a production run.
+Compare allocated CPU count, requested memory and time with measured use. The tiny job checks the workflow and field lookup; its utilization is not representative of a production input.
+
+- [Only if needed: accounting fields and job steps](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md#completed-job-accounting)
 
 **Expected:** You can explain AllocCPUS, ReqMem, MaxRSS, Elapsed, State, and ExitCode.
 
-**Continue when:** Choose a justified next request.
+**Continue when:** Use the fictional representative run for the next-test decision. MaxRSS belongs to a reported step and its units; do not multiply or interpret it blindly across a parallel/MPI workload.
 
 **If not:** Return to the field definitions; do not increase resources by guesswork.
 
@@ -178,9 +191,9 @@ Separate requested resources from actual use. A very short smoke test proves the
 
 **Where:** The remote Euler computer after you connect from your computer
 
-Keep or reduce unused resources, leave sensible headroom for representative variation, and increase a resource only after identifying that bottleneck.
+Use the representative serial-run scenario in the questions, not the tiny calculation, to choose the next test. Before reading the model, compare reserved and used resources and decide what headroom is justified. This lesson asks for a decision; it does not submit that request.
 
-**Expected:** The proposed CPU, memory, and time values cite measured evidence.
+**Expected:** Your selected next test has a reason for its CPU, total memory and time values.
 
 **Continue when:** Complete the questions and local confirmation.
 
@@ -207,6 +220,26 @@ Use **Check my work** before submitting. This check runs on your computer and
 checks only the practical work in this lesson. A score of 80% is required, and every
 safety-critical question must be correct. Failed attempts provide targeted
 feedback and can be retried without penalty.
+
+## Learning Check
+
+### Practise
+
+Try an answer before opening the explanation. These questions are for
+practice; they do not affect your progress.
+
+1. A single-task request uses three CPUs and 4 GiB per CPU. MaxRSS is 6 GiB on the relevant step. Which comparison is correct?
+
+   - Requested 4 GiB total and used 6 GiB; increase resources immediately.
+   - Requested 12 GiB total; compare observed 6 GiB with that reservation and representative variation.
+   - Used 18 GiB because every recorded memory value must be multiplied by CPU count.
+
+<details class="learning-explanation">
+<summary>See an explanation</summary>
+
+The request reserves 3 x 4 = 12 GiB. MaxRSS is an observation for a reported step, not a per-CPU request to multiply again. Use units, workload structure and representative variation before a future sizing decision.
+
+</details>
 
 ## If Blocked
 
