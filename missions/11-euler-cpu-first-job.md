@@ -2,33 +2,57 @@
 
 ## Outcome
 
-Run one tiny CPU program on Euler. Learn how to submit it, see whether it is
-waiting, running, or finished, stop it if needed, and inspect its resource use
-and output.
+Follow one tiny CPU job from an inspected script to its recorded result and output.
 
 ## Concept
 
-Euler has login nodes and compute nodes. An SSH session first reaches a login node, which is only for editing files, transferring data, and controlling jobs. Programs that use significant CPU or memory run on compute nodes.
+Euler has login nodes and compute nodes. Prepare files and control jobs from
+the login node. Slurm is the scheduler; it runs actual computation on a compute node. A batch job is a submitted script, not merely a file in a folder.
+sbatch submits one batch script and returns its job ID. Keep that number in
+$HOME, your small private Euler folder, and use the same numeric job ID later.
 
-Slurm is the scheduler that allocates a compute node and resources. A batch job is a script submitted with `sbatch`; `squeue` shows whether it is waiting or running, `sacct` records its final state and resources, and `seff` summarizes efficiency. This mission submits one tiny CPU job and follows that same job ID to completion.
+| Stage | What you inspect | What it establishes |
+| --- | --- | --- |
+| Create and inspect | Script text and syntax result | The file is ready, not running |
+| Submit once | Returned numeric ID | Slurm accepted that submission |
+| Observe | `squeue` for that ID | Whether it is currently queued or running |
+| Read the result | `sacct`, `seff` and its output | Recorded state, resources and expected calculation |
 
-On Euler, `$HOME` is the small private folder assigned to your account. A job
-ID is the number Slurm gives one submitted job. GiB is the memory unit used in
-this guide; 1 GiB is approximately one gigabyte.
+GiB is the memory unit used here. The teaching request is one CPU, 1 GiB per
+CPU, two minutes, no GPU and the already verified Euler Python environment.
+This is a workflow test, not a resource recommendation for a research program.
+
+## Learning Challenge
+
+If the script prints correctly but the queue is empty, what has actually
+happened so far? Decide which stage you reached before trying another command.
+The recipe follows one job throughout; you do not need a second submission.
 
 ## Worked Example
 
-The job completes on a compute node with one CPU, 1 GiB per CPU, no GPU, a zero
-exit code, and logs named with its job ID.
+<details>
+<summary>Read the completed job without mixing its rows</summary>
 
-Check these points:
+| Form observation | Where to compare it |
+| --- | --- |
+| Account | Main row: normal/es_fuge or es_fuge; normal/es+ is truncated |
+| State and exit code | Main row: COMPLETED and 0:0 |
+| CPU and requested memory | Main row: one CPU and 1G (per-CPU suffix may appear) |
+| Observed memory | Relevant .batch step; not the requested value |
+| Program output | Same ID: python_environment=passport-python and 5 squared is 25 |
 
-- **Where does the actual computation run?** On a Slurm-allocated compute node.
-- **The job is absent from squeue. What next?** Use sacct and inspect the job logs; it may already have finished.
+Read seff for that same job. Keep actual logs and identifiers private; enter
+only the requested observations in the local form.
+
+</details>
 
 ## Common Trap
 
-Running work on the login node, resubmitting because squeue is empty, or losing the job ID before checking sacct.
+Submitting again because a short job disappeared from the queue. Keep the
+stored ID and read its accounting and logs; queue visibility is not its outcome.
+
+
+
 
 ## Your Action
 
@@ -48,9 +72,7 @@ before continuing if these words are new.
 
 **Where:** This web page in your browser
 
-SSH opens an Euler login node for file and job management. Slurm schedules actual computation on a compute node. sbatch submits one batch script, squeue shows active jobs, sacct reports recorded state and resources, and seff summarizes efficiency. All four commands use the same numeric job ID. GiB is the memory unit used in this guide; 1 GiB is approximately one gigabyte.
-
-- [Open the Slurm command reference](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/reference/euler/slurm.md)
+Follow the four stages in the lifecycle above. Before connecting, distinguish preparing a file from asking Slurm to run it. Keep the same numeric job ID for every observation after submission.
 
 **Expected:** You can distinguish the login node from the compute node and state what sbatch, squeue, sacct, and seff do.
 
@@ -111,7 +133,7 @@ my_share_info
 
 **Where:** The remote Euler computer after you connect from your computer
 
-Create the expected script in your home training folder without overwriting an existing different file. The script establishes its Python environment inside the job. If the same script already exists after an interrupted session, reuse it. Validate Bash syntax and print it before submission.
+Paste the whole creation block, including EOF and the final closing parenthesis. It creates or safely reuses the training script, checks its syntax and prints it; it does not run the calculation. Compare its CPU, memory, time, account, environment and log directives with the small teaching request above before submitting.
 
 **After SSH connects to Euler, run this in the same text window:**
 
@@ -180,7 +202,7 @@ sed -n '1,100p' first-job.slurm
 ```
 <!-- /passport-snippet:euler-cpu-tiny-request -->
 
-**Expected:** The command prints created-script-ok or existing-script-ok before displaying the script. The displayed script ends at PYTHON; EOF and the lines after it finish the creation command and are not printed as part of the script. Check that the script shows es_fuge, two minutes, one task, one CPU, 1 GiB per CPU, the dated Python module, the training environment, and separate logs. This step does not submit a job, so an empty squeue is normal.
+**Expected:** created-script-ok or existing-script-ok, followed by script text ending at PYTHON. EOF and the following creation-command lines are not printed as part of the script. No job was submitted here; an empty queue is normal.
 
 **Continue when:** After checking the script, use Step 5 to submit it once.
 
@@ -225,7 +247,7 @@ fi
 
 **Where:** The remote Euler computer after you connect from your computer
 
-Query only the recorded job. A header without a row means the short job already left the active queue.
+Query only the recorded job. No row means it is not currently visible in the active queue; accounting and logs establish what happened. Keep its ID and do not submit a duplicate.
 
 **After SSH connects to Euler, run this in the same text window:**
 
@@ -237,9 +259,11 @@ squeue -j "$job_id" -o "%.18i %.2t %.30R"
 )
 ```
 
+- [Only if needed: stop this recorded job](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/euler-first-job.md#stop-the-recorded-job-if-needed)
+
 **Expected:** The job is pending or running, or it has already left the queue.
 
-**Continue when:** Wait for completion and inspect accounting.
+**Continue when:** Read accounting for that same ID. If the request is wrong and must be stopped, use the optional cancellation section; do not cancel a successful job merely for practice.
 
 **If not:** If the ID is wrong, recover it with squeue -u "$USER" or sacct; do not resubmit.
 
@@ -267,9 +291,9 @@ sacct -j "$job_id" --format=JobID,JobName,User,Account%40,State,ExitCode,Elapsed
 )
 ```
 
-**Expected:** While queued or running, the command says to wait without resubmitting. After completion it prints job-completed, then sacct shows the main job and its steps. The main row names your user, normal/es_fuge (or es_fuge if shown in short form), COMPLETED, 0:0, one CPU, and 1G requested memory. Account%40 gives the account column room to display the full name; normal/es+ is a truncated display and is not a value to enter. MaxRSS may appear on the .batch step.
+**Expected:** After job-completed, read the main row: your user, normal/es_fuge or es_fuge, COMPLETED, 0:0, one CPU and 1G requested memory. Account%40 gives the account column room; normal/es+ is truncated, not an account value. MaxRSS may be on the .batch step.
 
-**Continue when:** Inspect the efficiency report.
+**Continue when:** Use Account%40 to read the full account column, then inspect seff for the same ID. Read the small field guide above; keep actual account/user/job details private.
 
 **If not:** If the state is FAILED, TIMEOUT, or OUT_OF_MEMORY, inspect logs before changing resources.
 
@@ -323,7 +347,7 @@ grep -Fx "5 squared is 25" "$output"
 
 **Where:** The laptop or desktop in front of you
 
-Return to the local Passport, enter only the requested job facts, press Check my work, then submit once. Do not enter a username, path, log, or other private value.
+Return to the local Passport and enter the facts you personally observed for this one job. Job ID is used locally and is excluded from public evidence. Do not enter a username, path or log. Check my work compares the entered facts; the automatic check does not connect to Euler to repeat your observations. Then submit once.
 
 **Expected:** The Passport accepts the job ID, account, owner check, queue check, final state, resources, Python environment check, seff check, and output marker.
 
@@ -340,6 +364,26 @@ Use **Check my work** before submitting. This check runs on your computer and
 checks only the practical work in this lesson. A score of 100% is required, and every
 safety-critical question must be correct. Failed attempts provide targeted
 feedback and can be retried without penalty.
+
+## Learning Check
+
+### Practise
+
+Try an answer before opening the explanation. These questions are for
+practice; they do not affect your progress.
+
+1. The creation command printed existing-script-ok and the script. You have not used the submission step. Why might squeue be empty?
+
+   - The file exists, but no job has been submitted by that command.
+   - The calculation already finished; record success without checking.
+   - Euler lost the file; create it repeatedly until a job appears.
+
+<details class="learning-explanation">
+<summary>See an explanation</summary>
+
+Creating or printing a script is a file operation. Inspect it, then use the guarded submission step once if no ID is stored. Its returned ID lets you follow the actual job; neither the marker nor an empty queue proves execution.
+
+</details>
 
 ## If Blocked
 

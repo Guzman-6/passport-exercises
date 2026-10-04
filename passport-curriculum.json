@@ -3061,9 +3061,36 @@
     },
     "euler-cpu-accounting": {
       "activity": {
-        "action": "Connect to Euler, read sacct and seff for the completed training job, then choose the next request from measured use.",
-        "expected_result": "The proposed request follows measured utilization and does not enlarge resources merely to hide an error.",
+        "action": "Read sacct and seff for the existing tiny job, then choose a next test from the separate fictional representative-run scenario. Submit no new job.",
+        "expected_result": "You distinguish reserved resources from observed use and choose a justified next test for the supplied representative scenario.",
         "kind": "guided_remote",
+        "learning_checks": [
+          {
+            "answer": [
+              "correct"
+            ],
+            "critical": false,
+            "feedback": "The request reserves 3 x 4 = 12 GiB. MaxRSS is an observation for a reported step, not a per-CPU request to multiply again. Use units, workload structure and representative variation before a future sizing decision.",
+            "hint": "Which value says per CPU, and which reports observed use?",
+            "id": "per_cpu_reservation",
+            "options": [
+              {
+                "id": "wrong_a",
+                "label": "Requested 4 GiB total and used 6 GiB; increase resources immediately."
+              },
+              {
+                "id": "correct",
+                "label": "Requested 12 GiB total; compare observed 6 GiB with that reservation and representative variation."
+              },
+              {
+                "id": "wrong_b",
+                "label": "Used 18 GiB because every recorded memory value must be multiplied by CPU count."
+              }
+            ],
+            "prompt": "A single-task request uses three CPUs and 4 GiB per CPU. MaxRSS is 6 GiB on the relevant step. Which comparison is correct?",
+            "type": "single"
+          }
+        ],
         "machine": "euler",
         "questions": [
           {
@@ -3146,13 +3173,8 @@
               "commands": [],
               "expected": "You can distinguish allocated resources from measured use.",
               "id": "terms",
-              "instruction": "A Slurm request reserves CPUs, memory, and time before a job runs. sacct provides exact recorded fields; seff summarizes CPU and memory efficiency. AllocCPUS is the allocated CPU count, ReqMem is requested memory, MaxRSS is the largest recorded memory use, Elapsed is run time, State is the final condition, and ExitCode reports program success or failure. Read both commands for the existing job before deciding what a future run should request.",
-              "links": [
-                {
-                  "label": "Open the Slurm accounting reference",
-                  "url": "../../../docs/reference/euler/slurm.md"
-                }
-              ],
+              "instruction": "Use the compact field guide above while reading your existing job. Requested resources describe its reservation, not measured use. The tiny training job locates the fields; the separate fictional serial run supplies the sizing exercise.",
+              "links": [],
               "machine": "browser",
               "on_failure": "Return to the first-job mission; do not submit another job for this exercise.",
               "on_success": "Connect and recover the existing job ID.",
@@ -3255,11 +3277,16 @@
               "commands": [],
               "expected": "You can explain AllocCPUS, ReqMem, MaxRSS, Elapsed, State, and ExitCode.",
               "id": "interpret",
-              "instruction": "Separate requested resources from actual use. A very short smoke test proves the workflow but may be too short to size a production run.",
-              "links": [],
+              "instruction": "Compare allocated CPU count, requested memory and time with measured use. The tiny job checks the workflow and field lookup; its utilization is not representative of a production input.",
+              "links": [
+                {
+                  "label": "Only if needed: accounting fields and job steps",
+                  "url": "../../../docs/reference/euler/slurm.md#completed-job-accounting"
+                }
+              ],
               "machine": "euler",
               "on_failure": "Return to the field definitions; do not increase resources by guesswork.",
-              "on_success": "Choose a justified next request.",
+              "on_success": "Use the fictional representative run for the next-test decision. MaxRSS belongs to a reported step and its units; do not multiply or interpret it blindly across a parallel/MPI workload.",
               "platforms": [
                 "all"
               ],
@@ -3267,9 +3294,9 @@
             },
             {
               "commands": [],
-              "expected": "The proposed CPU, memory, and time values cite measured evidence.",
+              "expected": "Your selected next test has a reason for its CPU, total memory and time values.",
               "id": "right-size",
-              "instruction": "Keep or reduce unused resources, leave sensible headroom for representative variation, and increase a resource only after identifying that bottleneck.",
+              "instruction": "Use the representative serial-run scenario in the questions, not the tiny calculation, to choose the next test. Before reading the model, compare reserved and used resources and decide what headroom is justified. This lesson asks for a decision; it does not submit that request.",
               "links": [],
               "machine": "euler",
               "on_failure": "Measure a representative input before claiming a production allocation.",
@@ -3585,6 +3612,33 @@
         "action": "Create one small Python CPU batch script, inspect it, submit it once, and verify its queue, accounting, environment, efficiency, and output.",
         "expected_result": "The job completes on a compute node with one CPU, 1 GiB per CPU, no GPU, the verified Euler Python environment, a zero exit code, and separate output and error logs.",
         "kind": "guided_remote",
+        "learning_checks": [
+          {
+            "answer": [
+              "correct"
+            ],
+            "critical": false,
+            "feedback": "Creating or printing a script is a file operation. Inspect it, then use the guarded submission step once if no ID is stored. Its returned ID lets you follow the actual job; neither the marker nor an empty queue proves execution.",
+            "hint": "Which command actually hands a script to the scheduler?",
+            "id": "creation_not_execution",
+            "options": [
+              {
+                "id": "correct",
+                "label": "The file exists, but no job has been submitted by that command."
+              },
+              {
+                "id": "wrong_a",
+                "label": "The calculation already finished; record success without checking."
+              },
+              {
+                "id": "wrong_b",
+                "label": "Euler lost the file; create it repeatedly until a job appears."
+              }
+            ],
+            "prompt": "The creation command printed existing-script-ok and the script. You have not used the submission step. Why might squeue be empty?",
+            "type": "single"
+          }
+        ],
         "machine": "euler",
         "questions": [
           {
@@ -3643,13 +3697,8 @@
               "commands": [],
               "expected": "You can distinguish the login node from the compute node and state what sbatch, squeue, sacct, and seff do.",
               "id": "terms",
-              "instruction": "SSH opens an Euler login node for file and job management. Slurm schedules actual computation on a compute node. sbatch submits one batch script, squeue shows active jobs, sacct reports recorded state and resources, and seff summarizes efficiency. All four commands use the same numeric job ID. GiB is the memory unit used in this guide; 1 GiB is approximately one gigabyte.",
-              "links": [
-                {
-                  "label": "Open the Slurm command reference",
-                  "url": "../../../docs/reference/euler/slurm.md"
-                }
-              ],
+              "instruction": "Follow the four stages in the lifecycle above. Before connecting, distinguish preparing a file from asking Slurm to run it. Keep the same numeric job ID for every observation after submission.",
+              "links": [],
               "machine": "browser",
               "on_failure": "Do not run a workload until the login-node and compute-node roles are clear.",
               "on_success": "Connect to the login node.",
@@ -3717,9 +3766,9 @@
                   "snippet": "euler-cpu-tiny-request"
                 }
               ],
-              "expected": "The command prints created-script-ok or existing-script-ok before displaying the script. The displayed script ends at PYTHON; EOF and the lines after it finish the creation command and are not printed as part of the script. Check that the script shows es_fuge, two minutes, one task, one CPU, 1 GiB per CPU, the dated Python module, the training environment, and separate logs. This step does not submit a job, so an empty squeue is normal.",
+              "expected": "created-script-ok or existing-script-ok, followed by script text ending at PYTHON. EOF and the following creation-command lines are not printed as part of the script. No job was submitted here; an empty queue is normal.",
               "id": "create-script",
-              "instruction": "Create the expected script in your home training folder without overwriting an existing different file. The script establishes its Python environment inside the job. If the same script already exists after an interrupted session, reuse it. Validate Bash syntax and print it before submission.",
+              "instruction": "Paste the whole creation block, including EOF and the final closing parenthesis. It creates or safely reuses the training script, checks its syntax and prints it; it does not run the calculation. Compare its CPU, memory, time, account, environment and log directives with the small teaching request above before submitting.",
               "links": [],
               "machine": "euler",
               "on_failure": "Correct the script before sbatch; do not submit a script you have not read.",
@@ -3759,11 +3808,16 @@
               ],
               "expected": "The job is pending or running, or it has already left the queue.",
               "id": "queue",
-              "instruction": "Query only the recorded job. A header without a row means the short job already left the active queue.",
-              "links": [],
+              "instruction": "Query only the recorded job. No row means it is not currently visible in the active queue; accounting and logs establish what happened. Keep its ID and do not submit a duplicate.",
+              "links": [
+                {
+                  "label": "Only if needed: stop this recorded job",
+                  "url": "../../../docs/labs/euler-first-job.md#stop-the-recorded-job-if-needed"
+                }
+              ],
               "machine": "euler",
               "on_failure": "If the ID is wrong, recover it with squeue -u \"$USER\" or sacct; do not resubmit.",
-              "on_success": "Wait for completion and inspect accounting.",
+              "on_success": "Read accounting for that same ID. If the request is wrong and must be stopped, use the optional cancellation section; do not cancel a successful job merely for practice.",
               "platforms": [
                 "all"
               ],
@@ -3777,13 +3831,13 @@
                   "shell": "bash"
                 }
               ],
-              "expected": "While queued or running, the command says to wait without resubmitting. After completion it prints job-completed, then sacct shows the main job and its steps. The main row names your user, normal/es_fuge (or es_fuge if shown in short form), COMPLETED, 0:0, one CPU, and 1G requested memory. Account%40 gives the account column room to display the full name; normal/es+ is a truncated display and is not a value to enter. MaxRSS may appear on the .batch step.",
+              "expected": "After job-completed, read the main row: your user, normal/es_fuge or es_fuge, COMPLETED, 0:0, one CPU and 1G requested memory. Account%40 gives the account column room; normal/es+ is truncated, not an account value. MaxRSS may be on the .batch step.",
               "id": "accounting",
               "instruction": "Run this for the same job. If it says job-not-finished, wait 30 seconds and run this same step again. Never return to sbatch while waiting.",
               "links": [],
               "machine": "euler",
               "on_failure": "If the state is FAILED, TIMEOUT, or OUT_OF_MEMORY, inspect logs before changing resources.",
-              "on_success": "Inspect the efficiency report.",
+              "on_success": "Use Account%40 to read the full account column, then inspect seff for the same ID. Read the small field guide above; keep actual account/user/job details private.",
               "platforms": [
                 "all"
               ],
@@ -3833,7 +3887,7 @@
               "commands": [],
               "expected": "The Passport accepts the job ID, account, owner check, queue check, final state, resources, Python environment check, seff check, and output marker.",
               "id": "submit-receipt",
-              "instruction": "Return to the local Passport, enter only the requested job facts, press Check my work, then submit once. Do not enter a username, path, log, or other private value.",
+              "instruction": "Return to the local Passport and enter the facts you personally observed for this one job. Job ID is used locally and is excluded from public evidence. Do not enter a username, path or log. Check my work compares the entered facts; the automatic check does not connect to Euler to repeat your observations. Then submit once.",
               "links": [],
               "machine": "local",
               "on_failure": "Re-read the same job with sacct, seff, and its logs; do not submit another job.",
