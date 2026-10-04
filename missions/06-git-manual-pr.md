@@ -223,6 +223,8 @@ git diff --cached --check
 git diff --cached
 ```
 
+- [Optional: exact-file staging explained](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/git_workflow.md#staging-review)
+
 **Expected:** The staged diff contains only the intended note change. The whitespace check prints nothing when it passes.
 
 **Continue when:** git add selects the current saved content. git diff --cached compares that selection with the last commit; --check checks whitespace. The selection is what your next commit will record.
@@ -354,13 +356,13 @@ Committing records the change on your computer; pushing sends it to GitHub. A dr
 
 Do not use `git reset --hard`, broad deletion, or force push as a first repair.
 Preserve `git status`, the current branch, and the diff, then use the
-[first safe PR lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/first-safe-pr.md) recovery section or ask
+[first safe PR lab](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/first-safe-pr.md#safe-recovery) recovery section or ask
 for help through the non-secret dashboard issue form.
 
 Useful references:
 
-- [First Safe Pr](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/first-safe-pr.md)
-- [Git workflow](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/git_workflow.md)
+- [PR recovery](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/labs/first-safe-pr.md#safe-recovery): read the matching failure, then return here.
+- [Git recovery](https://github.com/IDEALLab/onboarding-IT/blob/main/onboarding_IT_guides/git_workflow.md#troubleshooting): use only the row matching your error.
 
 ## Understand Before Accepting AI Output
 
