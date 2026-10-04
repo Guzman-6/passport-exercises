@@ -2,163 +2,196 @@
 
 ## Outcome
 
-Learn what GitHub, the NAS, Blade, Euler, and temporary storage are, then choose the correct place for code, durable data, graphical Windows work, and scheduled computation.
+Decide where one fictional project's files belong and explain which copy must survive.
 
 ## Concept
 
-A lab project normally uses several systems, each for a different purpose:
+### One project, several places
 
-- GitHub stores reviewed source code and small text files.
-- The IDEAL Lab NAS is durable shared storage for approved project data.
-- Blade is a shared remote Windows computer for licensed graphical software.
-- Euler is an ETH Zurich service made of many managed computers for research calculations. A CPU is the general-purpose processor used by most programs; a GPU is an accelerator used only by compatible programs. Both kinds of work are submitted through Slurm, the software that queues programs and assigns them to available compute nodes.
-- Scratch and temporary folders hold replaceable working files, not the only copy of a result.
+Two students are studying how a beam bends. Their program and measurements are
+not the same kind of file, and the computer that runs a calculation need not be
+the place that keeps its result.
 
-Durable storage is intended to keep required files under an approved ownership and recovery plan. Temporary storage may be purged. A GUI is a graphical user interface controlled with windows, menus, and buttons. A scheduled computation is a program submitted with its CPU, memory, and time needs so Slurm can place it on a suitable Euler compute node.
+| Fictional item | Why the project needs it |
+| --- | --- |
+| `analyse.py` | Program both students will edit |
+| `measurements.csv` | Approved input that must remain available |
+| Working mesh | Replaceable file built for the calculation |
+| `report.pdf` | Result the thesis must retain |
 
-Choose a location from its purpose, owner, and retention rules, not from free disk space.
+## Learning Challenge
+
+Before reading the steps, choose one item that could safely be recreated after
+its working copy disappears. What would you need to record to rebuild it?
+There is no file to upload for this question. The steps help you check your reasoning.
 
 ## Worked Example
 
-The map separates code history, durable storage, temporary storage, graphical access, and scheduled computation.
+<details>
+<summary>See a possible route through the project</summary>
 
-Check these points:
+Code is reviewed on GitHub from each student's separate clone. The approved
+input stays in its owner-approved durable store. A working copy can travel to
+an approved compute location; a scheduled job produces the result. The result
+returns to approved durable storage and is verified before working copies are
+cleaned. Blade supplies the approved Windows interface when needed; it is not
+a replacement for scheduled heavy compute or durable storage.
 
-- **Where does maintained source code belong?** In an approved GitHub repository.
-- **Where should a heavy batch computation run?** In a Slurm allocation with explicit CPU, memory, and time limits on Euler or another approved compute system.
-- **Where should the main durable copy of an approved collaborative dataset live?** In the supervisor-approved durable project location on NAS or another named project store.
-- **What may be placed in scratch storage?** Temporary high-throughput files that can be recreated from recorded inputs.
-- **Where should you use an approved Windows-only engineering GUI?** On Blade for interactive GUI work, while heavy batch computation uses an approved compute system.
-- **What project context may you send to an AI service during onboarding?** Only the fictional practice files provided by the mission, unless the real data owner approved the exact service and content.
+</details>
 
 ## Common Trap
 
-Choosing a location without checking ownership, backup, lifetime, and where the
-data will be processed.
+A folder called `archive` is still temporary if the service's lifetime rules say
+so. Decide from ownership and retention, rather than a folder name or free space.
 
 ## Your Action
 
-Map code, durable data, temporary files, graphical Windows work, and scheduled computation to the correct lab systems.
+Use the fictional beam-test project to decide where its code, input data, temporary files and retained result belong. No files or permissions are changed.
 
-**Follow these steps in order.** A CPU is the general-purpose processor used by most programs. A GPU is an accelerator used by compatible programs. Durable storage is intended to keep required files under an approved recovery plan; temporary storage may be purged. A GUI is an application controlled with windows, menus, and buttons. For each item, decide who owns it, how long it must survive, and where the work actually runs.
+**Follow these steps in order.** Stay on this page. For each part of the fictional project, make your choice before opening Explanation and help. Do not move real files, connect to a service or change permissions.
 
-### 1. Read the system map before placing files
-
-**Where:** This web page in your browser
-
-Identify the role of each location: GitHub for reviewed source code, NAS for durable shared project data, Blade for licensed graphical Windows work, Euler for scheduled computation, and scratch or temporary folders for replaceable working files. Scheduled computation means submitting a program with requested CPU, memory, and time so a scheduler can choose where and when it runs.
-
-- [Open the complete system decision table](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/environments-overview.md)
-
-**Expected:** Each system has one clear purpose and temporary storage is not treated as durable.
-
-**Continue when:** Place source code first.
-
-**If not:** Do not answer from familiarity or free disk space; reread the decision table.
-
-### 2. Place source code
+### 1. Follow one project
 
 **Where:** This web page in your browser
 
-Keep source code and reviewable text in GitHub. Each contributor uses a separate clone, meaning their own working copy of the project. A branch keeps one line of work separate, and a pull request asks for that branch to be reviewed before it is combined with shared work.
+Two students study a beam. They have analyse.py (their program), measurements.csv (approved input data), a replaceable mesh for calculations, and report.pdf (the result to keep). Which of these must remain available after a temporary folder is cleaned?
 
-**Expected:** Code has version history and no shared writable working tree.
+**Expected:** Separate the files that must survive from working copies that can be rebuilt.
 
-**Continue when:** Continue to durable project data.
+**Continue when:** Durable means intended to retain required files under an approved ownership and recovery plan. Temporary files may be purged. A file extension does not tell you its approval or lifetime.
 
-**If not:** Move code collaboration out of a shared NAS checkout before continuing.
+**If not:** If the only copy cannot be recreated, treat that as an unresolved preservation decision; do not call it temporary.
 
-### 3. Place durable project data
-
-**Where:** This web page in your browser
-
-Use the supervisor-approved NAS project folder or another explicitly approved durable project store. A dataset is a collection of research data; a checkpoint is a saved state from a computation or model; a deliverable is an output the project must keep.
-
-**Expected:** The durable copy has a named owner and approved access.
-
-**Continue when:** Continue to temporary data.
-
-**If not:** Ask the supervisor which project location holds the main durable copy; do not invent one.
-
-### 4. Identify temporary storage
+### 2. Share changes to analyse.py
 
 **Where:** This web page in your browser
 
-Scratch means temporary working storage intended for replaceable files. Use scratch, Blade D:, or another named temporary area only for working copies you can recreate. Record how needed results return to durable storage.
+Both students want to edit the program. Choose how they can propose changes without overwriting one shared working copy.
 
-**Expected:** No irreplaceable file exists only in temporary storage.
+**Expected:** Each person has their own working copy; reviewed code has a shared history.
 
-**Continue when:** Continue to interactive GUI work.
+**Continue when:** GitHub stores reviewed source code and small text files. Each student uses a separate clone, their own copy for editing. A shared writable NAS checkout is not the collaboration route.
 
-**If not:** Copy and verify the required data in durable storage before proceeding.
+**If not:** Do not invent a shared checkout for this plan. The later Git lesson teaches how to propose a reviewed change.
 
-### 5. Place Windows GUI work
-
-**Where:** This web page in your browser
-
-Use Blade for approved interactive Windows software such as computer-aided design (CAD) or simulation pre-processing and post-processing. Inside Blade, P: is a Windows drive letter for the connected durable project storage. Keep durable files there and move heavy computation elsewhere.
-
-**Expected:** Blade is used interactively and does not hold the only durable copy.
-
-**Continue when:** Continue to scheduled computation.
-
-**If not:** Stop an unattended heavy workload and choose an approved compute system.
-
-### 6. Place scheduled computation
+### 3. Keep the approved input
 
 **Where:** This web page in your browser
 
-Euler login nodes are the computers reached first for access, file management, editing, and job control. Slurm is the scheduler that assigns submitted work to compute nodes. Run CPU or GPU computation on those compute nodes, not on a login node.
+The supervisor has named an approved NAS project folder for measurements.csv. Who decides whether a second service is allowed to hold that dataset?
 
-**Expected:** The Slurm job requests explicit CPU, memory, and time limits.
+**Expected:** The main input has a named information owner and an approved durable location.
 
-**Continue when:** Continue to the classification questions.
+**Continue when:** The NAS is durable shared storage for approved project data. Its owner approves access and other destinations. Having a login or free space does not grant permission.
 
-**If not:** Do not run the workload directly on an Euler login node.
+**If not:** For a real project, ask the information owner about an unnamed location. No approval or transfer is performed here.
 
-### 7. Complete the placement map
+### 4. Separate a working copy from the result
 
 **Where:** This web page in your browser
 
-Classify every fictional item below. Use the named systems and durability rules, not the amount of free disk space.
+The mesh can be rebuilt from recorded inputs. report.pdf is needed for the thesis. Decide which may have its only copy in temporary storage and how the report returns to the approved project store.
 
-**Expected:** Every item has one justified location.
+**Expected:** A replaceable working file can be rebuilt; the retained result has a verified durable copy.
 
-**Continue when:** Run Check my work.
+**Continue when:** Scratch and temporary folders hold replaceable working files. Copy a required result to the approved durable location and verify the copy before planned cleanup. A matching checksum proves equal content, not durability or permission.
 
-**If not:** Return to the relevant system rule and correct the placement.
+**If not:** Revise the fictional plan if a required result exists only in temporary storage. Do not delete or move any actual file.
+
+### 5. Choose where to use the graphical tool
+
+**Where:** This web page in your browser
+
+The project uses approved Windows-only engineering software to inspect the mesh with menus and buttons. Choose the computer for that interactive work and the destination of the saved result.
+
+**Expected:** Interactive work and durable storage have separate roles.
+
+**Continue when:** Blade is a shared remote Windows computer for licensed graphical software. A GUI is its windows-and-buttons interface. P: connects approved durable project storage; C: and D: must not hold the only retained copy.
+
+**If not:** Do not start a long unattended calculation on Blade. This exercise grants no access and requires no connection.
+
+### 6. Choose where the long calculation runs
+
+**Where:** This web page in your browser
+
+The beam calculation will run unattended for hours. Plan where it runs, rather than starting it in the shell used to log in.
+
+**Expected:** The plan uses an approved scheduled job with explicit CPU, memory and time limits.
+
+**Continue when:** Euler login nodes are for access, editing, files and job control. Slurm assigns jobs to compute nodes. A CPU is a general-purpose processor; a GPU helps only compatible programs. Heavy work belongs in an allocation on Euler or approved compute.
+
+**If not:** Do not run heavy work on a login node. No job is submitted in this lesson.
+
+### 7. Check your decisions
+
+**Where:** This web page in your browser
+
+Trace the code, input, working copy and retained report through your plan. Then try the questions below. Only fictional practice content may go to an AI service unless its owner approved the exact service and content.
+
+**Expected:** You can explain ownership, lifetime and processing location without guessing a real path.
+
+**Continue when:** The six questions check these decisions. They do not verify a real folder, backup, permission setting or Euler job.
+
+**If not:** Open the explanation for the decision you cannot yet justify. Ask privately about real data approval rather than putting project details into the exercise.
 
 The Passport presents the questions and required confirmation in the
 browser. Do not create or edit a submission JSON file by hand.
 
 ## Check Your Work
 
-Use **Check my work** before submitting. This check runs on your computer and
-checks only the practical work in this lesson. A score of 80% is required, and every
-safety-critical question must be correct. Failed attempts provide targeted
-feedback and can be retried without penalty.
+The six questions assess your placement decisions. They do not inspect real
+storage, backups, permissions or an Euler job. Use **Check my work**, then
+**Submit lesson** when the local check passes. Completion follows the trusted
+GitHub check. A score of 80% and every safety-critical answer are required.
+
+## Learning Check
+
+### Practise
+
+Try an answer before opening the explanation. These questions are for
+practice; they do not affect your progress.
+
+1. A result in scratch matches the original checksum. It cannot be regenerated. Is it ready for the project to keep?
+
+   - Yes; the checksum makes scratch durable.
+   - No; verify a copy in the owner-approved durable location before cleanup.
+   - Yes; rename its folder to archive.
+
+<details class="learning-explanation">
+<summary>See an explanation</summary>
+
+A checksum confirms the content of a copy. It does not change storage lifetime or authorize a destination. An irreplaceable result needs a verified approved durable copy.
+
+</details>
+
+2. Two students need to change analyse.py. The dataset already has an approved shared NAS folder. How should they edit the code?
+
+   - Edit one shared writable Git checkout next to the data.
+   - Use separate clones and propose reviewed changes through GitHub.
+   - Email two complete folders named final and final2.
+
+<details class="learning-explanation">
+<summary>See an explanation</summary>
+
+Sharing approved data does not mean sharing one writable Git working tree. Separate clones let each student make and review their own change before proposing it to the shared repository.
+
+</details>
 
 ## If Blocked
 
-Do not guess a storage path or AI approval. Record the unresolved decision and
-ask the project information owner or supervisor. The
-[data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/data-and-ai.md) defines the escalation
-boundary.
+For a real project, ask its information owner or supervisor about an unresolved
+location or AI approval. Keep real names, paths and data out of the public
+exercise. Use the Passport's non-secret help form for a lesson problem.
 
-Useful references:
-
-- [Environments Overview](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/environments-overview.md)
-- [Data And Ai Safety](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/data-and-ai-safety.md)
-- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/data-and-ai.md)
+- [System decision table](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/core/environments-overview.md#decision-table): optional lookup for one location, then return here.
+- [Data and AI policy](https://github.com/IDEALLab/onboarding-IT/blob/main/docs/policy/data-and-ai.md): the approval boundary for real work.
 
 ## Understand Before Accepting AI Output
 
-Zero-data-retention marketing does not decide whether project material may be
-uploaded. The information owner, ETH policy, lab policy, account terms, and
-data classification all still apply.
+An agent's suggested destination does not create permission, a backup or a
+retention plan. Check those facts with the owner before accepting a real plan.
 
 ## Finish And Continue
 
-When **Check my work** passes, use **Submit lesson** once. The launcher
-publishes only this lesson's generated submission after private information is excluded. Continue when the
-progress page shows the automatic GitHub result as passed; a check on your computer alone is not a pass.
+Submit once after the local check passes. Continue when your progress shows
+the automatic GitHub result as passed; reading a page is not completion.
