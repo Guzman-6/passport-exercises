@@ -4916,7 +4916,12 @@
               "expected": "The staged diff contains only the intended note change. The whitespace check prints nothing when it passes.",
               "id": "stage",
               "instruction": "Run the block to stage the note, then read the staged diff. Confirm every line before committing. If you edit again, stage and review the newer version.",
-              "links": [],
+              "links": [
+                {
+                  "label": "Optional: exact-file staging explained",
+                  "url": "../../../onboarding_IT_guides/git_workflow.md#staging-review"
+                }
+              ],
               "machine": "local",
               "on_failure": "For an unintended staged path, use git restore --staged on that path to keep the edit but remove it from the selection. Correct and review again.",
               "on_success": "git add selects the current saved content. git diff --cached compares that selection with the last commit; --check checks whitespace. The selection is what your next commit will record.",
