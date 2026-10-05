@@ -1,0 +1,31 @@
+{
+  "answers": {
+    "failed_job": [
+      "correct"
+    ],
+    "memory_measure": [
+      "correct"
+    ],
+    "right_size": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "euler-cpu-accounting",
+  "receipts": {
+    "checks": {
+      "job_id": true,
+      "sacct_seen": true,
+      "seff_seen": true
+    },
+    "passed": true,
+    "verifier": "euler_accounting"
+  },
+  "schema_version": 2
+}
