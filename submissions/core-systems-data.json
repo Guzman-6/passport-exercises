@@ -1,0 +1,38 @@
+{
+  "answers": {
+    "ai_context": [
+      "correct"
+    ],
+    "durable_dataset": [
+      "correct"
+    ],
+    "gui_task": [
+      "correct"
+    ],
+    "heavy_compute": [
+      "correct"
+    ],
+    "scratch_role": [
+      "correct"
+    ],
+    "source_code": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "core-systems-data",
+  "receipts": {
+    "checks": {
+      "structured_activity": true
+    },
+    "passed": true,
+    "verifier": "system_map"
+  },
+  "schema_version": 2
+}
