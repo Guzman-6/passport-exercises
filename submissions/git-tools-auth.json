@@ -1,0 +1,32 @@
+{
+  "answers": {
+    "auth_scope": [
+      "correct"
+    ],
+    "safe_diagnosis": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "git-tools-auth",
+  "receipts": {
+    "checks": {
+      "git": true,
+      "github_auth": true,
+      "identity_email": true,
+      "identity_name": true,
+      "practice_branch": true,
+      "practice_repository": true,
+      "remote_credentials_absent": true
+    },
+    "passed": true,
+    "verifier": "git_environment"
+  },
+  "schema_version": 2
+}
