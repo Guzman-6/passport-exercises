@@ -1,0 +1,36 @@
+{
+  "answers": {
+    "empty_queue": [
+      "correct"
+    ],
+    "login_node": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "euler-cpu-first-job",
+  "receipts": {
+    "checks": {
+      "completed": true,
+      "correct_account": true,
+      "job_id": true,
+      "one_cpu": true,
+      "one_gib_per_cpu": true,
+      "output_verified": true,
+      "owner_checked": true,
+      "python_environment": true,
+      "queue_inspected": true,
+      "seff_inspected": true,
+      "zero_exit": true
+    },
+    "passed": true,
+    "verifier": "euler_job"
+  },
+  "schema_version": 2
+}
