@@ -1,0 +1,36 @@
+{
+  "answers": {
+    "gpu_account": [
+      "correct"
+    ],
+    "one_gpu_scope": [
+      "correct"
+    ]
+  },
+  "artifacts": [
+    "workspace/slurm/gpu_job.slurm.txt"
+  ],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "euler-gpu-review",
+  "receipts": {
+    "checks": {
+      "account": true,
+      "bounded_file": true,
+      "cpu_limit": true,
+      "error_log": true,
+      "gpu_model": true,
+      "memory_limit": true,
+      "no_partition": true,
+      "output_log": true,
+      "time_limit": true
+    },
+    "passed": true,
+    "verifier": "gpu_script"
+  },
+  "schema_version": 2
+}
