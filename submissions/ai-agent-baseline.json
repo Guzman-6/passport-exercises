@@ -1,0 +1,34 @@
+{
+  "answers": {
+    "agent_result": [
+      "correct"
+    ],
+    "agent_scope": [
+      "correct"
+    ]
+  },
+  "artifacts": [
+    "workspace/agent_task/storage-plan.md"
+  ],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "ai-agent-baseline",
+  "receipts": {
+    "checks": {
+      "avoid_c": true,
+      "bounded_diff": true,
+      "bounded_file": true,
+      "canary_unchanged": true,
+      "durable_p": true,
+      "heavy_compute": true,
+      "temporary_d": true
+    },
+    "passed": true,
+    "verifier": "ai_project"
+  },
+  "schema_version": 2
+}
