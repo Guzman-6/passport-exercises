@@ -1,0 +1,30 @@
+{
+  "answers": {
+    "interpreter_check": [
+      "correct"
+    ],
+    "venv_tracking": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "python-environment",
+  "receipts": {
+    "checks": {
+      "conda_environment": true,
+      "environment_definition": true,
+      "venv_exists": true,
+      "venv_ignored": true,
+      "venv_interpreter": true
+    },
+    "passed": true,
+    "verifier": "python_environment"
+  },
+  "schema_version": 2
+}
