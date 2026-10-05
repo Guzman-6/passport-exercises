@@ -1,0 +1,38 @@
+{
+  "answers": {
+    "log_identity": [
+      "correct"
+    ],
+    "mutable_input": [
+      "correct"
+    ],
+    "nas_io": [
+      "correct"
+    ],
+    "run_record": [
+      "correct"
+    ],
+    "scratch_output": [
+      "correct"
+    ],
+    "scratch_role": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "euler-storage-reproducibility",
+  "receipts": {
+    "checks": {
+      "structured_activity": true
+    },
+    "passed": true,
+    "verifier": "euler_storage"
+  },
+  "schema_version": 2
+}
