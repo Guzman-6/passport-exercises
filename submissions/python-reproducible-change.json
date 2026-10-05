@@ -1,0 +1,33 @@
+{
+  "answers": {
+    "reproducible_scope": [
+      "correct"
+    ],
+    "test_claim": [
+      "correct"
+    ]
+  },
+  "artifacts": [
+    "workspace/python_project/passport_example.py",
+    "workspace/python_project/tests/test_passport_example.py"
+  ],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "python-reproducible-change",
+  "receipts": {
+    "checks": {
+      "bounded_diff": true,
+      "correct_behavior": true,
+      "input_validation": true,
+      "regression_test": true,
+      "visible_tests": true
+    },
+    "passed": true,
+    "verifier": "python_project"
+  },
+  "schema_version": 2
+}
