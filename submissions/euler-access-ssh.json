@@ -1,0 +1,35 @@
+{
+  "answers": {
+    "identity_file": [
+      "correct"
+    ],
+    "repair_rule": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "euler-access-ssh",
+  "receipts": {
+    "checks": {
+      "direct_connection": true,
+      "forward_agent_disabled": true,
+      "hostname": true,
+      "identity_policy_resolved": true,
+      "interactive_disabled": true,
+      "key_only_marker": true,
+      "password_disabled": true,
+      "private_identity_selection": true,
+      "publickey_only": true,
+      "short_username": true
+    },
+    "passed": true,
+    "verifier": "ssh_config"
+  },
+  "schema_version": 2
+}
