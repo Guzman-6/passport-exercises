@@ -1,0 +1,37 @@
+{
+  "answers": {
+    "pr_roles": [
+      "correct"
+    ],
+    "staged_diff": [
+      "correct"
+    ]
+  },
+  "artifacts": [
+    "workspace/manual_task/project-note.md"
+  ],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "git-manual-pr",
+  "receipts": {
+    "checks": {
+      "bounded_diff": true,
+      "conventional_commit": true,
+      "draft_pr": true,
+      "practice_branch": true
+    },
+    "passed": true,
+    "practice": {
+      "branch": "practice/guzman-6",
+      "head_sha": "e197ea6558b4d75563d202537e52c9b64083e481",
+      "pull_request": 1,
+      "repository": "Guzman-6/passport-exercises"
+    },
+    "verifier": "git_practice"
+  },
+  "schema_version": 2
+}
