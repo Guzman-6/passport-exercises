@@ -1,0 +1,30 @@
+{
+  "answers": {
+    "gateway_role": [
+      "correct"
+    ],
+    "key_storage": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "ai-tool-configuration",
+  "receipts": {
+    "checks": {
+      "agent_response_seen": true,
+      "practice_branch": true,
+      "practice_paths_clean": true,
+      "practice_repository": true,
+      "remote_credentials_absent": true
+    },
+    "passed": true,
+    "verifier": "ai_configuration"
+  },
+  "schema_version": 2
+}
