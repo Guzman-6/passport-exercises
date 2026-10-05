@@ -1,0 +1,29 @@
+{
+  "answers": {
+    "command_place": [
+      "correct"
+    ],
+    "resume_path": [
+      "correct"
+    ],
+    "status_source": [
+      "correct"
+    ]
+  },
+  "artifacts": [],
+  "attestation": {
+    "reviewed": true,
+    "no_secrets": true,
+    "observed_result": true
+  },
+  "curriculum_version": "2.1.2",
+  "mission": "core-orientation",
+  "receipts": {
+    "checks": {
+      "resumed_session": true
+    },
+    "passed": true,
+    "verifier": "route_resume"
+  },
+  "schema_version": 2
+}
